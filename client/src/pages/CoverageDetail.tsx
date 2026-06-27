@@ -397,17 +397,17 @@ export default function CoverageDetail() {
       </section>
 
       {/* CTA Band */}
-      <section className="section bg-ink text-center">
+      <section className="section bg-[#1A1A1A] text-center">
         <div className="container">
-          <span className="eyebrow text-[var(--hair)]">Let's get you covered</span>
+          <span className="eyebrow text-[#9E9A95]">Let's get you covered</span>
           <h2 className="mt-4 mb-8 text-white">
             Every mile covered — <em className="italic">by people who only do trucking.</em>
           </h2>
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="https://truxins.com/trucking-insurance-quote/" className="btn-solid" style={{ backgroundColor: "var(--purple)" }}>
+            <a href="https://truxins.com/trucking-insurance-quote/" className="btn-solid">
               Start Trucking Application
             </a>
-            <Link href="/quote" className="btn-ghost border-white text-white hover:bg-white hover:text-ink">
+            <Link href="/quote" className="btn-ghost border-white text-white hover:bg-white hover:text-[#1A1A1A]">
               Get a Fast Quote
             </Link>
           </div>

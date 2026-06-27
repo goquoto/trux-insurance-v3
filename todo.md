@@ -19,3 +19,8 @@
 - [x] Replace text wordmark in Footer with actual Trux logo
 - [x] Add white logo variant to dark utility bar area
 - [x] Use SVG checkmark as favicon/brand mark
+- [x] Add dark/light theme toggle button to header
+- [x] Create dark theme CSS variables for all design tokens
+- [x] Enable switchable theme in ThemeProvider
+- [x] Ensure all pages respect dark theme colors
+- [x] Use white logo variant in dark mode header/footer

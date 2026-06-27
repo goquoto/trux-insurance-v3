@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, Sun, Moon } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const navLinks = [
   { label: "Coverages", href: "/coverages" },
@@ -12,24 +13,25 @@ const navLinks = [
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [location] = useLocation();
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <>
       {/* Utility bar */}
-      <div className="bg-ink text-white py-2">
+      <div className="bg-[#1A1A1A] text-white py-2">
         <div className="container flex items-center justify-between">
           <span className="text-[13px] font-sans font-light hidden sm:block">
             Insuring motor carriers in <strong>all 50 states</strong> &middot; Mon–Fri 8–5 CT
           </span>
           <div className="flex items-center gap-4 text-[13px] font-sans">
-            <a href="tel:3312401101" className="flex items-center gap-1 text-white hover:text-purple-light no-underline">
+            <a href="tel:3312401101" className="flex items-center gap-1 text-white hover:text-[var(--purple-light)] no-underline">
               <Phone size={12} />
               (331) 240-1101
             </a>
-            <a href="https://truxins.com/certificate/" className="text-white hover:text-purple-light no-underline hidden sm:inline">
+            <a href="https://truxins.com/certificate/" className="text-white hover:text-[var(--purple-light)] no-underline hidden sm:inline">
               Certificates
             </a>
-            <a href="https://truxins.com/claim/" className="text-white hover:text-purple-light no-underline hidden sm:inline">
+            <a href="https://truxins.com/claim/" className="text-white hover:text-[var(--purple-light)] no-underline hidden sm:inline">
               Report a Claim
             </a>
           </div>
@@ -42,7 +44,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center no-underline">
             <img
-              src="/manus-storage/trux-logo-dark_9f1c7375.png"
+              src={theme === "dark" ? "/manus-storage/trux-logo-white_4e37a255.png" : "/manus-storage/trux-logo-dark_9f1c7375.png"}
               alt="Trux Insurance Services"
               className="h-[40px] w-auto"
             />
@@ -65,8 +67,17 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Right side: phone + CTA */}
-          <div className="hidden lg:flex items-center gap-6">
+          {/* Right side: theme toggle + phone + CTA */}
+          <div className="hidden lg:flex items-center gap-4">
+            {/* Theme toggle */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-none border border-[var(--hair)] hover:bg-sand transition-colors"
+              aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+              title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+            >
+              {theme === "light" ? <Moon size={16} className="text-muted-custom" /> : <Sun size={16} className="text-ink" />}
+            </button>
             <a href="tel:3312401101" className="font-sans text-[15px] font-medium text-ink no-underline flex items-center gap-1.5">
               <Phone size={15} className="text-purple" />
               (331) 240-1101
@@ -76,15 +87,24 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Mobile menu button */}
-          <button
-            className="lg:hidden p-2"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-expanded={mobileOpen}
-            aria-label="Toggle navigation menu"
-          >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          {/* Mobile: theme toggle + menu button */}
+          <div className="lg:hidden flex items-center gap-2">
+            <button
+              onClick={toggleTheme}
+              className="p-2 border border-[var(--hair)] hover:bg-sand transition-colors"
+              aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+            >
+              {theme === "light" ? <Moon size={18} className="text-muted-custom" /> : <Sun size={18} className="text-ink" />}
+            </button>
+            <button
+              className="p-2"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-expanded={mobileOpen}
+              aria-label="Toggle navigation menu"
+            >
+              {mobileOpen ? <X size={24} className="text-ink" /> : <Menu size={24} className="text-ink" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile menu */}

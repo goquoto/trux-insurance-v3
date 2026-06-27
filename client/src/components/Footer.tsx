@@ -1,6 +1,9 @@
 import { Link } from "wouter";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function Footer() {
+  const { theme } = useTheme();
+
   return (
     <footer className="bg-paper border-t border-[var(--hair)]">
       <div className="container section">
@@ -9,7 +12,7 @@ export default function Footer() {
           <div>
             <div className="mb-4">
               <img
-                src="/manus-storage/trux-logo-dark_9f1c7375.png"
+                src={theme === "dark" ? "/manus-storage/trux-logo-white_4e37a255.png" : "/manus-storage/trux-logo-dark_9f1c7375.png"}
                 alt="Trux Insurance Services"
                 className="h-[32px] w-auto"
               />
