@@ -17,7 +17,7 @@ export default function Home() {
                 Every mile covered — <em className="font-serif italic">by people who only do trucking.</em>
               </h1>
               <p className="text-[17px] leading-relaxed mb-8 max-w-lg">
-                Trux Insurance Services places commercial trucking and fleet coverage in all 50 states — auto liability, cargo, physical damage, trailer interchange and more. We market your account once, to the carriers that fit your risk, and stand behind it at claim time and renewal.
+                Trux Insurance Services places commercial trucking and fleet coverage across 21 states — auto liability, cargo, physical damage, trailer interchange and more. We market your account once, to the carriers that fit your risk, and stand behind it at claim time and renewal.
               </p>
               <div className="flex flex-wrap gap-4 mb-8">
                 <a href="https://truxins.com/trucking-insurance-quote/" className="btn-solid">
@@ -168,6 +168,48 @@ export default function Home() {
             <div className="text-center">
               <span className="font-serif text-[32px] font-medium text-ink">A-</span>
               <p className="font-sans text-[12px] text-taupe uppercase tracking-wider mt-1">Excellent</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr className="hairline" />
+
+      {/* Licensed States Map */}
+      <section className="section bg-paper">
+        <div className="container">
+          <span className="eyebrow">Where We Operate</span>
+          <div className="tick mt-4"></div>
+          <h2 className="mt-4 mb-4">Licensed in 21 states — and growing.</h2>
+          <p className="font-sans text-[16px] text-muted-custom max-w-2xl mb-8">
+            Trux Insurance Services is licensed to place commercial trucking coverage in the following states. If your authority operates in any of these states, we can help.
+          </p>
+          <div className="flex flex-col lg:flex-row gap-10 items-start">
+            <div className="flex-1">
+              <img
+                src="/manus-storage/us-state-map-licensed_15432f1c.png"
+                alt="US map showing 21 states where Trux Insurance Services is licensed, highlighted in purple"
+                className="w-full h-auto"
+              />
+            </div>
+            <div className="lg:w-[320px]">
+              <h3 className="text-[18px] mb-4">States licensed</h3>
+              <div className="grid grid-cols-2 gap-x-6 gap-y-2">
+                {[
+                  "Arizona", "Colorado", "Florida", "Georgia", "Illinois",
+                  "Indiana", "Iowa", "Kentucky", "Michigan", "Minnesota",
+                  "Mississippi", "Missouri", "Nevada", "North Carolina", "Ohio",
+                  "Pennsylvania", "South Carolina", "Tennessee", "Texas", "Virginia",
+                  "Wisconsin"
+                ].map((state) => (
+                  <span key={state} className="font-sans text-[14px] text-muted-custom border-b border-[var(--hair)] pb-1.5 flex items-center gap-1.5">
+                    <span className="text-purple text-[10px]">&#9632;</span> {state}
+                  </span>
+                ))}
+              </div>
+              <p className="font-sans text-[13px] text-taupe mt-6 italic">
+                Expanding to additional states — contact us if yours isn't listed.
+              </p>
             </div>
           </div>
         </div>

@@ -30,3 +30,6 @@
 - [x] Remove or shrink the sand-colored padding/borders around all images site-wide
 - [x] Add Freight Broker Bonds coverage to Coverages index and detail page
 - [x] Add Personal Lines (Coming Soon) coverage to Coverages index and detail page
+- [x] Generate color-pencil style US state map with 21 licensed states highlighted in purple
+- [x] Update "all 50 states" language across the site to reflect actual licensed states
+- [x] Add the state map to the homepage and/or About page

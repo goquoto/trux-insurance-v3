@@ -11,7 +11,7 @@ export default function About() {
           <div className="tick mt-4"></div>
           <h1 className="mt-4 mb-4">The only thing we do is trucking insurance.</h1>
           <p className="lead max-w-2xl">
-            Trux Insurance Services places commercial trucking and fleet coverage in all 50 states. We've built our agency around one industry, one set of markets, and one promise: stand behind the program at claim time.
+            Trux Insurance Services places commercial trucking and fleet coverage across 21 states. We've built our agency around one industry, one set of markets, and one promise: stand behind the program at claim time.
           </p>
         </div>
       </section>
