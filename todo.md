@@ -1,0 +1,17 @@
+# Project TODO
+
+- [x] Design system: CSS tokens (ink, head, taupe, muted, sand, paper, hair, tick, warn, purple accent)
+- [x] Typography: Google Fonts (Lora + Poppins) with correct weights and scale
+- [x] Global styles: warm paper backgrounds, hairline rules, tick accents, square geometry
+- [x] Header component: sticky nav with Trux logo, nav links, phone CTA, mobile hamburger
+- [x] Footer component: address, phones, Get Insurance links, For Clients links, fraud disclaimer
+- [x] Home page: hero with color-pencil truck, headline, dual CTAs, coverage highlights, partners, client center
+- [x] Coverages index page: card grid for all coverage types with sketch illustrations
+- [x] Coverage detail template: eyebrow/heading/body layout, pull-quote band, related coverages sidebar
+- [x] About / Why Trux page: mission, team values, color-pencil truck history illustration
+- [x] Service & Claims page: client center links (Request Certificate, Report a Claim, Policy Service, MVR Request, Make a Payment)
+- [x] Get a Quote page: fast-quote form (business name, contact info, DOT#, state selector) + full application link
+- [x] Contact page: office address, phone, hours, contact form
+- [x] Responsive design: mobile-first, breakpoints at 900px and 560px
+- [x] Routing: all pages wired with wouter
+- [x] Vitest specs for key components
