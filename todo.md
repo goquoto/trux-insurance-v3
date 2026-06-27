@@ -94,3 +94,6 @@
 - [x] Descriptive alt text on all images
 - [x] Keyboard-navigable menus and forms
 - [x] ARIA labels where needed
+
+## Navigation Consolidation
+- [x] Combine Coverages and Who We Insure under a single "Insurance" dropdown tab in the header nav
