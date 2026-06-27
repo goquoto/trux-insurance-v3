@@ -309,7 +309,7 @@ const coverageData: Record<string, CoverageData> = {
   "freight-broker-bonds": {
     title: "Freight Broker Bonds",
     eyebrow: "Surety Bonds",
-    image: "/manus-storage/coverage-freight-broker_0c3c67ae.png",
+    image: "/manus-storage/coverage-freight-broker_a28e33e2.png",
     subtitle: "BMC-84 surety bonds and trust fund agreements required by the FMCSA for licensed freight brokers and freight forwarders.",
     description: [
       "Every licensed freight broker and freight forwarder in the United States must maintain a BMC-84 surety bond or BMC-85 trust fund agreement in the amount of $75,000. This financial instrument guarantees that shippers and carriers will be paid for services rendered, even if the broker defaults on its obligations.",
@@ -338,7 +338,7 @@ const coverageData: Record<string, CoverageData> = {
   "personal-lines": {
     title: "Personal Lines",
     eyebrow: "Coming Soon",
-    image: "/manus-storage/coverage-personal-lines_7a6117e5.png",
+    image: "/manus-storage/coverage-personal-lines_c1c25da6.png",
     subtitle: "Home, auto, umbrella, and recreational vehicle coverage for you and your family — coming soon to Trux Insurance Services.",
     description: [
       "We know that trucking is more than a business — it's a lifestyle. That's why Trux is expanding into personal lines coverage to serve the families behind the fleets. Soon you'll be able to bundle your personal insurance with your commercial program under one agency relationship.",

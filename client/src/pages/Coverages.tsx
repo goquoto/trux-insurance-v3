@@ -66,13 +66,13 @@ const coverages: { slug: string; title: string; desc: string; image: string; com
     slug: "freight-broker-bonds",
     title: "Freight Broker Bonds",
     desc: "BMC-84 surety bonds and trust fund agreements required by the FMCSA for licensed freight brokers and freight forwarders.",
-    image: "/manus-storage/coverage-freight-broker_0c3c67ae.png",
+    image: "/manus-storage/coverage-freight-broker_a28e33e2.png",
   },
   {
     slug: "personal-lines",
     title: "Personal Lines",
     desc: "Home, auto, umbrella, and recreational vehicle coverage for you and your family — coming soon to Trux.",
-    image: "/manus-storage/coverage-personal-lines_7a6117e5.png",
+    image: "/manus-storage/coverage-personal-lines_c1c25da6.png",
     comingSoon: true,
   },
 ];

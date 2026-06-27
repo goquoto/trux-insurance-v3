@@ -33,3 +33,5 @@
 - [x] Generate color-pencil style US state map with 21 licensed states highlighted in purple
 - [x] Update "all 50 states" language across the site to reflect actual licensed states
 - [x] Add the state map to the homepage and/or About page
+- [x] Fix missing images on Freight Broker Bonds and Personal Lines coverage cards
+- [x] Move dark/light theme toggle icon to the end of the header (after Get a Quote button)

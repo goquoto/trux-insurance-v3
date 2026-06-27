@@ -67,9 +67,16 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Right side: theme toggle + phone + CTA */}
+          {/* Right side: phone + CTA + theme toggle */}
           <div className="hidden lg:flex items-center gap-4">
-            {/* Theme toggle */}
+            <a href="tel:3312401101" className="font-sans text-[15px] font-medium text-ink no-underline flex items-center gap-1.5">
+              <Phone size={15} className="text-purple" />
+              (331) 240-1101
+            </a>
+            <Link href="/quote" className="btn-solid">
+              Get a Quote
+            </Link>
+            {/* Theme toggle - at the end */}
             <button
               onClick={toggleTheme}
               className="p-2 rounded-none border border-[var(--hair)] hover:bg-sand transition-colors"
@@ -78,24 +85,10 @@ export default function Header() {
             >
               {theme === "light" ? <Moon size={16} className="text-muted-custom" /> : <Sun size={16} className="text-ink" />}
             </button>
-            <a href="tel:3312401101" className="font-sans text-[15px] font-medium text-ink no-underline flex items-center gap-1.5">
-              <Phone size={15} className="text-purple" />
-              (331) 240-1101
-            </a>
-            <Link href="/quote" className="btn-solid">
-              Get a Quote
-            </Link>
           </div>
 
-          {/* Mobile: theme toggle + menu button */}
+          {/* Mobile: menu button + theme toggle at the end */}
           <div className="lg:hidden flex items-center gap-2">
-            <button
-              onClick={toggleTheme}
-              className="p-2 border border-[var(--hair)] hover:bg-sand transition-colors"
-              aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
-            >
-              {theme === "light" ? <Moon size={18} className="text-muted-custom" /> : <Sun size={18} className="text-ink" />}
-            </button>
             <button
               className="p-2"
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -103,6 +96,13 @@ export default function Header() {
               aria-label="Toggle navigation menu"
             >
               {mobileOpen ? <X size={24} className="text-ink" /> : <Menu size={24} className="text-ink" />}
+            </button>
+            <button
+              onClick={toggleTheme}
+              className="p-2 border border-[var(--hair)] hover:bg-sand transition-colors"
+              aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+            >
+              {theme === "light" ? <Moon size={18} className="text-muted-custom" /> : <Sun size={18} className="text-ink" />}
             </button>
           </div>
         </div>
