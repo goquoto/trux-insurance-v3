@@ -351,11 +351,11 @@ export default function CoverageDetail() {
               <h1 className="mt-4 mb-4">{coverage.title}</h1>
               <p className="lead max-w-2xl">{coverage.subtitle}</p>
             </div>
-            <div className="bg-sand p-6 flex items-center justify-center">
+            <div className="flex items-center justify-center">
               <img
                 src={coverage.image}
                 alt={`Color pencil sketch illustration for ${coverage.title}`}
-                className="w-full max-h-[280px] object-contain"
+                className="w-full max-h-[300px] object-contain"
               />
             </div>
           </div>

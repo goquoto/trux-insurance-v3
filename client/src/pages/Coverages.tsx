@@ -91,11 +91,11 @@ export default function Coverages() {
                 href={`/coverages/${cov.slug}`}
                 className="group block border border-[var(--hair)] hover:border-[var(--purple)] transition-colors no-underline"
               >
-                <div className="bg-sand p-4 h-[200px] flex items-center justify-center overflow-hidden">
+                <div className="h-[200px] flex items-center justify-center overflow-hidden">
                   <img
                     src={cov.image}
                     alt={`Color pencil sketch illustration for ${cov.title}`}
-                    className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
                   />
                 </div>
                 <div className="p-6">

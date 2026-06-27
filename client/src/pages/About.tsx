@@ -36,11 +36,11 @@ export default function About() {
                 We are proud to represent a wide range of insurance companies that have sound financial rankings with A.M. Best, Standard &amp; Poor's, and other top-ranking services. These companies have made solid pledges to the motor carrier industry.
               </p>
             </div>
-            <div className="bg-sand p-8 flex items-center justify-center">
+            <div className="flex items-center justify-center">
               <img
                 src="/manus-storage/about-history_e281c740.png"
                 alt="Color pencil sketch of a vintage delivery truck representing the history of trucking insurance"
-                className="w-full h-auto max-w-[480px]"
+                className="w-full h-auto max-w-[520px]"
               />
             </div>
           </div>

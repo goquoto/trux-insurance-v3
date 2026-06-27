@@ -39,7 +39,7 @@ export default function Home() {
             </div>
 
             {/* Right: Truck illustration */}
-            <div className="bg-sand p-8 flex items-center justify-center">
+            <div className="flex items-center justify-center">
               <img
                 src="/manus-storage/hero-truck-color_26cb969a.png"
                 alt="Color pencil sketch of a classic Peterbilt semi-truck with purple accents"
