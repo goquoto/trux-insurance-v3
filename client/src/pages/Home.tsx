@@ -187,7 +187,7 @@ export default function Home() {
           <div className="flex flex-col lg:flex-row gap-10 items-start">
             <div className="flex-1">
               <img
-                src="/manus-storage/us-state-map-abbreviations_6492fe76.png"
+                src="/manus-storage/us-state-map-abbreviations_0ad32b5b.png"
                 alt="US map showing 21 states where Trux Insurance Services is licensed, highlighted in purple"
                 className="w-full h-auto"
               />
