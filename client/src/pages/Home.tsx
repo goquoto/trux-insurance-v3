@@ -1,10 +1,15 @@
 import { Link } from "wouter";
 import Layout from "@/components/Layout";
+import SEO from "@/components/SEO";
 import { Shield, FileText, AlertTriangle, CreditCard, Award } from "lucide-react";
-
 export default function Home() {
   return (
     <Layout>
+      <SEO
+        title="Commercial Trucking Insurance"
+        description="Trux Insurance Services — commercial trucking insurance specialists licensed in 21 states. Auto liability, cargo, physical damage, and more for owner-operators and fleets."
+        canonical="/"
+      />
       {/* Hero Section */}
       <section className="section bg-paper">
         <div className="container">

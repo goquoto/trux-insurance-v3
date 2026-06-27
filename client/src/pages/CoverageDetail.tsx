@@ -1,5 +1,8 @@
 import { Link, useParams } from "wouter";
 import Layout from "@/components/Layout";
+import SEO from "@/components/SEO";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import FAQSection from "@/components/FAQSection";
 
 interface CoverageData {
   title: string;
@@ -11,6 +14,7 @@ interface CoverageData {
   specs: { label: string; value: string }[];
   endorsements: { included: string[]; excluded: string[] };
   related: { slug: string; title: string }[];
+  faq?: { question: string; answer: string }[];
 }
 
 const coverageData: Record<string, CoverageData> = {
@@ -44,6 +48,12 @@ const coverageData: Record<string, CoverageData> = {
       { slug: "trailer-interchange", title: "Trailer Interchange" },
       { slug: "excess-umbrella", title: "Excess / Umbrella" },
     ],
+    faq: [
+      { question: "What does commercial auto liability cover?", answer: "It covers bodily injury and property damage to third parties caused by your commercial vehicle. This includes medical expenses, legal defense costs, and settlements when your operation is found at fault in an accident." },
+      { question: "What limits do I need for my authority?", answer: "Most for-hire motor carriers need a minimum of $750,000 CSL (Combined Single Limit) per FMCSA requirements. However, many brokers and shippers require $1,000,000. Hazmat carriers typically need $5,000,000." },
+      { question: "What is an MCS-90 endorsement?", answer: "The MCS-90 is a federal endorsement required on all for-hire motor carrier policies. It guarantees the public will be compensated for bodily injury or property damage, even if the policy would otherwise not cover the loss." },
+      { question: "How is my premium calculated?", answer: "Premiums are based on factors including your authority age, driving record (MVR), number of units, radius of operation, commodities hauled, and claims history. New authorities typically pay more until they establish a clean track record." },
+    ],
   },
   "physical-damage": {
     title: "Physical Damage",
@@ -72,6 +82,11 @@ const coverageData: Record<string, CoverageData> = {
       { slug: "auto-liability", title: "Commercial Auto Liability" },
       { slug: "cargo", title: "Motor Truck Cargo" },
       { slug: "trailer-interchange", title: "Trailer Interchange" },
+    ],
+    faq: [
+      { question: "What's the difference between comprehensive and collision?", answer: "Collision covers damage from hitting another vehicle or object. Comprehensive covers everything else — theft, fire, vandalism, weather, and animal strikes. Most lenders require both if you're financing equipment." },
+      { question: "Do I need physical damage on older trucks?", answer: "It depends on the truck's value and your financial ability to replace it. If losing a truck would shut down your operation, PD coverage is worth carrying regardless of age. We can help you determine the break-even point." },
+      { question: "How are PD premiums calculated?", answer: "Premiums are based on the stated value of your equipment, deductible chosen, driver experience, garaging location, and claims history. Higher deductibles significantly reduce premiums for established operators." },
     ],
   },
   "cargo": {
@@ -102,6 +117,11 @@ const coverageData: Record<string, CoverageData> = {
       { slug: "physical-damage", title: "Physical Damage" },
       { slug: "pollution-liability", title: "Pollution Liability" },
     ],
+    faq: [
+      { question: "What commodities does cargo insurance cover?", answer: "Standard cargo policies cover general commodities like dry goods, building materials, and consumer products. Specialized endorsements are needed for refrigerated goods, hazmat, household goods, electronics, and high-value freight." },
+      { question: "How much cargo coverage do I need?", answer: "Most brokers require $100,000 minimum. Many shippers require $250,000 or more for high-value freight. Your limit should match the maximum value of any single load you haul, plus consider earned freight charges." },
+      { question: "What's not covered by cargo insurance?", answer: "Standard exclusions include mysterious disappearance, inherent vice (natural spoilage), shipper-packed containers, and losses due to improper loading by the shipper. Many exclusions can be bought back with endorsements." },
+    ],
   },
   "general-liability": {
     title: "General Liability",
@@ -130,6 +150,11 @@ const coverageData: Record<string, CoverageData> = {
       { slug: "auto-liability", title: "Commercial Auto Liability" },
       { slug: "excess-umbrella", title: "Excess / Umbrella" },
       { slug: "workers-compensation", title: "Workers' Compensation" },
+    ],
+    faq: [
+      { question: "Do trucking companies need general liability?", answer: "Yes. GL covers premises liability (slip-and-fall at your yard), completed operations, and personal/advertising injury. It's separate from auto liability and required by many contracts and lease agreements." },
+      { question: "What's the difference between GL and auto liability?", answer: "Auto liability covers incidents involving your vehicles on the road. GL covers everything else — injuries at your terminal, damage during loading/unloading operations, and advertising claims. Most carriers need both." },
+      { question: "How much GL coverage do I need?", answer: "Standard limits are $1M per occurrence / $2M aggregate. Some contracts require higher limits, which can be achieved with an umbrella policy rather than increasing the base GL limit." },
     ],
   },
   "non-trucking": {
@@ -160,6 +185,11 @@ const coverageData: Record<string, CoverageData> = {
       { slug: "physical-damage", title: "Physical Damage" },
       { slug: "occupational-accident", title: "Occupational Accident" },
     ],
+    faq: [
+      { question: "What is non-trucking liability insurance?", answer: "NTL (also called bobtail insurance) covers owner-operators when their truck is not under dispatch from a motor carrier. It fills the gap between the carrier's insurance and personal use of the vehicle." },
+      { question: "When does NTL coverage apply?", answer: "It applies when you're driving your truck for non-business purposes — heading home after a delivery, running personal errands, or deadheading without a load assignment. It does NOT apply while under dispatch." },
+      { question: "Is bobtail the same as non-trucking liability?", answer: "They're often used interchangeably, but technically bobtail refers specifically to driving without a trailer. NTL is broader — it covers any non-dispatch use of the vehicle, whether bobtailing or pulling an empty trailer." },
+    ],
   },
   "trailer-interchange": {
     title: "Trailer Interchange",
@@ -188,6 +218,11 @@ const coverageData: Record<string, CoverageData> = {
       { slug: "auto-liability", title: "Commercial Auto Liability" },
       { slug: "physical-damage", title: "Physical Damage" },
       { slug: "cargo", title: "Motor Truck Cargo" },
+    ],
+    faq: [
+      { question: "What is trailer interchange insurance?", answer: "It covers physical damage to trailers you pull under a written trailer interchange agreement with another party (typically a rail yard or shipper). Without it, you're personally liable for damage to trailers you don't own." },
+      { question: "Do I need this if I only pull my own trailers?", answer: "No. Trailer interchange is specifically for trailers pulled under an interchange agreement. If you only pull your own trailers, standard physical damage coverage is sufficient." },
+      { question: "What does a trailer interchange agreement require?", answer: "The agreement typically requires you to carry physical damage coverage on the interchanged trailer, return it in the same condition, and report any damage immediately. Your TI policy satisfies the insurance requirement." },
     ],
   },
   "occupational-accident": {
@@ -218,6 +253,11 @@ const coverageData: Record<string, CoverageData> = {
       { slug: "workers-compensation", title: "Workers' Compensation" },
       { slug: "physical-damage", title: "Physical Damage" },
     ],
+    faq: [
+      { question: "What's the difference between OA and workers' comp?", answer: "Workers' comp is for employees. OA is for independent contractors and owner-operators who aren't eligible for workers' comp. OA provides similar benefits (medical, disability, death) without creating an employment relationship." },
+      { question: "Is occupational accident required?", answer: "It's not required by law, but most motor carriers require leased owner-operators to carry OA as a condition of their lease agreement. It protects both the driver and the carrier from catastrophic injury costs." },
+      { question: "What benefits does OA provide?", answer: "Typical OA policies include accident medical expense ($500K-$1M), temporary total disability (weekly benefit), permanent disability, and accidental death & dismemberment. Many also include passenger coverage." },
+    ],
   },
   "workers-compensation": {
     title: "Workers' Compensation",
@@ -246,6 +286,11 @@ const coverageData: Record<string, CoverageData> = {
       { slug: "general-liability", title: "General Liability" },
       { slug: "occupational-accident", title: "Occupational Accident" },
       { slug: "excess-umbrella", title: "Excess / Umbrella" },
+    ],
+    faq: [
+      { question: "Do I need workers' comp if all my drivers are independent contractors?", answer: "If they're truly independent contractors (1099), you don't need workers' comp for them — but you should require them to carry Occupational Accident coverage. If you have ANY W-2 employees (dispatchers, mechanics, office staff), you need WC." },
+      { question: "What is an experience modification factor?", answer: "Your 'mod' is a multiplier based on your claims history vs. industry average. A mod below 1.0 means fewer claims than average (lower premium). Above 1.0 means more claims (higher premium). It takes 3 years of data to calculate." },
+      { question: "How can I reduce my workers' comp costs?", answer: "Implement a safety program, establish a return-to-work program for injured employees, report claims immediately, and manage claims proactively. Over time, these actions lower your experience mod and reduce premiums significantly." },
     ],
   },
   "excess-umbrella": {
@@ -276,6 +321,11 @@ const coverageData: Record<string, CoverageData> = {
       { slug: "general-liability", title: "General Liability" },
       { slug: "workers-compensation", title: "Workers' Compensation" },
     ],
+    faq: [
+      { question: "What is a nuclear verdict and why should I worry?", answer: "Nuclear verdicts are jury awards exceeding $10M in trucking accident cases. They've become increasingly common as plaintiff attorneys use 'reptile theory' tactics. Adequate excess limits ($5M-$10M+) are your only protection against financial ruin." },
+      { question: "How much excess coverage do I need?", answer: "It depends on your operation size, commodities hauled, and contractual requirements. Most carriers need at least $2M-$5M. Large fleets or hazmat haulers should consider $10M+. Your broker contracts often dictate minimum requirements." },
+      { question: "What's the difference between excess and umbrella?", answer: "An umbrella provides broader coverage than underlying policies and may cover claims excluded by primary policies. Excess follows the exact terms of the underlying policy. In trucking, both terms are often used interchangeably for additional limits." },
+    ],
   },
   "pollution-liability": {
     title: "Pollution Liability",
@@ -304,6 +354,11 @@ const coverageData: Record<string, CoverageData> = {
       { slug: "auto-liability", title: "Commercial Auto Liability" },
       { slug: "cargo", title: "Motor Truck Cargo" },
       { slug: "general-liability", title: "General Liability" },
+    ],
+    faq: [
+      { question: "Do I need pollution coverage if I don't haul hazmat?", answer: "Potentially yes. Even non-hazmat carriers face pollution exposure from diesel fuel spills, hydraulic fluid leaks, or undisclosed hazardous cargo. Your standard auto policy excludes ALL pollution events regardless of the source." },
+      { question: "What triggers the pollution exclusion on my auto policy?", answer: "Any release of pollutants — including diesel fuel, oil, hydraulic fluid, or cargo contents — into the environment. Even a ruptured fuel tank from a routine accident can trigger the exclusion and leave you uninsured for cleanup costs." },
+      { question: "How much does pollution coverage cost?", answer: "For non-hazmat carriers, basic sudden & accidental coverage is relatively affordable ($1,500-$5,000/year). Hazmat haulers pay more based on commodities, limits, and routes. The cost is minimal compared to potential cleanup liability." },
     ],
   },
   "freight-broker-bonds": {
@@ -334,6 +389,11 @@ const coverageData: Record<string, CoverageData> = {
       { slug: "excess-umbrella", title: "Excess / Umbrella" },
       { slug: "auto-liability", title: "Commercial Auto Liability" },
     ],
+    faq: [
+      { question: "How much does a freight broker bond cost?", answer: "Premium is typically 1-10% of the $75,000 bond amount ($750-$7,500/year), depending on your personal credit score, business financials, and claims history. Strong credit scores qualify for the lowest rates." },
+      { question: "What happens if my bond lapses?", answer: "The FMCSA will revoke your broker authority. You cannot legally operate as a freight broker without an active BMC-84 bond or BMC-85 trust. Reinstatement requires a new bond filing and can take weeks." },
+      { question: "What's the difference between a bond and a trust?", answer: "A BMC-84 bond is purchased from a surety company (annual premium, no capital tied up). A BMC-85 trust requires depositing $75,000 in a trust account (your money is locked up but no annual premium). Most brokers choose the bond." },
+    ],
   },
   "cyber-coverage": {
     title: "Cyber Coverage",
@@ -362,6 +422,11 @@ const coverageData: Record<string, CoverageData> = {
       { slug: "crime-coverage", title: "Crime Coverage" },
       { slug: "general-liability", title: "General Liability" },
       { slug: "excess-umbrella", title: "Excess / Umbrella" },
+    ],
+    faq: [
+      { question: "What cyber risks do trucking companies face?", answer: "Ransomware attacks on dispatch systems, ELD hacking, phishing scams targeting accounting staff, data breaches of customer/shipper information, and social engineering fraud (fake vendor payment requests) are the most common threats." },
+      { question: "Does my general liability cover cyber events?", answer: "No. GL policies have broad technology and data exclusions. Cyber liability is a standalone coverage that specifically addresses data breaches, network security failures, and electronic crime. You need both GL and cyber." },
+      { question: "How much cyber coverage do I need?", answer: "For most mid-size carriers, $1M-$2M is adequate. Consider the cost of business interruption (what does a week of downtime cost?), notification expenses, and regulatory fines. Larger operations with sensitive data should consider $5M+." },
     ],
   },
   "crime-coverage": {
@@ -392,6 +457,11 @@ const coverageData: Record<string, CoverageData> = {
       { slug: "general-liability", title: "General Liability" },
       { slug: "freight-broker-bonds", title: "Freight Broker Bonds" },
     ],
+    faq: [
+      { question: "What's the difference between crime and cyber insurance?", answer: "Crime covers direct financial theft (employee embezzlement, forgery, funds transfer fraud). Cyber covers data breaches, ransomware, and network security failures. There's some overlap in social engineering, but they address different core risks." },
+      { question: "Does crime insurance cover cargo theft?", answer: "No. Cargo theft by third parties is covered by your motor truck cargo policy. Crime insurance covers theft by your own employees and fraud by outside parties targeting your financial accounts — not physical freight." },
+      { question: "How do I know if I need crime coverage?", answer: "If you have employees who handle money, process payments, manage bank accounts, or have access to financial systems, you have crime exposure. The more employees with financial access, the higher your risk and the more important the coverage." },
+    ],
   },
   "contractors": {
     title: "Contractors",
@@ -420,6 +490,11 @@ const coverageData: Record<string, CoverageData> = {
       { slug: "general-liability", title: "General Liability" },
       { slug: "workers-compensation", title: "Workers\u2019 Compensation" },
       { slug: "auto-liability", title: "Commercial Auto Liability" },
+    ],
+    faq: [
+      { question: "When will contractors coverage be available?", answer: "We're actively building carrier relationships and expect to launch the contractors program soon. Contact our office to join the early access list and be notified as soon as coverage becomes available." },
+      { question: "What trades will you cover?", answer: "We plan to serve general contractors, subcontractors, and artisan trades including electrical, plumbing, HVAC, framing, concrete, roofing, and specialty contractors. Our program will be tailored to each trade's unique risk profile." },
+      { question: "Can I bundle contractors with my trucking insurance?", answer: "Absolutely. Many of our trucking clients also have construction operations. Bundling both programs under one agency gives you coordinated coverage, streamlined billing, and a single point of contact for all your insurance needs." },
     ],
   },
   "personal-lines": {
@@ -450,6 +525,11 @@ const coverageData: Record<string, CoverageData> = {
       { slug: "excess-umbrella", title: "Excess / Umbrella" },
       { slug: "general-liability", title: "General Liability" },
     ],
+    faq: [
+      { question: "When will personal lines be available?", answer: "We're currently building carrier relationships and developing systems to serve personal lines clients. Contact our office to join the early access list and be the first to know when we launch." },
+      { question: "What personal lines will you offer?", answer: "We plan to offer homeowners, renters, personal auto, personal umbrella, and specialty coverage for recreational vehicles, boats, and collector cars — all with the same hands-on service you expect from Trux." },
+      { question: "Can I bundle personal and commercial insurance?", answer: "That's exactly the plan. By consolidating everything under one agency, you'll benefit from streamlined billing, coordinated renewals, and a single point of contact who understands your complete insurance picture." },
+    ],
   },
 };
 
@@ -475,16 +555,15 @@ export default function CoverageDetail() {
 
   return (
     <Layout>
-      {/* Breadcrumb */}
-      <div className="bg-paper-2 border-b border-[var(--hair)]">
-        <div className="container py-3">
-          <nav className="font-sans text-[13px] text-taupe">
-            <Link href="/coverages" className="hover:text-purple no-underline text-taupe">Coverages</Link>
-            <span className="mx-2">/</span>
-            <span className="text-ink">{coverage.title}</span>
-          </nav>
-        </div>
-      </div>
+      <SEO
+        title={`${coverage.title} Insurance`}
+        description={coverage.subtitle}
+        canonical={`/coverages/${slug}`}
+        faq={coverage.faq}
+        type="service"
+        serviceName={`${coverage.title} Insurance`}
+      />
+      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Coverages", href: "/coverages" }, { label: coverage.title }]} />
 
       {/* Page header with image */}
       <section className="py-16 bg-paper-2">
@@ -567,6 +646,13 @@ export default function CoverageDetail() {
                   </span>
                 ))}
               </div>
+
+              {/* FAQ Section */}
+              {coverage.faq && coverage.faq.length > 0 && (
+                <div className="mt-12">
+                  <FAQSection items={coverage.faq} title="Frequently Asked Questions" />
+                </div>
+              )}
             </div>
 
             {/* Sidebar */}

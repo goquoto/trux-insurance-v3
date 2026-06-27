@@ -1,9 +1,17 @@
 import { Link } from "wouter";
 import Layout from "@/components/Layout";
+import SEO from "@/components/SEO";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function About() {
   return (
     <Layout>
+      <SEO
+        title="About Us"
+        description="Trux Insurance Services — 10+ years specializing exclusively in commercial trucking insurance. Learn about our mission, team, and why we only insure trucking."
+        canonical="/about"
+      />
+      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "About" }]} />
       {/* Page header */}
       <section className="section bg-paper-2">
         <div className="container">

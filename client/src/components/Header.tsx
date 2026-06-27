@@ -5,6 +5,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 
 const navLinks = [
   { label: "Coverages", href: "/coverages" },
+  { label: "Who We Insure", href: "/who-we-insure" },
   { label: "About", href: "/about" },
   { label: "Service & Claims", href: "/service" },
   { label: "Contact", href: "/contact" },

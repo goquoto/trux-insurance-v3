@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Layout from "@/components/Layout";
+import SEO from "@/components/SEO";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { MapPin, Phone, Clock, Mail } from "lucide-react";
 import { toast } from "sonner";
 
@@ -22,6 +24,12 @@ export default function Contact() {
 
   return (
     <Layout>
+      <SEO
+        title="Contact Us"
+        description="Contact Trux Insurance Services in Bloomingdale, IL. Call 331-240-1101 or visit us at 1 Tiffany Pt Suite G2 for commercial trucking insurance quotes and service."
+        canonical="/contact"
+      />
+      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Contact" }]} />
       {/* Page header */}
       <section className="section bg-paper-2">
         <div className="container">

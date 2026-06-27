@@ -39,3 +39,58 @@
 - [x] Add Cyber Coverage to Coverages index and detail page with illustration
 - [x] Add Crime Coverage to Coverages index and detail page with illustration
 - [x] Add Contractors (Coming Soon) to Coverages index and detail page with illustration
+
+## Competitor-Beating Enhancements (from build brief)
+
+### SEO Infrastructure
+- [x] Add unique title tags and meta descriptions to every page
+- [x] Add JSON-LD schema (Organization, LocalBusiness, BreadcrumbList, Service, FAQPage)
+- [x] Add breadcrumb navigation to all inner pages
+- [x] Add self-referencing canonical tags
+- [x] Create robots.txt with proper rules
+- [x] Ensure single H1 per page across entire site
+
+### Who We Insure Hub (NEW - competitor gap)
+- [x] Create Who We Insure index page with operation-type cards
+- [x] Owner-Operator leaf page
+- [x] Small Fleet (2-10 trucks) leaf page
+- [x] Large Fleet (10+ trucks) leaf page
+- [x] Reefer / Refrigerated leaf page
+- [x] Flatbed leaf page
+- [x] Dump Truck leaf page
+- [x] Hazmat leaf page
+- [x] Hot-Shot leaf page
+- [x] Car Hauler leaf page
+- [x] Container / Intermodal leaf page
+- [x] Tow Truck leaf page
+- [x] Agricultural leaf page
+
+### FAQ Sections
+- [x] Add FAQ accordion sections to all coverage detail pages
+- [x] Add FAQ accordion sections to all operation-type pages
+- [x] Implement FAQPage schema on pages with FAQ blocks
+
+### Service Center Expansion
+- [x] Add Renewals section to Service & Claims page
+- [x] Add Request a Policy Change section
+- [x] Improve multi-step quote form with progress indicator
+
+### Cost / Pricing Pages (NEW - competitor gap)
+- [x] Create Cost hub page (/cost)
+- [x] Add pricing context and cost factors to relevant pages
+
+### State Pages (NEW - competitor gap)
+- [x] Create state page template
+- [x] Build state pages for top licensed states (IL, TX, FL, GA, OH)
+
+### Conversion & UX Improvements
+- [x] Add sticky mobile call/quote bar
+- [x] Add trust badges (years in business, carrier partners, trucking-focused)
+- [x] Add carrier/partner logos section
+- [x] Ensure every content page has a quote CTA
+
+### Accessibility
+- [x] Ensure proper heading hierarchy (single H1 per page)
+- [x] Descriptive alt text on all images
+- [x] Keyboard-navigable menus and forms
+- [x] ARIA labels where needed

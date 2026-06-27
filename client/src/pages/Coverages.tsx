@@ -1,5 +1,7 @@
 import { Link } from "wouter";
 import Layout from "@/components/Layout";
+import SEO from "@/components/SEO";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 const coverages: { slug: string; title: string; desc: string; image: string; comingSoon?: boolean }[] = [
   {
@@ -99,6 +101,12 @@ const coverages: { slug: string; title: string; desc: string; image: string; com
 export default function Coverages() {
   return (
     <Layout>
+      <SEO
+        title="Commercial Trucking Insurance Coverages"
+        description="Explore all commercial trucking insurance coverages from Trux: auto liability, cargo, physical damage, general liability, workers comp, excess/umbrella, and more."
+        canonical="/coverages"
+      />
+      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Coverages" }]} />
       {/* Page header */}
       <section className="section bg-paper-2">
         <div className="container">

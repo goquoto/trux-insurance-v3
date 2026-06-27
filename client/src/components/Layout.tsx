@@ -1,5 +1,6 @@
 import Header from "./Header";
 import Footer from "./Footer";
+import MobileCTABar from "./MobileCTABar";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -13,6 +14,9 @@ export default function Layout({ children }: LayoutProps) {
         {children}
       </main>
       <Footer />
+      <MobileCTABar />
+      {/* Spacer for mobile CTA bar */}
+      <div className="h-[52px] lg:hidden" />
     </div>
   );
 }

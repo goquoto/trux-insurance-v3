@@ -1,6 +1,8 @@
-import { Link } from "wouter";
 import Layout from "@/components/Layout";
-import { FileText, AlertTriangle, Settings, Car, CreditCard } from "lucide-react";
+import SEO from "@/components/SEO";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import { FileText, AlertTriangle, Settings, Car, CreditCard, RefreshCw, Edit } from "lucide-react";
+import { Link } from "wouter";
 
 const services = [
   {
@@ -38,11 +40,34 @@ const services = [
     icon: CreditCard,
     contact: "(331) 240-1101",
   },
+  {
+    title: "Renewals",
+    desc: "Your renewal process starts 60 days before expiration. We shop your account across our carrier panel to find the best rate and coverage combination — no action needed from you until we present options.",
+    href: "mailto:renewals@truxins.com",
+    icon: RefreshCw,
+    contact: "renewals@truxins.com",
+  },
+  {
+    title: "Request a Policy Change",
+    desc: "Need to add a truck, swap a trailer, update your radius, or change a driver? Submit your change request and we'll process it within one business day.",
+    href: "mailto:service@truxins.com",
+    icon: Edit,
+    contact: "service@truxins.com",
+  },
 ];
 
 export default function Service() {
   return (
     <Layout>
+      <SEO
+        title="Service & Claims"
+        description="Request certificates, report claims, make payments, request policy changes, and manage renewals. Trux Insurance client service center — Mon–Fri 8–5 CT."
+        canonical="/service"
+        type="service"
+        serviceName="Trux Insurance Client Service Center"
+      />
+      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Service & Claims" }]} />
+
       {/* Page header */}
       <section className="section bg-paper-2">
         <div className="container">
@@ -84,16 +109,81 @@ export default function Service() {
 
       <hr className="hairline" />
 
-      {/* Client Center CTA */}
+      {/* Renewals info band */}
       <section className="section sand-band">
+        <div className="container">
+          <span className="eyebrow">Renewal Process</span>
+          <div className="tick mt-4"></div>
+          <h2 className="mt-4 mb-6">How renewals work at Trux</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <span className="font-serif text-[32px] text-purple font-medium">01</span>
+              <h3 className="text-[16px] font-sans font-medium mt-2 mb-2">60 Days Out</h3>
+              <p className="font-sans text-[14px] text-muted-custom leading-relaxed">
+                We begin shopping your account across our carrier panel — comparing rates, coverage terms, and endorsement options.
+              </p>
+            </div>
+            <div>
+              <span className="font-serif text-[32px] text-purple font-medium">02</span>
+              <h3 className="text-[16px] font-sans font-medium mt-2 mb-2">30 Days Out</h3>
+              <p className="font-sans text-[14px] text-muted-custom leading-relaxed">
+                We present your renewal options with a clear comparison of premium, deductibles, and coverage differences so you can make an informed decision.
+              </p>
+            </div>
+            <div>
+              <span className="font-serif text-[32px] text-purple font-medium">03</span>
+              <h3 className="text-[16px] font-sans font-medium mt-2 mb-2">Bound & Filed</h3>
+              <p className="font-sans text-[14px] text-muted-custom leading-relaxed">
+                Once you approve, we bind coverage, file your MCS-90 and BMC-91, and issue certificates — all before your expiration date.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr className="hairline" />
+
+      {/* Policy Changes section */}
+      <section className="section bg-paper">
+        <div className="container max-w-3xl">
+          <span className="eyebrow">Policy Changes</span>
+          <div className="tick mt-4"></div>
+          <h2 className="mt-4 mb-6">Common changes we handle daily</h2>
+          <div className="space-y-4">
+            {[
+              { change: "Add or remove a power unit", time: "Same day" },
+              { change: "Add or remove a trailer", time: "Same day" },
+              { change: "Add or remove a driver", time: "1 business day" },
+              { change: "Update your radius of operation", time: "1 business day" },
+              { change: "Change your mailing or garaging address", time: "Same day" },
+              { change: "Add a lender/lienholder", time: "Same day" },
+              { change: "Increase or decrease limits", time: "1–2 business days" },
+              { change: "Add an additional insured", time: "Same day" },
+            ].map((item) => (
+              <div key={item.change} className="flex justify-between items-center border-b border-[var(--hair)] pb-3">
+                <span className="font-sans text-[15px] text-ink">{item.change}</span>
+                <span className="font-sans text-[13px] text-purple font-medium">{item.time}</span>
+              </div>
+            ))}
+          </div>
+          <p className="font-sans text-[14px] text-muted-custom mt-6">
+            Email <a href="mailto:service@truxins.com" className="text-purple">service@truxins.com</a> or call <a href="tel:3312401101" className="text-purple">(331) 240-1101</a> to request any change. We process most requests same day.
+          </p>
+        </div>
+      </section>
+
+      <hr className="hairline" />
+
+      {/* Client Center CTA */}
+      <section className="section bg-purple text-white">
         <div className="container text-center">
-          <span className="eyebrow">Client Center</span>
-          <div className="tick mt-4 mx-auto"></div>
-          <h2 className="mt-4 mb-6">Manage your policies online.</h2>
-          <p className="font-sans text-[16px] text-muted-custom max-w-xl mx-auto mb-8">
+          <span className="eyebrow !text-white/70">Client Center</span>
+          <div className="tick mt-4 mx-auto !bg-white/50"></div>
+          <h2 className="mt-4 mb-6 !text-white">Manage your policies online.</h2>
+          <p className="font-sans text-[16px] text-white/80 max-w-xl mx-auto mb-8">
             Log in to view your policies, download documents, request changes, and more. Available 24/7.
           </p>
-          <a href="https://truxins.com/client/" className="btn-solid">
+          <a href="https://truxins.com/client/" className="inline-block bg-white text-purple font-sans font-medium text-[14px] px-8 py-3 tracking-wider uppercase hover:bg-white/90 transition-colors">
             Visit Client Center
           </a>
         </div>
@@ -123,6 +213,10 @@ export default function Service() {
               <h3 className="text-[16px] font-sans font-medium text-ink mb-1">Email</h3>
               <a href="mailto:info@truxins.com" className="font-sans text-[15px] text-purple">info@truxins.com</a>
             </div>
+          </div>
+
+          <div className="mt-12 text-center">
+            <Link href="/quote" className="btn-solid">Get a Quote</Link>
           </div>
         </div>
       </section>
