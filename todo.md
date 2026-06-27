@@ -101,3 +101,11 @@
 ## Hero Video
 - [x] Generate animated video of the color-pencil truck sketch for the homepage hero
 - [x] Replace static hero image with the video (autoplay, muted, loop)
+
+## Blog Section
+- [x] Create blog articles data (10 articles with full content)
+- [x] Build Blog listing page with list/tile view toggle
+- [x] Build individual Blog article page
+- [x] Add Blog to navigation header
+- [x] Add blog route to App.tsx
+- [x] Add SEO to blog pages

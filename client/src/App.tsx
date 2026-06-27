@@ -14,6 +14,8 @@ import Contact from "./pages/Contact";
 import WhoWeInsure from "./pages/WhoWeInsure";
 import WhoWeInsureDetail from "./pages/WhoWeInsureDetail";
 import Cost from "./pages/Cost";
+import Blog from "./pages/Blog";
+import BlogArticle from "./pages/BlogArticle";
 import StatePage from "./pages/StatePage";
 
 function Router() {
@@ -25,6 +27,8 @@ function Router() {
       <Route path={"/who-we-insure"} component={WhoWeInsure} />
       <Route path={"/who-we-insure/:slug"} component={WhoWeInsureDetail} />
       <Route path={"/cost"} component={Cost} />
+      <Route path={"/blog"} component={Blog} />
+      <Route path={"/blog/:slug"} component={BlogArticle} />
       <Route path={"/states/:state"} component={StatePage} />
       <Route path={"/about"} component={About} />
       <Route path={"/service"} component={Service} />
