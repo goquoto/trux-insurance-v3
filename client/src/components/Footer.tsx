@@ -8,13 +8,11 @@ export default function Footer() {
           {/* Brand column */}
           <div>
             <div className="mb-4">
-              <span className="font-serif text-[24px] font-semibold text-ink tracking-tight leading-none">
-                Trux
-              </span>
-              <br />
-              <span className="font-sans text-[9px] uppercase tracking-[0.22em] text-taupe">
-                Insurance Services
-              </span>
+              <img
+                src="/manus-storage/trux-logo-dark_9f1c7375.png"
+                alt="Trux Insurance Services"
+                className="h-[32px] w-auto"
+              />
             </div>
             <address className="not-italic font-sans text-[14px] text-muted-custom leading-relaxed">
               1 Tiffany Pt Suite G2<br />

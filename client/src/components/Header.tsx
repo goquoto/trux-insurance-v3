@@ -40,15 +40,12 @@ export default function Header() {
       <header className="sticky top-0 z-50 bg-paper border-b border-[var(--hair)]" style={{ height: "78px" }}>
         <div className="container h-full flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 no-underline">
-            <div className="flex flex-col">
-              <span className="font-serif text-[28px] font-semibold text-ink tracking-tight leading-none">
-                Trux
-              </span>
-              <span className="font-sans text-[9px] uppercase tracking-[0.22em] text-taupe leading-none mt-0.5">
-                Insurance Services
-              </span>
-            </div>
+          <Link href="/" className="flex items-center no-underline">
+            <img
+              src="/manus-storage/trux-logo-dark_9f1c7375.png"
+              alt="Trux Insurance Services"
+              className="h-[40px] w-auto"
+            />
           </Link>
 
           {/* Desktop nav */}

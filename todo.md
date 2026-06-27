@@ -15,3 +15,7 @@
 - [x] Responsive design: mobile-first, breakpoints at 900px and 560px
 - [x] Routing: all pages wired with wouter
 - [x] Vitest specs for key components
+- [x] Replace text wordmark in Header with actual Trux logo (Asset 2 - dark version for light bg)
+- [x] Replace text wordmark in Footer with actual Trux logo
+- [x] Add white logo variant to dark utility bar area
+- [x] Use SVG checkmark as favicon/brand mark
