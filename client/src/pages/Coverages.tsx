@@ -69,6 +69,25 @@ const coverages: { slug: string; title: string; desc: string; image: string; com
     image: "/manus-storage/coverage-freight-broker_a28e33e2.png",
   },
   {
+    slug: "cyber-coverage",
+    title: "Cyber Coverage",
+    desc: "Protection against data breaches, ransomware attacks, and electronic theft — critical for carriers managing ELDs, dispatch systems, and customer data.",
+    image: "/manus-storage/coverage-cyber_001b3a0b.png",
+  },
+  {
+    slug: "crime-coverage",
+    title: "Crime Coverage",
+    desc: "Employee dishonesty, theft, forgery, and fraud protection — safeguards your business against internal and external criminal acts.",
+    image: "/manus-storage/coverage-crime_8f4d6dff.png",
+  },
+  {
+    slug: "contractors",
+    title: "Contractors",
+    desc: "General liability, builders risk, tools & equipment, and commercial auto coverage tailored for construction contractors — coming soon to Trux.",
+    image: "/manus-storage/coverage-contractors_82070c37.png",
+    comingSoon: true,
+  },
+  {
     slug: "personal-lines",
     title: "Personal Lines",
     desc: "Home, auto, umbrella, and recreational vehicle coverage for you and your family — coming soon to Trux.",

@@ -77,7 +77,7 @@ export default function Home() {
             <div>
               <h3 className="mb-4 text-ink">Workforce &amp; Specialty</h3>
               <ul className="space-y-3">
-                {["Workers' Compensation", "Occupational Accident", "Hired & Non-Owned Auto", "Pollution Liability", "Warehouse / Storage", "Property & Equipment Breakdown", "Cyber Liability", "Personal Lines"].map((item) => (
+                {["Workers' Compensation", "Occupational Accident", "Hired & Non-Owned Auto", "Pollution Liability", "Cyber Liability", "Crime Coverage", "Freight Broker Bonds", "Contractors"].map((item) => (
                   <li key={item} className="font-sans text-[15px] text-muted-custom border-b border-[var(--hair)] pb-2 flex items-start gap-2">
                     <span className="text-purple mt-1">·</span> {item}
                   </li>

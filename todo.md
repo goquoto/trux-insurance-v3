@@ -36,3 +36,6 @@
 - [x] Fix missing images on Freight Broker Bonds and Personal Lines coverage cards
 - [x] Move dark/light theme toggle icon to the end of the header (after Get a Quote button)
 - [x] Regenerate state map with state abbreviations (AZ, CO, FL, etc.) written on each state in pencil style
+- [x] Add Cyber Coverage to Coverages index and detail page with illustration
+- [x] Add Crime Coverage to Coverages index and detail page with illustration
+- [x] Add Contractors (Coming Soon) to Coverages index and detail page with illustration
