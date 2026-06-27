@@ -24,3 +24,6 @@
 - [x] Enable switchable theme in ThemeProvider
 - [x] Ensure all pages respect dark theme colors
 - [x] Use white logo variant in dark mode header/footer
+- [x] Generate unique color-pencil sketch illustrations for each coverage type
+- [x] Add detailed article content to each Coverage Detail page
+- [x] Update Coverages index page with unique images for all cards

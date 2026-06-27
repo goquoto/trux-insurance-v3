@@ -12,6 +12,7 @@ const coverages = [
     slug: "physical-damage",
     title: "Physical Damage",
     desc: "Comprehensive and collision protection for your power units and trailers — agreed value, stated amount, or actual cash value.",
+    image: "/manus-storage/coverage-physical-damage_391231f1.png",
   },
   {
     slug: "cargo",
@@ -23,36 +24,43 @@ const coverages = [
     slug: "general-liability",
     title: "General Liability",
     desc: "Premises and operations coverage for your terminal, yard, and office — slip-and-fall, advertising injury, and products/completed operations.",
+    image: "/manus-storage/coverage-general-liability_201703ff.png",
   },
   {
     slug: "non-trucking",
     title: "Non-Trucking Liability",
     desc: "Also called bobtail or deadhead coverage — protects you when the truck is not under dispatch or load.",
+    image: "/manus-storage/coverage-non-trucking_9bc1fc78.png",
   },
   {
     slug: "trailer-interchange",
     title: "Trailer Interchange",
     desc: "Physical damage coverage for trailers you pull under a trailer interchange agreement — required by most intermodal contracts.",
+    image: "/manus-storage/coverage-trailer-interchange_709da492.png",
   },
   {
     slug: "occupational-accident",
     title: "Occupational Accident",
     desc: "Accident and disability benefits for owner-operators and independent contractors who aren't covered by workers' comp.",
+    image: "/manus-storage/coverage-occupational-accident_d07390f2.png",
   },
   {
     slug: "workers-compensation",
     title: "Workers' Compensation",
     desc: "Statutory coverage for employee injuries on the job — medical, disability, and death benefits as required by state law.",
+    image: "/manus-storage/coverage-workers-comp_88cc6f4a.png",
   },
   {
     slug: "excess-umbrella",
     title: "Excess / Umbrella",
     desc: "Additional limits above your primary auto liability, general liability, and employers liability — often required by shippers and brokers.",
+    image: "/manus-storage/coverage-excess-umbrella_10be31ef.png",
   },
   {
     slug: "pollution-liability",
     title: "Pollution Liability",
     desc: "Coverage for environmental cleanup costs and third-party bodily injury or property damage from a pollution event during transit.",
+    image: "/manus-storage/coverage-pollution-liability_f2d70e4e.png",
   },
 ];
 
@@ -83,20 +91,13 @@ export default function Coverages() {
                 href={`/coverages/${cov.slug}`}
                 className="group block border border-[var(--hair)] hover:border-[var(--purple)] transition-colors no-underline"
               >
-                {cov.image && (
-                  <div className="bg-sand p-4 h-[180px] flex items-center justify-center overflow-hidden">
-                    <img
-                      src={cov.image}
-                      alt={`Color pencil sketch illustration for ${cov.title}`}
-                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
-                    />
-                  </div>
-                )}
-                {!cov.image && (
-                  <div className="bg-sand p-4 h-[180px] flex items-center justify-center">
-                    <span className="font-serif text-[48px] text-[var(--hair)]">✦</span>
-                  </div>
-                )}
+                <div className="bg-sand p-4 h-[200px] flex items-center justify-center overflow-hidden">
+                  <img
+                    src={cov.image}
+                    alt={`Color pencil sketch illustration for ${cov.title}`}
+                    className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                  />
+                </div>
                 <div className="p-6">
                   <h3 className="text-[18px] mb-2 group-hover:text-purple transition-colors">{cov.title}</h3>
                   <p className="font-sans text-[14px] text-muted-custom leading-relaxed">{cov.desc}</p>
