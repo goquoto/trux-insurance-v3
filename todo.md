@@ -35,3 +35,4 @@
 - [x] Add the state map to the homepage and/or About page
 - [x] Fix missing images on Freight Broker Bonds and Personal Lines coverage cards
 - [x] Move dark/light theme toggle icon to the end of the header (after Get a Quote button)
+- [x] Regenerate state map with state abbreviations (AZ, CO, FL, etc.) written on each state in pencil style
