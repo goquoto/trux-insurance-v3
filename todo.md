@@ -97,3 +97,7 @@
 
 ## Navigation Consolidation
 - [x] Combine Coverages and Who We Insure under a single "Insurance" dropdown tab in the header nav
+
+## Hero Video
+- [x] Generate animated video of the color-pencil truck sketch for the homepage hero
+- [x] Replace static hero image with the video (autoplay, muted, loop)

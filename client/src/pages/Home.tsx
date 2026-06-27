@@ -45,10 +45,15 @@ export default function Home() {
 
             {/* Right: Truck illustration */}
             <div className="flex items-center justify-center">
-              <img
-                src="/manus-storage/hero-truck-color_26cb969a.png"
-                alt="Color pencil sketch of a classic Peterbilt semi-truck with purple accents"
-                className="w-full h-auto max-w-[540px]"
+              <video
+                src="/manus-storage/hero-truck-animation-final_b1e281a5.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster="/manus-storage/hero-truck-color_26cb969a.png"
+                aria-label="Animated color pencil sketch of a classic Peterbilt semi-truck with purple accents"
+                className="w-full h-auto max-w-[540px] object-contain bg-transparent"
               />
             </div>
           </div>
