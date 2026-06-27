@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import Layout from "@/components/Layout";
 
-const coverages = [
+const coverages: { slug: string; title: string; desc: string; image: string; comingSoon?: boolean }[] = [
   {
     slug: "auto-liability",
     title: "Commercial Auto Liability",
@@ -62,6 +62,19 @@ const coverages = [
     desc: "Coverage for environmental cleanup costs and third-party bodily injury or property damage from a pollution event during transit.",
     image: "/manus-storage/coverage-pollution-liability_f2d70e4e.png",
   },
+  {
+    slug: "freight-broker-bonds",
+    title: "Freight Broker Bonds",
+    desc: "BMC-84 surety bonds and trust fund agreements required by the FMCSA for licensed freight brokers and freight forwarders.",
+    image: "/manus-storage/coverage-freight-broker_0c3c67ae.png",
+  },
+  {
+    slug: "personal-lines",
+    title: "Personal Lines",
+    desc: "Home, auto, umbrella, and recreational vehicle coverage for you and your family — coming soon to Trux.",
+    image: "/manus-storage/coverage-personal-lines_7a6117e5.png",
+    comingSoon: true,
+  },
 ];
 
 export default function Coverages() {
@@ -89,13 +102,18 @@ export default function Coverages() {
               <Link
                 key={cov.slug}
                 href={`/coverages/${cov.slug}`}
-                className="group block border border-[var(--hair)] hover:border-[var(--purple)] transition-colors no-underline"
+                className={`group block border border-[var(--hair)] hover:border-[var(--purple)] transition-colors no-underline relative ${cov.comingSoon ? 'opacity-90' : ''}`}
               >
+                {cov.comingSoon && (
+                  <div className="absolute top-3 right-3 z-10 bg-[var(--purple)] text-white font-sans text-[11px] font-medium tracking-wider uppercase px-3 py-1">
+                    Coming Soon
+                  </div>
+                )}
                 <div className="h-[200px] flex items-center justify-center overflow-hidden">
                   <img
                     src={cov.image}
                     alt={`Color pencil sketch illustration for ${cov.title}`}
-                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                    className={`w-full h-full object-cover transition-opacity ${cov.comingSoon ? 'opacity-60' : 'opacity-90 group-hover:opacity-100'}`}
                   />
                 </div>
                 <div className="p-6">

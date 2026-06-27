@@ -28,3 +28,5 @@
 - [x] Add detailed article content to each Coverage Detail page
 - [x] Update Coverages index page with unique images for all cards
 - [x] Remove or shrink the sand-colored padding/borders around all images site-wide
+- [x] Add Freight Broker Bonds coverage to Coverages index and detail page
+- [x] Add Personal Lines (Coming Soon) coverage to Coverages index and detail page

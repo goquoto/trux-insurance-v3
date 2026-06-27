@@ -306,6 +306,64 @@ const coverageData: Record<string, CoverageData> = {
       { slug: "general-liability", title: "General Liability" },
     ],
   },
+  "freight-broker-bonds": {
+    title: "Freight Broker Bonds",
+    eyebrow: "Surety Bonds",
+    image: "/manus-storage/coverage-freight-broker_0c3c67ae.png",
+    subtitle: "BMC-84 surety bonds and trust fund agreements required by the FMCSA for licensed freight brokers and freight forwarders.",
+    description: [
+      "Every licensed freight broker and freight forwarder in the United States must maintain a BMC-84 surety bond or BMC-85 trust fund agreement in the amount of $75,000. This financial instrument guarantees that shippers and carriers will be paid for services rendered, even if the broker defaults on its obligations.",
+      "The bond is filed directly with the FMCSA and remains active for the life of your broker authority. If it lapses or is cancelled, your authority is automatically revoked — making it one of the most critical compliance requirements for any brokerage operation.",
+      "At Trux, we place freight broker bonds with surety companies that understand the transportation industry. Our bonds are competitively priced, issued quickly, and backed by carriers with strong financial ratings. We handle the FMCSA filing process and monitor your bond status to ensure continuous compliance.",
+      "Whether you're a new broker applying for authority or an established operation looking for better rates at renewal, we can help you secure the bond you need without tying up capital in a trust fund arrangement.",
+    ],
+    whyItMatters: "Without an active BMC-84 bond or BMC-85 trust, your freight broker authority cannot operate. It's the financial guarantee that shippers and carriers rely on — and the FMCSA enforces it strictly.",
+    specs: [
+      { label: "Bond amount", value: "$75,000" },
+      { label: "Who it's for", value: "Freight brokers & forwarders" },
+      { label: "Filing", value: "BMC-84 with FMCSA" },
+      { label: "Term", value: "Continuous until cancelled" },
+      { label: "Alternative", value: "BMC-85 trust fund" },
+    ],
+    endorsements: {
+      included: ["FMCSA electronic filing", "Continuous bond monitoring", "Renewal reminders", "Quick issuance (24–48 hrs)"],
+      excluded: ["Brokers with prior bond claims", "Authorities under investigation", "Inactive authorities"],
+    },
+    related: [
+      { slug: "general-liability", title: "General Liability" },
+      { slug: "excess-umbrella", title: "Excess / Umbrella" },
+      { slug: "auto-liability", title: "Commercial Auto Liability" },
+    ],
+  },
+  "personal-lines": {
+    title: "Personal Lines",
+    eyebrow: "Coming Soon",
+    image: "/manus-storage/coverage-personal-lines_7a6117e5.png",
+    subtitle: "Home, auto, umbrella, and recreational vehicle coverage for you and your family — coming soon to Trux Insurance Services.",
+    description: [
+      "We know that trucking is more than a business — it's a lifestyle. That's why Trux is expanding into personal lines coverage to serve the families behind the fleets. Soon you'll be able to bundle your personal insurance with your commercial program under one agency relationship.",
+      "Our personal lines offering will include homeowners and renters insurance, personal auto coverage, personal umbrella policies, and specialty coverage for recreational vehicles, boats, and collector cars. All placed with the same A-rated carriers and hands-on service you expect from Trux.",
+      "By consolidating your personal and commercial insurance with one agency, you'll benefit from streamlined billing, coordinated renewals, and a single point of contact who understands your complete insurance picture. No more juggling multiple agents and policies.",
+      "We're currently building relationships with personal lines carriers and developing the systems to serve you. If you'd like to be notified when personal lines coverage becomes available, contact our office and we'll add you to the early access list.",
+    ],
+    whyItMatters: "The people who move freight deserve the same level of expertise and advocacy for their personal insurance. One agency, one relationship, complete coverage — that's the Trux promise, expanding to cover every part of your life.",
+    specs: [
+      { label: "Status", value: "Coming Soon" },
+      { label: "Lines planned", value: "Home · Auto · Umbrella" },
+      { label: "Specialty", value: "RV · Boat · Collector" },
+      { label: "Availability", value: "Notify me" },
+      { label: "Bundling", value: "With commercial program" },
+    ],
+    endorsements: {
+      included: ["Homeowners / Renters", "Personal Auto", "Personal Umbrella", "Recreational Vehicles", "Watercraft"],
+      excluded: ["Not yet available", "Contact us for early access"],
+    },
+    related: [
+      { slug: "auto-liability", title: "Commercial Auto Liability" },
+      { slug: "excess-umbrella", title: "Excess / Umbrella" },
+      { slug: "general-liability", title: "General Liability" },
+    ],
+  },
 };
 
 export default function CoverageDetail() {
