@@ -276,7 +276,7 @@ export default function Home() {
           </div>
 
           <div className="mt-8">
-            <a href="https://truxins.com/client/" className="btn-solid">
+            <a href="/client-center" className="btn-solid">
               Visit Client Center
             </a>
           </div>

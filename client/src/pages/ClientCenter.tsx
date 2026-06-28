@@ -146,7 +146,7 @@ export default function ClientCenter() {
           <div className="mt-8 pt-6 border-t border-[var(--hair)]">
             <p className="font-sans text-[14px] text-muted-custom">
               Need help? Call <a href="tel:3312401101" className="text-purple font-medium">(331) 240-1101</a> or email{" "}
-              <a href="mailto:service@truxins.com" className="text-purple font-medium">service@truxins.com</a> — Mon–Fri 8–5 CT.
+              <a href="mailto:service@truxins.com" className="text-purple font-medium">service@truxins.com</a> — Mon–Fri 9–5 CT.
             </p>
           </div>
         </div>

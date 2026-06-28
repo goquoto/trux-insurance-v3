@@ -446,7 +446,7 @@ export default function Quote() {
                   (331) 240-1101
                 </a>
                 <p className="font-sans text-[13px] text-taupe mt-2">
-                  Mon–Fri 8:00 AM – 5:00 PM CT
+                  Mon–Fri 9:00 AM – 5:00 PM CT
                 </p>
               </div>
 

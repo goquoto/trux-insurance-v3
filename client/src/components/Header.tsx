@@ -75,7 +75,7 @@ export default function Header() {
       <div className="bg-[#1A1A1A] text-white py-2">
         <div className="container flex items-center justify-between">
           <span className="text-[13px] font-sans font-light hidden sm:block">
-            Insuring motor carriers in <strong>21 states</strong> &middot; Mon–Fri 8–5 CT
+            Insuring motor carriers in <strong>21 states</strong> &middot; Mon–Fri 9–5 CT
           </span>
           <div className="flex items-center gap-4 text-[13px] font-sans">
             <a href="tel:3312401101" className="flex items-center gap-1 text-white hover:text-[var(--purple-light)] no-underline">

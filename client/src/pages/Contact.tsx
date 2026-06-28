@@ -96,7 +96,7 @@ export default function Contact() {
                           {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].map((day) => (
                             <tr key={day}>
                               <td className="pr-6 py-0.5">{day}</td>
-                              <td className="py-0.5">8:00 AM – 5:00 PM</td>
+                              <td className="py-0.5">9:00 AM – 5:00 PM</td>
                             </tr>
                           ))}
                           <tr>

@@ -40,7 +40,7 @@ const orgSchema = {
   "openingHoursSpecification": {
     "@type": "OpeningHoursSpecification",
     "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-    "opens": "08:00",
+    "opens": "09:00",
     "closes": "17:00"
   },
   "areaServed": [
@@ -263,7 +263,7 @@ function getPageSEO(path: string): PageSEO | null {
   if (path === "/contact") {
     return {
       title: "Contact Trux Insurance Services",
-      description: "Contact Trux Insurance Services in Bloomingdale, IL. Phone (331) 240-1101, toll-free 1-877-350-8789. Monday–Friday 8am–5pm CT.",
+      description: "Contact Trux Insurance Services in Bloomingdale, IL. Phone (331) 240-1101, toll-free 1-877-350-8789. Monday–Friday 9am–5pm CT.",
       canonical: `${BASE_URL}/contact`,
       h1: "Contact Us",
       schemas: [orgSchema, breadcrumbSchema([{ name: "Home", url: "/" }, { name: "Contact", url: "/contact" }])],

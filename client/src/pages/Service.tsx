@@ -61,7 +61,7 @@ export default function Service() {
     <Layout>
       <SEO
         title="Service & Claims"
-        description="Request certificates, report claims, make payments, request policy changes, and manage renewals. Trux Insurance client service center — Mon–Fri 8–5 CT."
+        description="Request certificates, report claims, make payments, request policy changes, and manage renewals. Trux Insurance client service center — Mon–Fri 9–5 CT."
         canonical="/service"
         type="service"
         serviceName="Trux Insurance Client Service Center"
@@ -75,7 +75,7 @@ export default function Service() {
           <div className="tick mt-4"></div>
           <h1 className="mt-4 mb-4">We're here when you need us.</h1>
           <p className="lead max-w-2xl">
-            From certificates to claims, policy changes to payments — your service team is a phone call away. Mon–Fri 8–5 CT, or 24/7 through our self-service portal.
+            From certificates to claims, policy changes to payments — your service team is a phone call away. Mon–Fri 9–5 CT, or 24/7 through our self-service portal.
           </p>
         </div>
       </section>
