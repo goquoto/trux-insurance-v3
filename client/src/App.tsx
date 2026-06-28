@@ -26,6 +26,7 @@ const Cost = lazy(() => import("./pages/Cost"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogArticle = lazy(() => import("./pages/BlogArticle"));
 const StatePage = lazy(() => import("./pages/StatePage"));
+const StatesHub = lazy(() => import("./pages/StatesHub"));
 const ClientCenter = lazy(() => import("./pages/ClientCenter"));
 
 // Minimal loading fallback that matches the site's style
@@ -49,6 +50,7 @@ function Router() {
         <Route path={"/cost"} component={Cost} />
         <Route path={"/blog"} component={Blog} />
         <Route path={"/blog/:slug"} component={BlogArticle} />
+        <Route path={"/states"} component={StatesHub} />
         <Route path={"/states/:state"} component={StatePage} />
         <Route path={"/about"} component={About} />
         <Route path={"/service"} component={Service} />

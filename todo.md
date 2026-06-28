@@ -154,3 +154,12 @@
 
 ## Footer Link Fixes
 - [x] Fix "For Clients" footer links: Policy Service → support.truxins.com, Report a Claim → /service page, Make a Payment → truxins.epaypolicy.com
+
+## State Landing Pages (21 States) — Comprehensive Implementation
+- [x] Create interactive US map component with clickable states (SVG-based, shows all 21 licensed states)
+- [x] Build StatesHub page at /states with interactive map and state grid
+- [x] Generate comprehensive content for all 21 states (freight hubs, corridors, regulations, endorsements, FAQs)
+- [x] Create state landing page template that renders new comprehensive content format
+- [x] Fix routing for multi-word states (north-carolina, south-carolina) with hyphenated slugs
+- [x] Verify all state pages load with complete content (tested North Carolina)
+- [x] Embed interactive map on homepage (optional for future)
