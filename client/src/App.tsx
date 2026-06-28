@@ -28,6 +28,10 @@ const BlogArticle = lazy(() => import("./pages/BlogArticle"));
 const StatePage = lazy(() => import("./pages/StatePage"));
 const StatesHub = lazy(() => import("./pages/StatesHub"));
 const ClientCenter = lazy(() => import("./pages/ClientCenter"));
+const FreightBrokerInsurance = lazy(() => import("./pages/FreightBrokerInsurance"));
+const UsageBasedSolutions = lazy(() => import("./pages/UsageBasedSolutions"));
+const SafetyHub = lazy(() => import("./pages/SafetyHub"));
+const ClientLoginHub = lazy(() => import("./pages/ClientLoginHub"));
 
 // Minimal loading fallback that matches the site's style
 function PageLoader() {
@@ -54,11 +58,15 @@ function Router() {
         <Route path={"/states/:state"} component={StatePage} />
         <Route path={"/about"} component={About} />
         <Route path={"/service"} component={Service} />
-        <Route path={"/quote"} component={QuoteForm} />
+        <Route path={"/quote"} component={Quote} />
         <Route path={"/quick-quote"} component={QuickQuote} />
         <Route path={"/quote-confirmation/:id"} component={QuoteConfirmation} />
         <Route path={"/admin/quotes"} component={AdminQuotes} />
         <Route path={"/client-center"} component={ClientCenter} />
+        <Route path={"/freight-broker-insurance"} component={FreightBrokerInsurance} />
+        <Route path={"/usage-based-solutions"} component={UsageBasedSolutions} />
+        <Route path={"/safety"} component={SafetyHub} />
+        <Route path={"/client-login"} component={ClientLoginHub} />
         <Route path={"/contact"} component={Contact} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />

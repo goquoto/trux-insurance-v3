@@ -31,6 +31,13 @@ function getAllUrls(): SitemapEntry[] {
     { path: "/contact", priority: "0.8", changefreq: "monthly" },
     { path: "/blog", priority: "0.8", changefreq: "weekly" },
     { path: "/cost", priority: "0.8", changefreq: "monthly" },
+    { path: "/states", priority: "0.9", changefreq: "monthly" },
+    { path: "/quick-quote", priority: "0.8", changefreq: "monthly" },
+    { path: "/client-center", priority: "0.7", changefreq: "monthly" },
+    { path: "/client-login", priority: "0.7", changefreq: "monthly" },
+    { path: "/freight-broker-insurance", priority: "0.8", changefreq: "monthly" },
+    { path: "/usage-based-solutions", priority: "0.8", changefreq: "monthly" },
+    { path: "/safety", priority: "0.8", changefreq: "weekly" },
   ];
 
   for (const page of staticPages) {
@@ -107,7 +114,13 @@ function getAllUrls(): SitemapEntry[] {
     "trailer-interchange-insurance-explained",
     "dashcam-impact-on-trucking-insurance-premiums",
     "hired-non-owned-auto-coverage-trucking",
-    "understanding-trucking-insurance-audits"
+    "understanding-trucking-insurance-audits",
+    "motus-fmcsa-safety-fitness-determination-rule",
+    "driver-fatigue-management-trucking-safety",
+    "pre-trip-inspection-checklist-trucking",
+    "distracted-driving-trucking-risks-law",
+    "weather-related-trucking-accidents-safety",
+    "backing-accidents-preventable-trucking"
   ];
   for (const slug of blogSlugs) {
     entries.push({

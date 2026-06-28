@@ -78,14 +78,18 @@ export default function Header() {
             Insuring motor carriers in <strong>21 states</strong> &middot; Mon–Fri 9–5 CT
           </span>
           <div className="flex items-center gap-4 text-[13px] font-sans">
-            <a href="tel:3312401101" className="flex items-center gap-1 text-white hover:text-[var(--purple-light)] no-underline">
+            <a href="tel:18773508789" className="flex items-center gap-1 text-white hover:text-[var(--purple-light)] no-underline hidden md:flex">
+              <Phone size={12} />
+              1-877-350-8789
+            </a>
+            <a href="tel:3312401101" className="flex items-center gap-1 text-white hover:text-[var(--purple-light)] no-underline md:hidden">
               <Phone size={12} />
               (331) 240-1101
             </a>
-            <a href="https://truxins.com/certificate/" className="text-white hover:text-[var(--purple-light)] no-underline hidden sm:inline">
+            <a href="https://app.nowcerts.com/trux-insurance-services/certificate-request" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[var(--purple-light)] no-underline hidden sm:inline">
               Certificates
             </a>
-            <a href="https://truxins.com/claim/" className="text-white hover:text-[var(--purple-light)] no-underline hidden sm:inline">
+            <a href="/service" className="text-white hover:text-[var(--purple-light)] no-underline hidden sm:inline">
               Report a Claim
             </a>
           </div>

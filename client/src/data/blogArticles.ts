@@ -9,7 +9,7 @@ export interface BlogArticle {
   content: string;
 }
 
-const blogArticles: BlogArticle[] = [
+const _blogArticles: BlogArticle[] = [
   {
     slug: "primary-liability-cargo-physical-damage-what-every-fleet-owner-needs",
     title: "Primary Liability, Cargo, Physical Damage: What Every Fleet Owner Needs to Know",
@@ -2060,7 +2060,4 @@ Backing accidents are preventable. The question is whether you're willing to inv
 ];
 
 // Combine all articles
-export const allBlogArticles = [...blogArticles, ...safetyArticles];
-
-// Re-export for backward compatibility
-export { allBlogArticles as blogArticles };
+export const blogArticles: BlogArticle[] = [..._blogArticles, ...safetyArticles];

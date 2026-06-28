@@ -175,3 +175,60 @@
   - Backing Accidents: The #1 Preventable Accident in Trucking
 - [x] Integrate safety articles into blog listing and filtering
 - [x] Verify all articles display correctly on blog page
+
+
+## Build Spec Implementation (Priority 1-6)
+
+### Priority 1: Enhanced 3-Step Quote Form
+- [x] Convert quote form to 3-step progressive form (Get Started → Your Operation → Equipment & Docs)
+- [x] Add progress bar showing all 3 steps
+- [x] Make Steps 2-3 optional (allow submit after Step 1)
+- [x] Add Save & Continue functionality to reduce abandonment
+- [x] Keep file upload prominent (multi-file, 10 files max, 25MB per file)
+- [x] Add "Confidence line" near submit button
+- [x] Enable AJAX submission (no page reload)
+- [x] Add inline validation on blur
+
+### Priority 2: State Landing Pages Enhancement
+- [x] Add unique state-specific copy to all 21 state pages (150-250 words per state)
+- [x] Include major freight corridors/cities in intro paragraph
+- [x] Add unique meta titles and descriptions per state
+- [x] Add internal links from states index page
+- [x] Verify state pages appear in XML sitemap
+
+### Priority 3: Product Silos
+- [x] Create Freight Broker Insurance silo (/freight-broker-insurance/)
+  - [x] Contingent Cargo section
+  - [x] General Liability section
+  - [x] Shippers Interest section
+  - [x] Errors & Omissions section
+  - [x] Broker Bonds section
+  - [x] Cyber section
+- [x] Create Usage-Based Solutions silo (/usage-based-solutions/)
+  - [x] Telematics integration section
+  - [x] Driver coaching section
+  - [x] Premium discount section
+  - [x] How it works section
+
+### Priority 4: Safety/Risk Management Hub
+- [x] Create /safety/ landing page with comprehensive content
+- [x] Add CSA Score Management section (all 7 BASICs)
+- [x] Add ELD Compliance section
+- [x] Add Pre-Trip Inspection Programs section
+- [x] Add Driver Training & Coaching section
+- [x] Add Post-Accident Protocol sidebar
+- [x] Link to safety blog articles
+
+### Priority 5: Client Login Hub
+- [x] Create /client-login/ page
+- [x] Add Policy Service Portal tile (link to support.truxins.com)
+- [x] Add Request a Certificate tile (link to NowCerts portal)
+- [x] Add Make a Payment tile (link to epaypolicy)
+- [x] Add Report a Claim tile (link to /service)
+- [x] Add help section with contact info
+
+### Priority 6: Homepage Trust Block & Sticky CTA
+- [x] Add trust/social proof block with stats (5.0 rating, 10+ years, 21 states, A+ carriers)
+- [x] Add partner section (Bizee, Blue Ink Tech, Motive, RTS)
+- [x] Phone number already prominent in header
+- [x] Add sticky mobile CTA bar (Get a Quote + Call Now) on homepage

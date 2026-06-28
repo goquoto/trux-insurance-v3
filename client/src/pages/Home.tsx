@@ -311,6 +311,31 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Trust / Social Proof Block */}
+      <section className="py-12 bg-paper-2 border-t border-[var(--hair)]">
+        <div className="container">
+          <p className="font-sans text-[12px] text-taupe uppercase tracking-[0.2em] text-center mb-8">Trusted by carriers across 21 states</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center">
+            <div className="text-center">
+              <span className="font-serif text-[28px] text-ink font-bold">5.0</span>
+              <p className="font-sans text-[12px] text-muted-custom mt-1">Google Rating (184 reviews)</p>
+            </div>
+            <div className="text-center">
+              <span className="font-serif text-[28px] text-ink font-bold">10+</span>
+              <p className="font-sans text-[12px] text-muted-custom mt-1">Years in trucking insurance</p>
+            </div>
+            <div className="text-center">
+              <span className="font-serif text-[28px] text-ink font-bold">21</span>
+              <p className="font-sans text-[12px] text-muted-custom mt-1">States licensed</p>
+            </div>
+            <div className="text-center">
+              <span className="font-serif text-[28px] text-ink font-bold">A+</span>
+              <p className="font-sans text-[12px] text-muted-custom mt-1">Rated carriers only</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Band */}
       <section className="section bg-[#1A1A1A] text-center">
         <div className="container">
@@ -329,6 +354,15 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* Sticky Mobile CTA */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-[var(--hair)] p-3 flex gap-3 lg:hidden">
+        <a href="/quote" className="btn-solid flex-1 text-center text-[13px] py-3">
+          Get a Quote
+        </a>
+        <a href="tel:3312401101" className="btn-ghost flex-1 text-center text-[13px] py-3">
+          Call Now
+        </a>
+      </div>
     </Layout>
   );
 }
