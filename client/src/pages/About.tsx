@@ -11,7 +11,7 @@ export default function About() {
         description="Trux Insurance Services — 10+ years specializing exclusively in commercial trucking insurance. Learn about our mission, team, and why we only insure trucking."
         canonical="/about"
       />
-      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "About" }]} />
+      <Breadcrumbs items={[{ label: "About" }]} />
       {/* Page header */}
       <section className="section bg-paper-2">
         <div className="container">

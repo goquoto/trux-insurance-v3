@@ -75,9 +75,19 @@ export default function Home() {
             <div>
               <h3 className="mb-4 text-ink">Trucking &amp; Auto</h3>
               <ul className="space-y-3">
-                {["Commercial Auto Liability", "Auto Physical Damage", "Motor Truck Cargo", "General Liability", "Non-Trucking / Bobtail", "Trailer Interchange", "Excess / Umbrella", "Contingent Auto & Cargo"].map((item) => (
-                  <li key={item} className="font-sans text-[15px] text-muted-custom border-b border-[var(--hair)] pb-2 flex items-start gap-2">
-                    <span className="text-purple mt-1">·</span> {item}
+                {[
+                  { name: "Commercial Auto Liability", slug: "auto-liability" },
+                  { name: "Auto Physical Damage", slug: "physical-damage" },
+                  { name: "Motor Truck Cargo", slug: "cargo" },
+                  { name: "General Liability", slug: "general-liability" },
+                  { name: "Non-Trucking / Bobtail", slug: "non-trucking" },
+                  { name: "Trailer Interchange", slug: "trailer-interchange" },
+                  { name: "Excess / Umbrella", slug: "excess-umbrella" },
+                  { name: "Contingent Auto & Cargo", slug: "cargo" },
+                ].map((item) => (
+                  <li key={item.name} className="font-sans text-[15px] text-muted-custom border-b border-[var(--hair)] pb-2 flex items-start gap-2">
+                    <span className="text-purple mt-1">·</span>
+                    <Link href={`/coverages/${item.slug}`} className="no-underline text-muted-custom hover:text-ink transition-colors">{item.name}</Link>
                   </li>
                 ))}
               </ul>
@@ -87,9 +97,19 @@ export default function Home() {
             <div>
               <h3 className="mb-4 text-ink">Workforce &amp; Specialty</h3>
               <ul className="space-y-3">
-                {["Workers' Compensation", "Occupational Accident", "Hired & Non-Owned Auto", "Pollution Liability", "Cyber Liability", "Crime Coverage", "Freight Broker Bonds", "Contractors"].map((item) => (
-                  <li key={item} className="font-sans text-[15px] text-muted-custom border-b border-[var(--hair)] pb-2 flex items-start gap-2">
-                    <span className="text-purple mt-1">·</span> {item}
+                {[
+                  { name: "Workers' Compensation", slug: "workers-compensation" },
+                  { name: "Occupational Accident", slug: "occupational-accident" },
+                  { name: "Hired & Non-Owned Auto", slug: "non-trucking" },
+                  { name: "Pollution Liability", slug: "pollution-liability" },
+                  { name: "Cyber Liability", slug: "cyber-coverage" },
+                  { name: "Crime Coverage", slug: "crime-coverage" },
+                  { name: "Freight Broker Bonds", slug: "freight-broker-bonds" },
+                  { name: "Contractors", slug: "contractors" },
+                ].map((item) => (
+                  <li key={item.name} className="font-sans text-[15px] text-muted-custom border-b border-[var(--hair)] pb-2 flex items-start gap-2">
+                    <span className="text-purple mt-1">·</span>
+                    <Link href={`/coverages/${item.slug}`} className="no-underline text-muted-custom hover:text-ink transition-colors">{item.name}</Link>
                   </li>
                 ))}
               </ul>
@@ -206,15 +226,21 @@ export default function Home() {
               <h3 className="text-[18px] mb-4">States licensed</h3>
               <div className="grid grid-cols-2 gap-x-6 gap-y-2">
                 {[
-                  "Arizona", "Colorado", "Florida", "Georgia", "Illinois",
-                  "Indiana", "Iowa", "Kentucky", "Michigan", "Minnesota",
-                  "Mississippi", "Missouri", "Nevada", "North Carolina", "Ohio",
-                  "Pennsylvania", "South Carolina", "Tennessee", "Texas", "Virginia",
-                  "Wisconsin"
+                  { name: "Arizona", slug: "arizona" }, { name: "Colorado", slug: "colorado" },
+                  { name: "Florida", slug: "florida" }, { name: "Georgia", slug: "georgia" },
+                  { name: "Illinois", slug: "illinois" }, { name: "Indiana", slug: "indiana" },
+                  { name: "Iowa", slug: "iowa" }, { name: "Kentucky", slug: "kentucky" },
+                  { name: "Michigan", slug: "michigan" }, { name: "Minnesota", slug: "minnesota" },
+                  { name: "Mississippi", slug: "mississippi" }, { name: "Missouri", slug: "missouri" },
+                  { name: "Nevada", slug: "nevada" }, { name: "North Carolina", slug: "north-carolina" },
+                  { name: "Ohio", slug: "ohio" }, { name: "Pennsylvania", slug: "pennsylvania" },
+                  { name: "South Carolina", slug: "south-carolina" }, { name: "Tennessee", slug: "tennessee" },
+                  { name: "Texas", slug: "texas" }, { name: "Virginia", slug: "virginia" },
+                  { name: "Wisconsin", slug: "wisconsin" }
                 ].map((state) => (
-                  <span key={state} className="font-sans text-[14px] text-muted-custom border-b border-[var(--hair)] pb-1.5 flex items-center gap-1.5">
-                    <span className="text-purple text-[10px]">&#9632;</span> {state}
-                  </span>
+                  <Link key={state.slug} href={`/states/${state.slug}`} className="font-sans text-[14px] text-muted-custom border-b border-[var(--hair)] pb-1.5 flex items-center gap-1.5 no-underline hover:text-ink transition-colors">
+                    <span className="text-purple text-[10px]">&#9632;</span> {state.name}
+                  </Link>
                 ))}
               </div>
               <p className="font-sans text-[13px] text-taupe mt-6 italic">

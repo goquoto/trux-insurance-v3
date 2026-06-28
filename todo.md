@@ -113,3 +113,18 @@
 ## Blog Expansion
 - [x] Add Blog link to the footer navigation
 - [x] Add 5 more full-length blog articles
+
+## SEO Audit Implementation
+- [x] P1: Add prerendering/SSR so H1, body copy, and JSON-LD appear in raw HTML
+- [x] P1: Fix XML sitemap (currently returns HTML shell) — generate proper sitemap with all URLs (70 URLs)
+- [x] P1: Ensure structured data (InsuranceAgency, Service, FAQPage, BreadcrumbList, Organization) ships in initial HTML
+- [x] P2: Fix duplicate breadcrumb on Quote page (Home > Home > Get a Quote)
+- [x] P2: Coverage pages have 4+ paragraphs, spec tables, endorsements, FAQ, and pull-quotes each
+- [x] P2: Add state-specific pages (/states/:state) with genuine state content (21 states)
+- [x] P3: SEO meta tags added to all pages via SEO component + server prerender
+- [x] P3: Trust signals added to CoverageDetail, BlogArticle, and Home hero
+- [x] P3: Add sticky mobile CTA bar (Call Now / Get a Quote) on all pages
+- [x] P3: Internal linking: Home coverage list links to detail pages, state list links to state pages, blog has related articles
+- [x] P4: Performance — code split via React.lazy, font preload, reduced motion support
+- [x] P4: Accessibility pass — focus rings, skip-to-content, reduced motion, ARIA roles
+- [x] P4: Verify robots/crawl rules after SSR is live (robots.txt + sitemap confirmed)

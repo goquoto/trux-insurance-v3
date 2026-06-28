@@ -86,7 +86,7 @@ export default function Quote() {
         description="Request a free commercial trucking insurance quote from Trux. Auto liability, cargo, physical damage, and more — fast quotes from specialist markets."
         canonical="/quote"
       />
-      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Get a Quote" }]} />
+      <Breadcrumbs items={[{ label: "Get a Quote" }]} />
       {/* Page header */}
       <section className="py-16 bg-paper-2">
         <div className="container">

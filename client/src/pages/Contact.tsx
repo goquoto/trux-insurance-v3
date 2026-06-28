@@ -29,7 +29,7 @@ export default function Contact() {
         description="Contact Trux Insurance Services in Bloomingdale, IL. Call 331-240-1101 or visit us at 1 Tiffany Pt Suite G2 for commercial trucking insurance quotes and service."
         canonical="/contact"
       />
-      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Contact" }]} />
+      <Breadcrumbs items={[{ label: "Contact" }]} />
       {/* Page header */}
       <section className="section bg-paper-2">
         <div className="container">

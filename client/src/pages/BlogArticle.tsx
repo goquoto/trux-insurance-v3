@@ -3,6 +3,7 @@ import { useParams, Link, useLocation } from "wouter";
 import Layout from "../components/Layout";
 import Breadcrumbs from "../components/Breadcrumbs";
 import SEO from "../components/SEO";
+import TrustSignals from "../components/TrustSignals";
 import { blogArticles } from "../data/blogArticles";
 
 export default function BlogArticle() {
@@ -83,6 +84,13 @@ export default function BlogArticle() {
               {renderMarkdownContent(article.content)}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Trust Signals */}
+      <section className="bg-paper">
+        <div className="container py-8 max-w-[740px]">
+          <TrustSignals variant="compact" />
         </div>
       </section>
 

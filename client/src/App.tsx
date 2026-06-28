@@ -1,42 +1,58 @@
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+
+// Critical path — loaded eagerly
 import Home from "./pages/Home";
-import Coverages from "./pages/Coverages";
-import CoverageDetail from "./pages/CoverageDetail";
-import About from "./pages/About";
-import Service from "./pages/Service";
-import Quote from "./pages/Quote";
-import Contact from "./pages/Contact";
-import WhoWeInsure from "./pages/WhoWeInsure";
-import WhoWeInsureDetail from "./pages/WhoWeInsureDetail";
-import Cost from "./pages/Cost";
-import Blog from "./pages/Blog";
-import BlogArticle from "./pages/BlogArticle";
-import StatePage from "./pages/StatePage";
+
+// Lazy-loaded routes (code-split for performance)
+const Coverages = lazy(() => import("./pages/Coverages"));
+const CoverageDetail = lazy(() => import("./pages/CoverageDetail"));
+const About = lazy(() => import("./pages/About"));
+const Service = lazy(() => import("./pages/Service"));
+const Quote = lazy(() => import("./pages/Quote"));
+const Contact = lazy(() => import("./pages/Contact"));
+const WhoWeInsure = lazy(() => import("./pages/WhoWeInsure"));
+const WhoWeInsureDetail = lazy(() => import("./pages/WhoWeInsureDetail"));
+const Cost = lazy(() => import("./pages/Cost"));
+const Blog = lazy(() => import("./pages/Blog"));
+const BlogArticle = lazy(() => import("./pages/BlogArticle"));
+const StatePage = lazy(() => import("./pages/StatePage"));
+
+// Minimal loading fallback that matches the site's style
+function PageLoader() {
+  return (
+    <div className="min-h-[60vh] flex items-center justify-center">
+      <div className="w-8 h-8 border-2 border-[var(--hair)] border-t-[var(--purple)] rounded-full animate-spin" />
+    </div>
+  );
+}
 
 function Router() {
   return (
-    <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/coverages"} component={Coverages} />
-      <Route path={"/coverages/:slug"} component={CoverageDetail} />
-      <Route path={"/who-we-insure"} component={WhoWeInsure} />
-      <Route path={"/who-we-insure/:slug"} component={WhoWeInsureDetail} />
-      <Route path={"/cost"} component={Cost} />
-      <Route path={"/blog"} component={Blog} />
-      <Route path={"/blog/:slug"} component={BlogArticle} />
-      <Route path={"/states/:state"} component={StatePage} />
-      <Route path={"/about"} component={About} />
-      <Route path={"/service"} component={Service} />
-      <Route path={"/quote"} component={Quote} />
-      <Route path={"/contact"} component={Contact} />
-      <Route path={"/404"} component={NotFound} />
-      <Route component={NotFound} />
-    </Switch>
+    <Suspense fallback={<PageLoader />}>
+      <Switch>
+        <Route path={"/"} component={Home} />
+        <Route path={"/coverages"} component={Coverages} />
+        <Route path={"/coverages/:slug"} component={CoverageDetail} />
+        <Route path={"/who-we-insure"} component={WhoWeInsure} />
+        <Route path={"/who-we-insure/:slug"} component={WhoWeInsureDetail} />
+        <Route path={"/cost"} component={Cost} />
+        <Route path={"/blog"} component={Blog} />
+        <Route path={"/blog/:slug"} component={BlogArticle} />
+        <Route path={"/states/:state"} component={StatePage} />
+        <Route path={"/about"} component={About} />
+        <Route path={"/service"} component={Service} />
+        <Route path={"/quote"} component={Quote} />
+        <Route path={"/contact"} component={Contact} />
+        <Route path={"/404"} component={NotFound} />
+        <Route component={NotFound} />
+      </Switch>
+    </Suspense>
   );
 }
 

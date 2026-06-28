@@ -106,7 +106,7 @@ export default function Coverages() {
         description="Explore all commercial trucking insurance coverages from Trux: auto liability, cargo, physical damage, general liability, workers comp, excess/umbrella, and more."
         canonical="/coverages"
       />
-      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Coverages" }]} />
+      <Breadcrumbs items={[{ label: "Coverages" }]} />
       {/* Page header */}
       <section className="section bg-paper-2">
         <div className="container">

@@ -1,6 +1,7 @@
 import { Link, useParams } from "wouter";
 import Layout from "@/components/Layout";
 import SEO from "@/components/SEO";
+import TrustSignals from "@/components/TrustSignals";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import FAQSection from "@/components/FAQSection";
 
@@ -563,7 +564,7 @@ export default function CoverageDetail() {
         type="service"
         serviceName={`${coverage.title} Insurance`}
       />
-      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Coverages", href: "/coverages" }, { label: coverage.title }]} />
+      <Breadcrumbs items={[{ label: "Coverages", href: "/coverages" }, { label: coverage.title }]} />
 
       {/* Page header with image */}
       <section className="py-16 bg-paper-2">
@@ -686,6 +687,13 @@ export default function CoverageDetail() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Trust Signals */}
+      <section className="bg-paper">
+        <div className="container py-10">
+          <TrustSignals />
         </div>
       </section>
 

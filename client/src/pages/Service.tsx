@@ -66,7 +66,7 @@ export default function Service() {
         type="service"
         serviceName="Trux Insurance Client Service Center"
       />
-      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Service & Claims" }]} />
+      <Breadcrumbs items={[{ label: "Service & Claims" }]} />
 
       {/* Page header */}
       <section className="section bg-paper-2">
