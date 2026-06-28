@@ -747,6 +747,435 @@ NTL is relatively inexpensive — typically $500–$1,500 per year depending on 
 Every owner-operator leased to a carrier should carry NTL at minimum. We review your lease agreement, your typical operating patterns, and your carrier's coverage to determine whether additional bobtail coverage is warranted.
 
 If you're between carriers or transitioning to your own authority, call us before you drive another mile. The coverage gap during transitions is where we see the most uninsured losses.`
+  },
+  {
+    slug: "new-authority-insurance-checklist-first-90-days",
+    title: "New Authority Insurance Checklist: What to Do in Your First 90 Days",
+    excerpt: "Getting your MC number is just the beginning. Here's the insurance checklist every new-authority carrier needs to complete before hauling their first load.",
+    category: "Education",
+    readTime: "7 min read",
+    publishDate: "2026-04-10",
+    author: "Trux Insurance Services",
+    content: `Getting your motor carrier authority is an accomplishment — but it's only the first step. The 90 days after activation are when most new carriers make costly insurance mistakes that follow them for years.
+
+We've helped hundreds of carriers through their first year of operations. Here's the checklist we walk every new client through.
+
+## Before You Haul: The Mandatory Coverages
+
+The FMCSA won't activate your authority without proof of insurance filed via Form BMC-91 (for liability) and BMC-34 (for cargo, if required). These filings must come from your insurance company — you can't file them yourself.
+
+**Minimum requirements:**
+- $750,000 auto liability for general freight (Form BMC-91)
+- $1,000,000 for hazmat carriers
+- $5,000,000 for certain passenger carriers
+- $5,000 cargo insurance for household goods (Form BMC-34)
+
+Most brokers and shippers require $1,000,000 liability and $100,000 cargo regardless of what the FMCSA mandates. Plan for these higher limits from day one.
+
+## Week 1: Get Your Filings in Order
+
+Your insurance agent should file your BMC-91 electronically. This typically takes 1-3 business days to appear in SAFER. Until it shows, you cannot legally haul freight.
+
+**Critical timing note:** If your filing lapses for any reason — non-payment, policy cancellation, carrier switch — the FMCSA issues a revocation notice. You have 30 days to get new filings in place, or your authority is revoked. Reinstatement after revocation requires starting the entire application process over.
+
+## Week 2-4: Build Your Coverage Stack
+
+Beyond the mandatory filings, here's what you need:
+
+**Physical damage** — If you have a loan or lease on your truck, your lender requires this. Even if you own the truck outright, consider the replacement cost. Can you afford to buy another truck tomorrow if yours is totaled?
+
+**General liability** — Covers you at shipper facilities, truck stops, and anywhere you're not driving. Many facilities require a certificate showing GL coverage before you can enter.
+
+**Workers' compensation** — Required in most states if you have any employees, including yourself in some jurisdictions. Even if your state exempts owner-operators, many shippers and brokers require it.
+
+**Umbrella/excess** — Provides additional limits above your primary liability. With nuclear verdicts exceeding $10 million regularly, a $1M umbrella is increasingly standard.
+
+## Days 30-60: Establish Your Safety Record
+
+Your insurance premium in year two depends heavily on what happens in year one. Carriers with clean first-year records see renewal decreases of 15-30%. Carriers with accidents or violations see increases of 40-100% — if they can find coverage at all.
+
+**What to focus on:**
+- Install dashcams (front and driver-facing) immediately
+- Run MVRs on every driver before hiring
+- Establish a written safety program (even if you're the only driver)
+- Document all pre-trip and post-trip inspections
+- Respond to any DataQs or roadside inspection issues within 30 days
+
+## Days 60-90: Review and Adjust
+
+By day 60, you should have enough operating history to review your coverage with your agent. Questions to ask:
+
+- Is my cargo limit appropriate for the freight I'm actually hauling?
+- Do I need hired/non-owned auto coverage for any rented equipment?
+- Am I properly covered for the states I'm operating in?
+- Are my driver files complete and compliant?
+
+## Common First-Year Mistakes
+
+**Buying minimum limits to save money** — The premium difference between $750K and $1M liability is often $200-400/year. The coverage difference in a serious accident is $250,000.
+
+**Not reading the cargo exclusions** — Standard cargo policies exclude refrigerated goods, hazmat, electronics, and high-value items. If you haul any of these, you need endorsements or a specialized policy.
+
+**Letting coverage lapse for even one day** — A single day without coverage creates a filing gap that follows you for years. Every future insurer will ask about it, and many will decline to quote.
+
+**Not shopping at renewal** — Your first-year premium is almost always higher than what you'll pay in year two with a clean record. But you have to shop it — your current carrier won't automatically reduce your rate.
+
+## How Trux Helps New Authorities
+
+We assign every new-authority client a dedicated account manager who walks them through the first 90 days step by step. We handle the filings, review your lease agreements, verify your coverage matches your operations, and check in monthly during your first year.
+
+Call us before you get your authority — the earlier we're involved, the smoother your launch.`
+  },
+  {
+    slug: "trailer-interchange-insurance-explained",
+    title: "Trailer Interchange Insurance: When You Need It and What It Actually Covers",
+    excerpt: "If you pull trailers you don't own, you may have a massive coverage gap. Here's how trailer interchange works and why standard policies don't cover borrowed equipment.",
+    category: "Coverage",
+    readTime: "5 min read",
+    publishDate: "2026-04-05",
+    author: "Trux Insurance Services",
+    content: `If you pull trailers owned by someone else — a broker, shipper, or interchange partner — your standard physical damage policy almost certainly doesn't cover them. This is one of the most common and most expensive coverage gaps in trucking.
+
+## What Is Trailer Interchange?
+
+Trailer interchange is a written agreement between two parties where one party (usually a motor carrier) takes possession of a trailer owned by another party (usually a shipper or broker). The agreement specifies who is responsible for damage to the trailer while it's in the carrier's possession.
+
+The key word is "written agreement." If you sign a trailer interchange agreement — and most carriers do without reading them carefully — you've accepted financial responsibility for that trailer.
+
+## Why Standard Physical Damage Doesn't Cover It
+
+Your physical damage policy covers equipment you own or lease long-term. It specifically excludes property in your "care, custody, or control" that you don't own. A trailer you picked up under an interchange agreement falls squarely into this exclusion.
+
+This means if you're pulling a $45,000 reefer trailer under interchange and it's damaged in an accident, stolen, or destroyed by fire — you're personally liable for the full replacement cost.
+
+## What Trailer Interchange Insurance Covers
+
+**Covered perils typically include:**
+- Collision damage
+- Comprehensive (theft, fire, vandalism, weather)
+- Overturning
+- Loading/unloading damage (varies by policy)
+
+**Common exclusions:**
+- Mechanical breakdown
+- Tire damage (unless caused by a covered peril)
+- Wear and tear
+- Damage from improper loading by the shipper
+- Refrigeration unit breakdown (unless you add reefer breakdown coverage)
+
+## How Much Does It Cost?
+
+Trailer interchange premiums depend on:
+- The number of trailers you interchange at any given time
+- The maximum value per trailer
+- Your loss history
+- Whether you need reefer breakdown coverage
+
+Typical costs range from $800-$2,500 per year for a single owner-operator interchanging 1-3 trailers at a time. Fleets pulling dozens of interchanged trailers pay more but benefit from volume pricing.
+
+## Who Needs Trailer Interchange?
+
+You need this coverage if:
+- You pull drop trailers for Amazon, Walmart, or other major shippers
+- You operate under interchange agreements with brokers
+- You pick up loaded trailers at rail yards
+- You pull any trailer you don't own under a written agreement
+
+You probably don't need it if:
+- You only pull your own trailers
+- You're leased to a carrier that provides trailer interchange coverage
+- You only do live load/unload (no drop trailers)
+
+## The Interchange Agreement Trap
+
+Many carriers sign interchange agreements without reading them. These agreements almost always include language making you responsible for "all damage" to the trailer while in your possession — regardless of fault.
+
+Some agreements even make you responsible for pre-existing damage unless you documented it at pickup. This is why we tell every client: photograph every trailer at pickup and delivery, noting any existing damage on the interchange receipt.
+
+## How Trux Handles Trailer Interchange
+
+We review your interchange agreements, determine your maximum exposure, and structure coverage that matches your actual operations. If you're pulling high-value reefer trailers, we make sure reefer breakdown is included. If you're interchanging at multiple locations, we ensure your coverage follows the trailer regardless of where damage occurs.
+
+Don't assume you're covered. Send us your interchange agreements and we'll tell you exactly where you stand.`
+  },
+  {
+    slug: "dashcam-impact-on-trucking-insurance-premiums",
+    title: "How Dashcams Impact Your Trucking Insurance Premium — And Which Ones Insurers Want to See",
+    excerpt: "Dashcams can reduce your premium by 5-15%, but only if you use the right type and follow specific protocols. Here's what actually moves the needle with underwriters.",
+    category: "Cost Savings",
+    readTime: "6 min read",
+    publishDate: "2026-03-28",
+    author: "Trux Insurance Services",
+    content: `Every trucking insurance underwriter asks the same question during the quoting process: "Do you have dashcams?" The answer affects your premium — but not always in the way fleet owners expect.
+
+Having cameras is good. Having the right cameras, with the right protocols, integrated into a documented safety program — that's what actually moves the needle.
+
+## The Premium Impact: Real Numbers
+
+Based on our experience placing hundreds of accounts:
+
+**Forward-facing only:** 3-5% premium credit from most carriers
+**Forward + driver-facing:** 8-15% premium credit
+**AI-powered systems with event recording:** 10-20% premium credit
+**No cameras:** Increasingly, some carriers won't quote you at all
+
+The math is straightforward. On a $25,000 annual premium, a 15% credit saves $3,750 per year. A quality dual-camera system costs $200-500 per truck plus $20-40/month for cloud storage. The ROI is immediate.
+
+## What Underwriters Actually Want
+
+Not all dashcam setups are created equal in the eyes of an underwriter. Here's what they're looking for:
+
+**Continuous recording, not just event-triggered** — Event-triggered cameras miss the 30 seconds before an incident that often prove the truck driver wasn't at fault. Continuous loop recording with event flagging is the standard.
+
+**Driver-facing cameras** — This is where many owner-operators push back, but it's where the biggest premium credits come from. Driver-facing cameras prove your driver wasn't on their phone, wasn't drowsy, and was paying attention. In litigation, this footage is worth millions.
+
+**Cloud backup** — Local SD card storage is better than nothing, but cards get lost, damaged, or "disappear" after incidents. Cloud backup ensures footage is preserved regardless of what happens to the truck.
+
+**Retention policy** — Most insurers want 30-60 days of continuous footage retention and permanent retention of any flagged events. Document your retention policy in writing.
+
+## The Litigation Advantage
+
+Dashcams don't just reduce premiums — they reduce claim costs, which reduces future premiums. Here's how:
+
+**Fraudulent claims** — Staged accidents and exaggerated injuries are common in trucking. Forward-facing footage eliminates these claims immediately.
+
+**Comparative fault** — In states with comparative negligence, proving the other driver was 60% at fault instead of 40% can mean hundreds of thousands of dollars in reduced liability.
+
+**Nuclear verdict defense** — Plaintiff attorneys build nuclear verdicts on the narrative that trucking companies are reckless and don't care about safety. A comprehensive camera program with documented review processes destroys that narrative.
+
+## Which Systems Insurers Prefer
+
+We won't endorse specific brands, but here's what the top-rated systems have in common:
+
+- Dual-facing (road + driver) with at least 1080p resolution
+- AI-powered event detection (hard braking, following distance, lane departure)
+- Real-time alerts to fleet managers
+- Cloud storage with minimum 60-day retention
+- GPS integration for speed and location verification
+- Easy footage retrieval for claims and legal requests
+
+## The Protocol That Matters More Than the Hardware
+
+Underwriters don't just want cameras — they want evidence that you use them proactively. Document these processes:
+
+**Weekly review** — Someone reviews flagged events weekly and coaches drivers on identified risks. Keep records of these reviews.
+
+**Post-incident protocol** — Within 1 hour of any incident, footage is flagged, preserved, and sent to your insurance company. Don't wait for a claim to be filed.
+
+**New driver onboarding** — Every new driver is informed about the camera system, signs an acknowledgment, and understands the footage review process.
+
+**Quarterly safety meetings** — Use camera footage (anonymized) in safety meetings to illustrate common risks and proper responses.
+
+## Common Mistakes That Negate the Benefit
+
+**Installing cameras but never reviewing footage** — Underwriters will ask about your review process. "We have cameras but don't really look at them" is worse than not having cameras at all — it suggests you know about problems and ignore them.
+
+**Allowing drivers to disable cameras** — If drivers can cover, unplug, or disable cameras, you don't have a camera program. You have expensive decorations.
+
+**Not preserving footage after incidents** — If you can't produce footage when a claim is filed, the assumption is that the footage showed your driver at fault. Preserve everything.
+
+## How Trux Maximizes Your Camera Credit
+
+When we submit your account to underwriters, we include documentation of your camera system, your review protocols, and your safety meeting records. We present it as part of a comprehensive safety program — not just a box to check.
+
+If you're shopping for cameras or upgrading your system, call us first. We'll tell you exactly what the carriers we work with want to see, so you invest in equipment that actually reduces your premium.`
+  },
+  {
+    slug: "hired-non-owned-auto-coverage-trucking",
+    title: "Hired and Non-Owned Auto Coverage: The Policy Most Trucking Companies Forget",
+    excerpt: "If anyone in your company ever drives a vehicle you don't own for business purposes, you have an uncovered exposure. Here's what hired and non-owned auto actually does.",
+    category: "Coverage",
+    readTime: "5 min read",
+    publishDate: "2026-03-20",
+    author: "Trux Insurance Services",
+    content: `Most trucking companies focus on their commercial auto policy — the one covering their trucks and trailers. But there's a separate exposure that catches companies off guard: what happens when an employee drives a vehicle you don't own for business purposes?
+
+This is where hired and non-owned auto (HNOA) coverage comes in. It's inexpensive, often overlooked, and can prevent a catastrophic uninsured loss.
+
+## What "Hired Auto" Means
+
+Hired auto coverage applies to vehicles you rent, lease short-term, or borrow for business use. Common scenarios in trucking:
+
+- Renting a pickup truck to drive to a shipper meeting
+- Leasing a temporary replacement vehicle while your truck is in the shop
+- Renting a car for a business trip to a carrier appointment
+- Using a rental while deadheading to pick up a load
+
+Your commercial auto policy covers scheduled vehicles — the trucks and trailers listed on your policy. A rental car or short-term lease isn't scheduled, so it's not covered unless you have hired auto coverage.
+
+## What "Non-Owned Auto" Means
+
+Non-owned auto coverage applies when an employee uses their personal vehicle for business purposes. In trucking, this happens more than you'd think:
+
+- A dispatcher drives their personal car to deliver paperwork to a shipper
+- A driver uses their personal vehicle to run to the parts store for the truck
+- An office employee drives to the bank to make a company deposit
+- A mechanic uses their car to pick up parts from a supplier
+
+If that employee causes an accident while on company business, the injured party can sue your company — even though the vehicle isn't yours. Without non-owned auto coverage, you're defending that lawsuit out of pocket.
+
+## Why Your Personal Auto Policy Doesn't Help
+
+The employee's personal auto policy is primary for their own vehicle. But when they're on company business, the injured party's attorney will name your company as a defendant under the legal doctrine of "respondeat superior" — employer liability for employee actions within the scope of employment.
+
+Your company needs its own coverage to respond to that claim. That's what non-owned auto provides.
+
+## What HNOA Covers
+
+**Liability only** — HNOA covers bodily injury and property damage you cause to others. It does not cover physical damage to the hired or non-owned vehicle itself.
+
+**Excess over other insurance** — HNOA typically pays after the vehicle owner's insurance is exhausted. If your employee's personal policy has $100K limits and the claim is $500K, HNOA covers the $400K excess.
+
+**Defense costs** — HNOA includes a duty to defend, meaning your insurer provides and pays for legal defense.
+
+## What HNOA Doesn't Cover
+
+- Physical damage to the rented/borrowed vehicle (buy the rental company's CDW or add a hired auto physical damage endorsement)
+- Vehicles you own but forgot to schedule on your policy
+- Long-term leases (these should be scheduled on your commercial auto policy)
+- Vehicles used by independent contractors (they need their own coverage)
+
+## How Much Does It Cost?
+
+HNOA is one of the cheapest coverages in trucking. Typical premiums:
+
+- Small operations (1-5 employees): $200-500/year
+- Medium fleets (6-20 employees): $500-1,500/year
+- Larger operations: $1,500-3,000/year
+
+The cost depends on your number of employees, annual revenue, and whether you frequently rent vehicles.
+
+## Who Needs HNOA?
+
+Every trucking company with employees needs non-owned auto coverage. Period. If anyone ever drives any vehicle for any business purpose, you have the exposure.
+
+You need hired auto coverage if you ever:
+- Rent vehicles for business use
+- Borrow vehicles from other companies
+- Use short-term leases for temporary equipment
+
+## The General Liability Confusion
+
+Some carriers assume their general liability policy covers auto accidents involving non-owned vehicles. It doesn't. General liability specifically excludes auto-related claims. You need a separate HNOA policy or endorsement.
+
+## How to Add HNOA
+
+HNOA can be added as:
+- An endorsement to your commercial auto policy (most common)
+- An endorsement to your general liability policy
+- A standalone policy (rare, usually only for companies with no owned vehicles)
+
+We typically add it to the commercial auto policy because it keeps all auto-related coverages in one place and simplifies claims reporting.
+
+## Trux Recommendation
+
+We include HNOA in every commercial auto policy we write unless the client specifically declines it. The cost is minimal, the exposure is real, and the consequences of being uninsured are severe. It's one of those coverages where the question isn't "can I afford it?" — it's "can I afford not to have it?"`
+  },
+  {
+    slug: "understanding-trucking-insurance-audits",
+    title: "Understanding Trucking Insurance Audits: Why They Happen and How to Prepare",
+    excerpt: "If your premium is based on mileage, revenue, or unit count, you'll face an audit. Here's how the process works and how to avoid surprise additional premiums.",
+    category: "Compliance",
+    readTime: "6 min read",
+    publishDate: "2026-03-12",
+    author: "Trux Insurance Services",
+    content: `Every trucking insurance policy based on variable factors — mileage, revenue, number of units, or payroll — is subject to an annual audit. The insurance company wants to verify that the estimates you provided at policy inception match your actual operations.
+
+Audits aren't punitive. They're a standard part of commercial insurance. But they can result in significant additional premium if you're not prepared — or significant refunds if your operations were smaller than estimated.
+
+## Why Audits Exist
+
+When you buy a trucking insurance policy, your premium is calculated based on estimates:
+
+- Estimated annual mileage
+- Estimated revenue
+- Estimated number of power units
+- Estimated payroll (for workers' comp)
+
+These estimates determine your deposit premium — what you pay upfront. After the policy period ends, the insurer audits your actual figures to calculate the final premium. The difference is either billed as additional premium or refunded as a return premium.
+
+## Types of Audits
+
+**Physical audit** — An auditor visits your office and reviews your books, IFTA records, and financial statements in person. This is the most thorough type and is common for larger fleets.
+
+**Mail audit** — The insurer sends you a questionnaire requesting specific documents. You compile and return them. Common for smaller operations.
+
+**Phone audit** — An auditor calls to discuss your operations and requests documents electronically. Increasingly common post-COVID.
+
+**Voluntary audit** — You proactively submit your figures to the insurer. Some carriers offer this option and it often results in faster processing.
+
+## What Auditors Look At
+
+**For mileage-rated policies:**
+- IFTA quarterly returns (the gold standard for mileage verification)
+- ELD reports showing total miles driven
+- Fuel tax records
+- Trip logs and dispatch records
+
+**For revenue-rated policies:**
+- Federal tax returns
+- Profit and loss statements
+- 1099s from brokers
+- Factoring company statements
+- Load board payment records
+
+**For unit-count policies:**
+- Vehicle registration records
+- IRP cab cards
+- Equipment schedules
+- Lease agreements for any added units
+
+**For workers' compensation:**
+- Payroll records (W-2s, pay stubs)
+- 1099s for subcontractors
+- Quarterly tax filings (941s)
+- Certificates of insurance from subcontractors
+
+## How to Prepare
+
+**Keep clean records throughout the policy period** — Don't wait until the audit notice arrives to organize your books. Maintain monthly records of mileage, revenue, and unit counts.
+
+**Separate business types** — If you have both trucking and non-trucking revenue (brokerage, warehousing, etc.), keep them separate in your books. Non-trucking revenue may be rated differently or excluded from the audit.
+
+**Document subcontractors** — If you use owner-operators or subcontractors, keep copies of their certificates of insurance. Without proof of their own coverage, their revenue or mileage may be included in your audit — dramatically increasing your premium.
+
+**Report changes mid-term** — If you add or remove trucks during the policy period, report it immediately. Mid-term endorsements adjust your premium in real-time, reducing the audit surprise at year-end.
+
+## Common Audit Surprises
+
+**Uninsured subcontractors** — You hired three owner-operators mid-year but didn't get their certificates of insurance. The auditor includes their mileage in your figures, adding $15,000 to your premium.
+
+**Revenue growth** — You estimated $500,000 in revenue but actually did $800,000. Your premium increases proportionally — potentially a 60% additional premium bill.
+
+**Unreported units** — You added two trucks mid-year but forgot to call your agent. The audit catches them, and you owe back-premium for the months they were uninsured on your policy.
+
+**IFTA vs. estimated mileage** — You estimated 100,000 miles per truck but your IFTA shows 130,000. The additional 30% mileage means additional premium.
+
+## How to Minimize Audit Additional Premiums
+
+**Estimate accurately at inception** — Don't lowball your estimates to get a cheaper deposit premium. You'll pay the difference at audit anyway, plus you may face a large lump-sum bill instead of spreading the cost over 12 months.
+
+**Report changes promptly** — Adding a truck? Call your agent the same day. Removing one? Same thing. Mid-term adjustments prevent year-end surprises.
+
+**Maintain subcontractor files** — Every owner-operator or subcontractor should have a current certificate of insurance in your files. Review quarterly and request updated certificates before they expire.
+
+**Review your audit** — Audits contain errors. Review every line item. Common mistakes include counting personal vehicles, including non-trucking revenue, or using incorrect classification codes.
+
+## Disputing an Audit
+
+If you believe your audit is incorrect:
+
+1. Request a detailed breakdown of how the auditor calculated each figure
+2. Provide documentation supporting your position
+3. Ask your agent to advocate on your behalf with the carrier
+4. If unresolved, request a re-audit with a different auditor
+5. As a last resort, file a complaint with your state's department of insurance
+
+## How Trux Helps With Audits
+
+We prepare our clients for audits before they happen. At policy inception, we help you estimate accurately. Mid-term, we process endorsements promptly so your policy reflects your actual operations. When the audit notice arrives, we review it with you, identify any errors, and dispute incorrect charges on your behalf.
+
+An audit shouldn't be stressful. With proper preparation and an agent who understands trucking operations, it's just a routine verification.`
   }
 ];
 

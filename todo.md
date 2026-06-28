@@ -109,3 +109,7 @@
 - [x] Add Blog to navigation header
 - [x] Add blog route to App.tsx
 - [x] Add SEO to blog pages
+
+## Blog Expansion
+- [x] Add Blog link to the footer navigation
+- [x] Add 5 more full-length blog articles
