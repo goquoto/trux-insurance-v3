@@ -1,125 +1,94 @@
 import Layout from "@/components/Layout";
 import SEO from "@/components/SEO";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { FileText, Settings, ExternalLink } from "lucide-react";
-import { useState } from "react";
-
-type Portal = "certificates" | "policy";
+import { FileText, Settings, CreditCard, ExternalLink } from "lucide-react";
 
 export default function ClientCenter() {
-  const [activePortal, setActivePortal] = useState<Portal>("certificates");
-
   return (
     <Layout>
       <SEO
         title="Client Center"
-        description="Access your Trux Insurance client portals — download certificates of insurance instantly via NowCerts or submit policy changes through our support portal."
+        description="Access your Trux Insurance client portals — download certificates, submit policy changes, or make a payment online."
         canonical="/client-center"
       />
       <Breadcrumbs items={[{ label: "Client Center" }]} />
 
       {/* Page header */}
-      <section className="py-12 bg-paper-2">
+      <section className="py-16 bg-paper-2">
         <div className="container">
           <span className="eyebrow">Client Center</span>
           <div className="tick mt-4"></div>
           <h1 className="mt-4 mb-4">Manage your account online.</h1>
           <p className="lead max-w-2xl">
-            Access your insurance portals below — download certificates instantly or submit policy change requests. Available 24/7.
+            Access your insurance portals below — download certificates, submit policy changes, or make a payment. Available 24/7.
           </p>
         </div>
       </section>
 
       <hr className="hairline" />
 
-      {/* Portal selector */}
-      <section className="py-8 bg-paper">
+      {/* Portal cards */}
+      <section className="section bg-paper">
         <div className="container">
-          <div className="flex flex-col sm:flex-row gap-4 mb-8">
-            <button
-              onClick={() => setActivePortal("certificates")}
-              className={`flex items-center gap-3 px-6 py-4 border transition-all text-left ${
-                activePortal === "certificates"
-                  ? "border-[var(--purple)] bg-purple/5"
-                  : "border-[var(--hair)] hover:border-[var(--purple)]"
-              }`}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+
+            {/* Certificates */}
+            <a
+              href="https://identity.nowcerts.com/Account/Login?ReturnUrl=%2FAccount%2FLoginRedirectUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group border border-[var(--hair)] p-8 text-center transition-all hover:border-purple hover:shadow-sm"
             >
-              <FileText size={24} className={activePortal === "certificates" ? "text-purple" : "text-muted-custom"} />
-              <div>
-                <h3 className={`text-[16px] font-sans font-medium ${activePortal === "certificates" ? "text-purple" : "text-ink"}`}>
-                  Certificates Portal
-                </h3>
-                <p className="font-sans text-[13px] text-muted-custom mt-0.5">
-                  Download, email, or print certificates of insurance
-                </p>
+              <div className="w-14 h-14 mx-auto mb-5 flex items-center justify-center bg-paper-2 group-hover:bg-purple/5 transition-colors">
+                <FileText size={28} className="text-purple" />
               </div>
-            </button>
+              <h3 className="text-[18px] font-serif font-medium text-ink mb-2">Certificates</h3>
+              <p className="font-sans text-[14px] text-muted-custom mb-4 leading-relaxed">
+                Download, email, or print your Certificate of Insurance instantly.
+              </p>
+              <span className="inline-flex items-center gap-1.5 font-sans text-[13px] font-medium text-purple">
+                Open Portal <ExternalLink size={12} />
+              </span>
+            </a>
 
-            <button
-              onClick={() => setActivePortal("policy")}
-              className={`flex items-center gap-3 px-6 py-4 border transition-all text-left ${
-                activePortal === "policy"
-                  ? "border-[var(--purple)] bg-purple/5"
-                  : "border-[var(--hair)] hover:border-[var(--purple)]"
-              }`}
+            {/* Policy Changes */}
+            <a
+              href="https://support.truxins.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group border border-[var(--hair)] p-8 text-center transition-all hover:border-purple hover:shadow-sm"
             >
-              <Settings size={24} className={activePortal === "policy" ? "text-purple" : "text-muted-custom"} />
-              <div>
-                <h3 className={`text-[16px] font-sans font-medium ${activePortal === "policy" ? "text-purple" : "text-ink"}`}>
-                  Policy Changes Portal
-                </h3>
-                <p className="font-sans text-[13px] text-muted-custom mt-0.5">
-                  Submit policy changes, add vehicles, update information
-                </p>
+              <div className="w-14 h-14 mx-auto mb-5 flex items-center justify-center bg-paper-2 group-hover:bg-purple/5 transition-colors">
+                <Settings size={28} className="text-purple" />
               </div>
-            </button>
-          </div>
+              <h3 className="text-[18px] font-serif font-medium text-ink mb-2">Policy Changes</h3>
+              <p className="font-sans text-[14px] text-muted-custom mb-4 leading-relaxed">
+                Add vehicles, update drivers, change your radius, or request any policy modification.
+              </p>
+              <span className="inline-flex items-center gap-1.5 font-sans text-[13px] font-medium text-purple">
+                Open Portal <ExternalLink size={12} />
+              </span>
+            </a>
 
-          {/* Embedded portal */}
-          <div className="border border-[var(--hair)] bg-white relative" style={{ minHeight: "700px" }}>
-            {activePortal === "certificates" && (
-              <iframe
-                src="https://identity.nowcerts.com/Account/Login?ReturnUrl=%2FAccount%2FLoginRedirectUrl"
-                title="NowCerts Certificates Portal"
-                className="w-full border-0"
-                style={{ height: "700px" }}
-                sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation"
-              />
-            )}
-            {activePortal === "policy" && (
-              <iframe
-                src="https://support.truxins.com/"
-                title="Policy Changes & Support Portal"
-                className="w-full border-0"
-                style={{ height: "700px" }}
-                sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation"
-              />
-            )}
-          </div>
+            {/* Payments */}
+            <a
+              href="https://truxins.epaypolicy.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group border border-[var(--hair)] p-8 text-center transition-all hover:border-purple hover:shadow-sm"
+            >
+              <div className="w-14 h-14 mx-auto mb-5 flex items-center justify-center bg-paper-2 group-hover:bg-purple/5 transition-colors">
+                <CreditCard size={28} className="text-purple" />
+              </div>
+              <h3 className="text-[18px] font-serif font-medium text-ink mb-2">Make a Payment</h3>
+              <p className="font-sans text-[14px] text-muted-custom mb-4 leading-relaxed">
+                Pay your premium online securely via ePayPolicy.
+              </p>
+              <span className="inline-flex items-center gap-1.5 font-sans text-[13px] font-medium text-purple">
+                Open Portal <ExternalLink size={12} />
+              </span>
+            </a>
 
-          {/* Fallback link */}
-          <div className="mt-4 flex items-center gap-2 text-[13px] font-sans text-muted-custom">
-            <ExternalLink size={14} />
-            <span>Having trouble? Open the portal directly: </span>
-            {activePortal === "certificates" ? (
-              <a
-                href="https://identity.nowcerts.com/Account/Login?ReturnUrl=%2FAccount%2FLoginRedirectUrl"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-purple underline"
-              >
-                NowCerts Login
-              </a>
-            ) : (
-              <a
-                href="https://support.truxins.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-purple underline"
-              >
-                Support Portal
-              </a>
-            )}
           </div>
         </div>
       </section>
@@ -129,25 +98,19 @@ export default function ClientCenter() {
       {/* Help section */}
       <section className="py-12 bg-paper-2">
         <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl">
-            <div>
-              <h3 className="text-[16px] font-sans font-medium text-ink mb-2">Need a certificate?</h3>
-              <p className="font-sans text-[14px] text-muted-custom leading-relaxed">
-                Log in to the Certificates Portal above to download, email, or print your Certificate of Insurance. Most certificates are available instantly.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-[16px] font-sans font-medium text-ink mb-2">Need a policy change?</h3>
-              <p className="font-sans text-[14px] text-muted-custom leading-relaxed">
-                Use the Policy Changes Portal to add/remove vehicles, update drivers, change your radius, or request any other policy modification. We process most requests same day.
-              </p>
-            </div>
-          </div>
-          <div className="mt-8 pt-6 border-t border-[var(--hair)]">
-            <p className="font-sans text-[14px] text-muted-custom">
-              Need help? Call <a href="tel:3312401101" className="text-purple font-medium">(331) 240-1101</a> or email{" "}
-              <a href="mailto:service@truxins.com" className="text-purple font-medium">service@truxins.com</a> — Mon–Fri 9–5 CT.
+          <div className="max-w-2xl mx-auto text-center">
+            <h2 className="text-[24px] font-serif font-medium text-ink mb-4">Need help?</h2>
+            <p className="font-sans text-[15px] text-muted-custom mb-6 leading-relaxed">
+              Our service team is available Monday–Friday, 9–5 CT. Call, email, or submit a request through the policy changes portal above.
             </p>
+            <div className="flex flex-wrap justify-center gap-6 font-sans text-[14px]">
+              <a href="tel:3312401101" className="text-purple font-medium hover:underline">
+                (331) 240-1101
+              </a>
+              <a href="mailto:service@truxins.com" className="text-purple font-medium hover:underline">
+                service@truxins.com
+              </a>
+            </div>
           </div>
         </div>
       </section>
