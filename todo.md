@@ -128,3 +128,12 @@
 - [x] P4: Performance — code split via React.lazy, font preload, reduced motion support
 - [x] P4: Accessibility pass — focus rings, skip-to-content, reduced motion, ARIA roles
 - [x] P4: Verify robots/crawl rules after SSR is live (robots.txt + sitemap confirmed)
+
+## Quote Form System
+- [x] Create quotes database table with all fields
+- [x] Build backend tRPC procedures (submit, getById, getAll, updateStatus)
+- [x] Build 8-step quote form UI with progress indicator
+- [ ] Add quote confirmation page with tracking link
+- [ ] Add admin dashboard to manage quotes
+- [ ] Wire form submissions to email notifications
+- [ ] Add "Save and Continue Later" functionality

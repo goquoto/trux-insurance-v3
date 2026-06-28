@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, datetime, json } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -25,4 +25,68 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
-// TODO: Add your tables here
+// Quotes table for storing insurance quote submissions
+export const quotes = mysqlTable('quotes', {
+  id: int('id').autoincrement().primaryKey(),
+  
+  // Basic Info
+  effectiveDate: datetime('effectiveDate').notNull(),
+  policyState: varchar('policyState', { length: 50 }).notNull(),
+  currentlyInsured: int('currentlyInsured').notNull(),
+  targetPremium: int('targetPremium'),
+  dotNumber: varchar('dotNumber', { length: 20 }),
+  mcNumber: varchar('mcNumber', { length: 20 }),
+  ein: varchar('ein', { length: 20 }),
+  
+  // Business Info
+  businessName: varchar('businessName', { length: 255 }).notNull(),
+  hasDba: int('hasDba').notNull(),
+  dbaName: varchar('dbaName', { length: 255 }),
+  businessStructure: varchar('businessStructure', { length: 50 }).notNull(),
+  website: varchar('website', { length: 255 }),
+  yearEstablished: int('yearEstablished').notNull(),
+  
+  // Addresses
+  mailingAddress: text('mailingAddress').notNull(),
+  mailingCity: varchar('mailingCity', { length: 100 }).notNull(),
+  mailingState: varchar('mailingState', { length: 50 }).notNull(),
+  mailingZip: varchar('mailingZip', { length: 10 }).notNull(),
+  garagingAddress: text('garagingAddress'),
+  garagingCity: varchar('garagingCity', { length: 100 }),
+  garagingState: varchar('garagingState', { length: 50 }),
+  garagingZip: varchar('garagingZip', { length: 10 }),
+  sameAsMailingAddress: int('sameAsMailingAddress').notNull(),
+  allVehiclesSameLocation: int('allVehiclesSameLocation').notNull(),
+  
+  // Coverages (JSON array of coverage selections)
+  selectedCoverages: json('selectedCoverages').$type().notNull(),
+  
+  // Contact Info
+  contactFirstName: varchar('contactFirstName', { length: 100 }).notNull(),
+  contactLastName: varchar('contactLastName', { length: 100 }).notNull(),
+  contactEmail: varchar('contactEmail', { length: 320 }).notNull(),
+  contactPhone: varchar('contactPhone', { length: 20 }).notNull(),
+  
+  // Trucks (JSON array)
+  trucks: json('trucks').$type().notNull(),
+  
+  // Trailers (JSON array)
+  trailers: json('trailers').$type().notNull(),
+  
+  // Drivers (JSON array)
+  drivers: json('drivers').$type().notNull(),
+  
+  // Commodities (JSON array)
+  commodities: json('commodities').$type().notNull(),
+  
+  // Quote Status
+  status: mysqlEnum('status', ['pending', 'under_review', 'approved', 'issued', 'rejected']).default('pending').notNull(),
+  notes: text('notes'),
+  
+  // Metadata
+  createdAt: timestamp('createdAt').defaultNow().notNull(),
+  updatedAt: timestamp('updatedAt').defaultNow().onUpdateNow().notNull(),
+});
+
+export type Quote = typeof quotes.$inferSelect;
+export type InsertQuote = typeof quotes.$inferInsert;

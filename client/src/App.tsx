@@ -15,6 +15,7 @@ const CoverageDetail = lazy(() => import("./pages/CoverageDetail"));
 const About = lazy(() => import("./pages/About"));
 const Service = lazy(() => import("./pages/Service"));
 const Quote = lazy(() => import("./pages/Quote"));
+const QuoteForm = lazy(() => import("./pages/QuoteForm"));
 const Contact = lazy(() => import("./pages/Contact"));
 const WhoWeInsure = lazy(() => import("./pages/WhoWeInsure"));
 const WhoWeInsureDetail = lazy(() => import("./pages/WhoWeInsureDetail"));
@@ -47,7 +48,8 @@ function Router() {
         <Route path={"/states/:state"} component={StatePage} />
         <Route path={"/about"} component={About} />
         <Route path={"/service"} component={Service} />
-        <Route path={"/quote"} component={Quote} />
+        <Route path={"/quote"} component={QuoteForm} />
+        <Route path={"/quote-confirmation/:id"} component={Quote} />
         <Route path={"/contact"} component={Contact} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />

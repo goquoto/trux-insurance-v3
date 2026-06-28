@@ -1,7 +1,10 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, router } from "./_core/trpc";
+import { publicProcedure, router, protectedProcedure } from "./_core/trpc";
+import { createQuote, getQuoteById, getAllQuotes, updateQuoteStatus } from "./db";
+import { InsertQuote } from "../drizzle/schema";
+import { z } from "zod";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -17,12 +20,42 @@ export const appRouter = router({
     }),
   }),
 
-  // TODO: add feature routers here, e.g.
-  // todo: router({
-  //   list: protectedProcedure.query(({ ctx }) =>
-  //     db.getUserTodos(ctx.user.id)
-  //   ),
-  // }),
+  quotes: router({
+    submit: publicProcedure
+      .input(z.any())
+      .mutation(async ({ input }) => {
+        const quote = input as InsertQuote;
+        const created = await createQuote(quote);
+        return { id: created?.id, success: !!created };
+      }),
+    
+    getById: publicProcedure
+      .input(z.number())
+      .query(async ({ input }) => {
+        return await getQuoteById(input);
+      }),
+    
+    getAll: protectedProcedure
+      .query(async ({ ctx }) => {
+        if (ctx.user?.role !== 'admin') {
+          throw new Error('Unauthorized');
+        }
+        return await getAllQuotes();
+      }),
+    
+    updateStatus: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        status: z.enum(['pending', 'under_review', 'approved', 'issued', 'rejected']),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user?.role !== 'admin') {
+          throw new Error('Unauthorized');
+        }
+        return await updateQuoteStatus(input.id, input.status, input.notes);
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;
