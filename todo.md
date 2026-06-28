@@ -137,3 +137,8 @@
 - [x] Add admin dashboard to manage quotes
 - [x] Wire form submissions to email notifications
 - [x] Add "Save and Continue Later" functionality (auto-save + manual save button + draft restoration)
+
+## Quick Quote Form (Simplified)
+- [x] Create QuickQuote page with simplified form (name, email, phone, company, DOT, state, notes, file upload)
+- [x] Wire to database and email notifications (uses existing quotes.submit procedure)
+- [x] Add route and navigation link (GET A FAST QUOTE button on homepage)

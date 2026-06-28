@@ -28,9 +28,9 @@ export default function Home() {
                 <a href="https://truxins.com/trucking-insurance-quote/" className="btn-solid">
                   Start Trucking Application
                 </a>
-                <Link href="/quote" className="btn-ghost">
-                  Get a Fast Quote
-                </Link>
+                <a href="/quick-quote" className="btn-ghost">
+                  GET A FAST QUOTE
+                </a>
               </div>
               {/* Trust line */}
               <div className="flex flex-wrap items-center gap-6 text-[13px] font-sans text-taupe">

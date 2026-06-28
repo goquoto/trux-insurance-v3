@@ -15,6 +15,7 @@ const CoverageDetail = lazy(() => import("./pages/CoverageDetail"));
 const About = lazy(() => import("./pages/About"));
 const Service = lazy(() => import("./pages/Service"));
 const Quote = lazy(() => import("./pages/Quote"));
+const QuickQuote = lazy(() => import("./pages/QuickQuote"));
 const QuoteForm = lazy(() => import("./pages/QuoteForm"));
 const QuoteConfirmation = lazy(() => import("./pages/QuoteConfirmation"));
 const AdminQuotes = lazy(() => import("./pages/AdminQuotes"));
@@ -51,6 +52,7 @@ function Router() {
         <Route path={"/about"} component={About} />
         <Route path={"/service"} component={Service} />
         <Route path={"/quote"} component={QuoteForm} />
+        <Route path={"/quick-quote"} component={QuickQuote} />
         <Route path={"/quote-confirmation/:id"} component={QuoteConfirmation} />
         <Route path={"/admin/quotes"} component={AdminQuotes} />
         <Route path={"/contact"} component={Contact} />
