@@ -151,3 +151,6 @@
 - [x] Create tRPC procedure to fetch Google reviews via Places API (server-side, cached 1 hour)
 - [x] Build GoogleReviews component with star ratings, review cards, and "See all reviews" link
 - [x] Integrate GoogleReviews component into the About page
+
+## Footer Link Fixes
+- [x] Fix "For Clients" footer links: Policy Service → support.truxins.com, Report a Claim → /service page, Make a Payment → truxins.epaypolicy.com
