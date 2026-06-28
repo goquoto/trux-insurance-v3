@@ -4,6 +4,7 @@ import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { trpc } from '@/lib/trpc';
+import { LICENSED_STATES } from '@shared/states';
 
 type FormStep = 'basic' | 'coverages' | 'contacts' | 'trucks' | 'trailers' | 'drivers' | 'commodities' | 'wrapping';
 
@@ -18,15 +19,7 @@ const STEPS: { id: FormStep; label: string; number: number }[] = [
   { id: 'wrapping', label: 'Wrapping Up', number: 8 },
 ];
 
-const US_STATES = [
-  'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
-  'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
-  'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
-  'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico',
-  'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania',
-  'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-  'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-];
+const US_STATES = LICENSED_STATES;
 
 const COVERAGE_OPTIONS = [
   'Commercial Auto Liability',
