@@ -1176,6 +1176,256 @@ If you believe your audit is incorrect:
 We prepare our clients for audits before they happen. At policy inception, we help you estimate accurately. Mid-term, we process endorsements promptly so your policy reflects your actual operations. When the audit notice arrives, we review it with you, identify any errors, and dispute incorrect charges on your behalf.
 
 An audit shouldn't be stressful. With proper preparation and an agent who understands trucking operations, it's just a routine verification.`
+  },
+  {
+    slug: "motus-fmcsa-new-registration-system-what-trucking-companies-need-to-know",
+    title: "MOTUS: FMCSA's New Registration System — What Every Trucking Company Needs to Know",
+    excerpt: "FMCSA launched MOTUS in May 2026 to replace legacy registration systems. This comprehensive guide covers what changed, who is affected, how to claim your account, and what it means for your insurance and compliance.",
+    category: "Compliance",
+    readTime: "14 min read",
+    publishDate: "2026-06-27",
+    author: "Trux Insurance Services",
+    content: `The Federal Motor Carrier Safety Administration (FMCSA) has officially launched MOTUS — a modernized, unified registration system that replaces decades-old platforms used by motor carriers, brokers, freight forwarders, and supporting companies across the United States. If you hold a USDOT number, operate under interstate authority, or file insurance on behalf of carriers, MOTUS is now your primary registration interface.
+
+This is the most significant change to FMCSA's registration infrastructure since the Unified Registration System (URS) was introduced. Every trucking company operating in interstate commerce needs to understand what MOTUS is, what it replaces, how to transition, and what it means for ongoing compliance and insurance requirements.
+
+## What Is MOTUS?
+
+MOTUS — derived from the Latin word for "movement" — is FMCSA's new unified online registration system for USDOT numbers and operating authority. It was designed to replace three legacy systems simultaneously:
+
+- **The Unified Registration System (URS)** — FMCSA's previous system of record for new applications and updates since the early 2010s
+- **The registration components of MCMIS** — the Motor Carrier Management Information System modules used for application intake and update workflows
+- **The Interstate Commerce Commission Licensing and Insurance (L&I) system** — established in 1994 and still embedded in some operating-authority and insurance-filing reconciliation flows
+
+MOTUS creates a single online portal where regulated companies manage all federal registration records connected to safety, authority, and compliance monitoring. The goal is to improve data accuracy, reduce duplicate or conflicting records, strengthen fraud prevention, and give FMCSA clearer visibility into regulated business activity.
+
+## Why FMCSA Built MOTUS
+
+FMCSA developed MOTUS to address long-standing problems with fragmented registration systems:
+
+**Data fragmentation.** Under the old systems, carrier information was spread across multiple databases that didn't always communicate. A name change filed in one system might not propagate to another, creating inconsistencies that complicated compliance monitoring.
+
+**Registration fraud.** The legacy systems had verification gaps that bad actors exploited. "Chameleon carriers" — unsafe operators who shut down and reopen under new identities — could slip through. MOTUS adds identity verification, business validation, and automated fraud detection to close these gaps.
+
+**Outdated technology.** Some components of the previous system dated back to 1994. The user experience was fragmented, confusing, and not mobile-friendly. MOTUS provides a modern, intuitive interface accessible from any device.
+
+**Statutory mandate.** The Moving Ahead for Progress in the 21st Century Act (MAP-21) required FMCSA to build a unified registration system. MOTUS fulfills that mandate.
+
+## The Rollout Timeline
+
+FMCSA deployed MOTUS in phases:
+
+### Phase I — December 8, 2025
+
+Phase I went live for "supporting companies" — three groups that assist carriers with registration:
+
+- **Blanket companies** (BOC-3 filers) — entities that file Form BOC-3 (designation of process agents) on behalf of motor carriers, brokers, and freight forwarders
+- **Financial responsibility filers** — insurance and surety companies that file evidence of insurance, surety bonds, or trust agreements with FMCSA
+- **Transportation service providers** — entities that assist regulated registrants with the registration process
+
+If your fleet uses a process-agent service provider or files insurance through a third-party filer, that partner has been operating inside MOTUS since December 2025.
+
+### Phase II — May 2026
+
+Phase II opened MOTUS to all regulated entities: motor carriers (interstate property and passenger), private motor carriers, brokers, freight forwarders, leasing companies, and the rest of the population that registers with FMCSA.
+
+FMCSA required all carriers to update and verify their registration information in the FMCSA Portal by May 14, 2026. Motor carriers, brokers, and freight forwarders gained full access in late May 2026.
+
+## Who Does MOTUS Affect?
+
+Every entity that interacts with FMCSA registration:
+
+- **Interstate motor carriers** — property carriers, passenger carriers, household goods movers
+- **Private motor carriers** — companies transporting their own cargo across state lines
+- **Brokers and freight forwarders** — including BOC-3 process-agent designations and financial-responsibility bond filings
+- **CDL-required operations** — any employer operating commercial motor vehicles in interstate commerce
+- **Mexico-domiciled carriers** — operating in the United States under long-haul or commercial zone authority
+- **Intermodal equipment providers and cargo tank facilities**
+- **Insurance companies and surety providers** — filing evidence of financial responsibility on behalf of carriers
+
+Intrastate carriers are not subject to new federal requirements under MOTUS. However, if a state requires a USDOT number, that registration is still managed through the new system.
+
+## What Changed in MOTUS
+
+### Fully Electronic Registration
+
+MOTUS operates as a fully electronic system. Paper-based registration processes are no longer supported. This improves speed and consistency but increases the importance of maintaining accurate digital records.
+
+### Secure Access via Login.gov
+
+Access to MOTUS is controlled through Login.gov credentials and multi-factor authentication. Only authorized users may view or manage a company's registration data. The initial account setup requires the designated Company Official to use the same Login.gov email associated with the FMCSA Portal.
+
+### Identity and Business Verification
+
+MOTUS requires identity and business verification for:
+
+- New USDOT number registrations
+- New operating authority applications
+- Existing companies accessing MOTUS for the first time
+
+FMCSA verifies identity, physical business location, and ownership information. Records that cannot be verified may be delayed, reviewed, or denied.
+
+### Enhanced Fraud Prevention
+
+Automated checks review data for inconsistencies and suspicious patterns before authority is granted or updated. This targets chameleon carrier activity and prevents unsafe or noncompliant operations from entering the system.
+
+### USDOT Number Suffixes
+
+MOTUS introduces suffixes to help identify entity types and registrations:
+
+- **C** — Property Carrier Operating Authority
+- **V** — Private Carrier
+- **P** — Passenger Operating Authority
+- **H** — Household Goods Carrier Operating Authority
+- **B** — Broker Operating Authority
+- **F** — Freight Forwarder Operating Authority
+- **E** — Enterprise Operating Authority
+- **X** — MX Long-Haul
+- **Z** — MX Commercial Zone
+- **N** — Non-North America Domiciled
+- **R** — Intrastate Carrier
+
+A registrant may have multiple suffixes (e.g., USDOT 1234567 **CF** for a property carrier with freight forwarder authority). Suffixes are displayed in MOTUS for reference but are not a vehicle marking requirement.
+
+### Automated Notifications
+
+MOTUS sends automated electronic notifications when updates are required, biennial updates are due, or registration status changes. Registrants can opt in to receive automated service of registration-related notices and orders electronically.
+
+## What Has NOT Changed
+
+At launch, MOTUS does **not**:
+
+- Eliminate MC, FF, or MX numbers (existing numbers carry forward)
+- Introduce Safety Registration (subject to future rulemaking)
+- Change BOC-3 filing requirements
+- Change registration fees
+- Require new permits or licenses
+- Change underlying compliance requirements
+
+The rules of compliance remain the same. MOTUS changes how compliance information is reviewed, verified, and enforced — not what is required.
+
+## How to Get Started in MOTUS
+
+### Step 1: Create a User Profile
+
+Visit [motus.dot.gov](https://motus.dot.gov) and create a user profile using your Login.gov credentials. You'll need to complete identity verification through Login.gov, which requires a valid government-issued ID and may include additional verification steps.
+
+### Step 2: Create or Claim a Company Account
+
+**New registrants:** Create a new company account and apply for a USDOT number and/or operating authority.
+
+**Existing registrants:** The Company Official can quickly set up a MOTUS company account by "claiming" the existing USDOT number. This imports your company data, allows you to verify business information, and saves you from entering everything manually.
+
+**Critical:** Use the same Login.gov email that was used as the Company Official in the FMCSA Portal. This is the only way to claim your existing record.
+
+### Step 3: Register and Manage
+
+Once your account is active, you can:
+
+- Apply for a new USDOT number or operating authority
+- Submit biennial updates
+- Update business information (company name, address, contacts)
+- Apply for additional types of operating authority
+- Reinstate suspended operating authority or reapply after revocation
+- Inactivate or reactivate your USDOT number
+- Track the status of registration actions
+
+## What This Means for Your Insurance
+
+MOTUS strengthens FMCSA's ability to monitor insurance and bond compliance in real time. This has several implications for trucking companies:
+
+### Faster Enforcement on Lapsed Filings
+
+When required insurance filings lapse, enforcement actions may occur more quickly than under the old systems. The margin for error is smaller due to real-time monitoring and faster system response. If your insurance filing lapses even briefly, FMCSA will know sooner and may act sooner.
+
+### Insurance Filing Accuracy
+
+Because MOTUS validates data more aggressively, discrepancies between your registration record and your insurance filings are more likely to be flagged. Make sure your legal name, USDOT number, and authority type match exactly between your registration and your insurance certificates.
+
+### Coordination with Your Insurance Agent
+
+Your insurance company or surety provider has been operating inside MOTUS since Phase I (December 2025). Confirm that:
+
+- Your evidence of financial responsibility is current and correctly filed
+- Your legal name on the insurance filing matches your MOTUS registration exactly
+- If you've changed insurance carriers recently, the new evidence has been filed correctly
+
+### What Trux Insurance Does for You
+
+As your trucking insurance specialist, we monitor your filing status continuously. When MOTUS flags a discrepancy or a filing approaches expiration, we catch it before it becomes an enforcement issue. Our team:
+
+- Ensures your insurance filings match your MOTUS registration record exactly
+- Files evidence of financial responsibility promptly when policies are issued or renewed
+- Monitors for any FMCSA notices related to your registration status
+- Coordinates with your compliance team on biennial updates that affect insurance requirements
+- Alerts you immediately if any filing issue arises
+
+## How to Prepare: Your Action Checklist
+
+Whether you've already claimed your MOTUS account or haven't started yet, here's what to do:
+
+### Immediate Actions
+
+1. **Verify your FMCSA Portal access is active.** If your account has been disabled or archived, contact FMCSA's contact center at [ask.fmcsa.dot.gov](https://ask.fmcsa.dot.gov)
+2. **Identify your Company Official.** Only the designated Company Official using the same Login.gov email from the FMCSA Portal can claim the account in MOTUS
+3. **Confirm your Login.gov email.** If you've lost access to the email used for the FMCSA Portal, resolve this before attempting to claim your MOTUS account
+4. **Review your registration data.** Confirm legal name, DBA names, business address, USDOT contact, MCS-150 mileage figures, and authority categories are correct
+
+### Within 30 Days
+
+5. **Claim your USDOT number in MOTUS.** Visit motus.dot.gov, create your user profile, and claim your existing record
+6. **Review and certify your information.** Once claimed, review all imported data and certify its accuracy
+7. **Coordinate with your process-agent provider.** Confirm your BOC-3 designations are correct in each state where you operate
+8. **Coordinate with your insurance agent.** Verify that your evidence of financial responsibility is current and matches your MOTUS record
+
+### Ongoing
+
+9. **Set up authorized users.** Designate who in your organization can access and manage your MOTUS account
+10. **Document credentials securely.** Store Login.gov credentials in a secure, shared location that survives staff turnover
+11. **Respond to automated notifications.** MOTUS will send reminders for biennial updates and other required actions — don't ignore them
+12. **Keep your insurance agent informed.** Any changes to your registration (name, address, authority type) may require corresponding insurance filing updates
+
+## Frequently Asked Questions
+
+**Do I need to migrate to MOTUS immediately?**
+
+If you haven't already claimed your account, you should do so as soon as possible. While there's no hard deadline that shuts off access, delaying increases the risk of complications — especially if you need to file for authority changes, process biennial updates, or respond to FMCSA notices.
+
+**Will my existing USDOT number change?**
+
+No. Existing USDOT numbers, operating authority numbers (MC/FF/MX), and Clearinghouse registrations continue without change. MOTUS is a new interface; your identifiers carry forward.
+
+**Can I access MOTUS from my phone?**
+
+Yes. MOTUS is designed to work on mobile devices, tablets, and computers.
+
+**What if I can't verify my identity?**
+
+Identity verification is handled through Login.gov. If you have difficulty, Login.gov provides support options including in-person verification at participating locations. FMCSA also has resources at [fmcsa.dot.gov/registration/identity-verification](https://www.fmcsa.dot.gov/registration/identity-verification).
+
+**Does MOTUS change my insurance requirements?**
+
+No. The underlying insurance and financial responsibility requirements remain the same. MOTUS changes how those filings are tracked and monitored — not what's required.
+
+**What happens if my insurance filing lapses in MOTUS?**
+
+FMCSA's real-time monitoring means lapses may trigger enforcement actions faster than before. Contact your insurance agent immediately if you receive any notice about a filing issue.
+
+**I'm a new carrier. How do I register?**
+
+New carriers apply directly through MOTUS at motus.dot.gov. Use FMCSA's [USDOT Wizard](https://www.fmcsa.dot.gov/usdot-wizard) to determine whether you need only a USDOT number or both a USDOT number and operating authority, then create your user profile and company account in MOTUS.
+
+## The Bottom Line
+
+MOTUS is not optional and it's not going away. It's the system you'll use every time you interact with FMCSA registration going forward — biennial updates, authority changes, name changes, insurance filings, everything.
+
+The good news: for compliant companies with accurate records, MOTUS actually reduces administrative friction. The interface is cleaner, status tracking is better, and automated notifications help prevent missed deadlines.
+
+The risk: for companies with incomplete, inconsistent, or outdated registration information, MOTUS increases the likelihood of delays, denials, or enforcement action. The system validates more aggressively and monitors in real time.
+
+**Our recommendation:** Claim your MOTUS account now if you haven't already. Review your registration data. Confirm your insurance filings match. And keep your insurance agent in the loop — because in a system that monitors compliance in real time, having an agent who responds in real time is more important than ever.
+
+Need help navigating the transition? Contact Trux Insurance Services. We're already operating inside MOTUS on behalf of our clients and can ensure your insurance filings stay current and accurate throughout the transition.`
   }
 ];
 

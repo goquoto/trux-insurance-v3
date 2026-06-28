@@ -142,3 +142,6 @@
 - [x] Create QuickQuote page with simplified form (name, email, phone, company, DOT, state, notes, file upload)
 - [x] Wire to database and email notifications (uses existing quotes.submit procedure)
 - [x] Add route and navigation link (GET A FAST QUOTE button on homepage)
+
+## MOTUS Blog Post
+- [x] Add extensive MOTUS blog article (14 min read, covers what it is, timeline, who's affected, what changed, insurance implications, action checklist, FAQ)
