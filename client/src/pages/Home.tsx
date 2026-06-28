@@ -75,48 +75,10 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Trucking & Auto */}
-            <div>
-              <h3 className="mb-4 text-ink">Trucking &amp; Auto</h3>
-              <ul className="space-y-3">
-                {[
-                  { name: "Commercial Auto Liability", slug: "auto-liability" },
-                  { name: "Auto Physical Damage", slug: "physical-damage" },
-                  { name: "Motor Truck Cargo", slug: "cargo" },
-                  { name: "General Liability", slug: "general-liability" },
-                  { name: "Non-Trucking / Bobtail", slug: "non-trucking" },
-                  { name: "Trailer Interchange", slug: "trailer-interchange" },
-                  { name: "Excess / Umbrella", slug: "excess-umbrella" },
-                  { name: "Contingent Auto & Cargo", slug: "cargo" },
-                ].map((item) => (
-                  <li key={item.name} className="font-sans text-[15px] text-muted-custom border-b border-[var(--hair)] pb-2 flex items-start gap-2">
-                    <span className="text-purple mt-1">·</span>
-                    <Link href={`/coverages/${item.slug}`} className="no-underline text-muted-custom hover:text-ink transition-colors">{item.name}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <TruckingAutoList />
 
             {/* Workforce & Specialty */}
-            <div>
-              <h3 className="mb-4 text-ink">Workforce &amp; Specialty</h3>
-              <ul className="space-y-3">
-                {[
-                  { name: "Workers' Compensation", slug: "workers-compensation" },
-                  { name: "Occupational Accident", slug: "occupational-accident" },
-                  { name: "Hired & Non-Owned Auto", slug: "non-trucking" },
-                  { name: "Pollution Liability", slug: "pollution-liability" },
-                  { name: "Cyber Liability", slug: "cyber-coverage" },
-                  { name: "Crime Coverage", slug: "crime-coverage" },
-                  { name: "Freight Broker Bonds", slug: "freight-broker-bonds" },
-                  { name: "Contractors", slug: "contractors" },
-                ].map((item) => (
-                  <li key={item.name} className="font-sans text-[15px] text-muted-custom border-b border-[var(--hair)] pb-2 flex items-start gap-2">
-                    <span className="text-purple mt-1">·</span>
-                    <Link href={`/coverages/${item.slug}`} className="no-underline text-muted-custom hover:text-ink transition-colors">{item.name}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <WorkforceSpecialtyList />
 
             {/* Endorsements & Broadening */}
             <EndorsementsList />
@@ -354,6 +316,88 @@ export default function Home() {
         </a>
       </div>
     </Layout>
+  );
+}
+
+function TruckingAutoList() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const items = [
+    { name: "Commercial Auto Liability", slug: "auto-liability", desc: "Covers bodily injury and property damage you cause to others while operating your commercial vehicle on public roads." },
+    { name: "Auto Physical Damage", slug: "physical-damage", desc: "Pays to repair or replace your truck and trailer after a collision, theft, fire, vandalism, or weather event." },
+    { name: "Motor Truck Cargo", slug: "cargo", desc: "Protects the freight you're hauling against loss or damage from accidents, theft, or contamination during transit." },
+    { name: "General Liability", slug: "general-liability", desc: "Covers third-party bodily injury and property damage claims that occur off the road — at your terminal, yard, or office." },
+    { name: "Non-Trucking / Bobtail", slug: "non-trucking", desc: "Provides liability coverage when you're driving your truck for personal use — not under dispatch or hauling freight." },
+    { name: "Trailer Interchange", slug: "trailer-interchange", desc: "Covers physical damage to trailers you don't own but are pulling under a trailer interchange agreement." },
+    { name: "Excess / Umbrella", slug: "excess-umbrella", desc: "Adds an extra layer of liability protection above your primary auto and general liability limits." },
+    { name: "Contingent Auto & Cargo", slug: "cargo", desc: "Protects freight brokers when a carrier's own insurance fails to respond to a covered auto or cargo claim." },
+  ];
+
+  return (
+    <div>
+      <h3 className="mb-4 text-ink">Trucking &amp; Auto</h3>
+      <ul className="space-y-0">
+        {items.map((item, idx) => (
+          <li key={item.name} className="border-b border-[var(--hair)]">
+            <button
+              onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+              className="w-full flex items-center gap-2 py-3 text-left group cursor-pointer"
+              aria-expanded={openIndex === idx}
+            >
+              <span className="text-purple shrink-0">·</span>
+              <span className="font-sans text-[15px] text-muted-custom group-hover:text-ink transition-colors flex-1">{item.name}</span>
+              <ChevronDown className={`w-4 h-4 text-taupe transition-transform duration-200 ${openIndex === idx ? 'rotate-180' : ''}`} />
+            </button>
+            <div className={`overflow-hidden transition-all duration-200 ease-out ${openIndex === idx ? 'max-h-40 pb-3' : 'max-h-0'}`}>
+              <p className="text-[13px] text-taupe leading-relaxed pl-5 pr-4">{item.desc}</p>
+              <Link href={`/coverages/${item.slug}`} className="text-[12px] text-purple hover:text-ink pl-5 mt-1 inline-block transition-colors">
+                Learn more →
+              </Link>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function WorkforceSpecialtyList() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const items = [
+    { name: "Workers' Compensation", slug: "workers-compensation", desc: "Covers medical expenses, lost wages, and rehabilitation for employees injured on the job — required in most states." },
+    { name: "Occupational Accident", slug: "occupational-accident", desc: "Provides accident and injury benefits for independent contractors and owner-operators who aren't eligible for workers' comp." },
+    { name: "Hired & Non-Owned Auto", slug: "non-trucking", desc: "Covers liability when employees drive rented vehicles or their personal cars for business purposes." },
+    { name: "Pollution Liability", slug: "pollution-liability", desc: "Covers cleanup costs and third-party claims from hazardous material spills, fuel leaks, or chemical releases." },
+    { name: "Cyber Liability", slug: "cyber-coverage", desc: "Protects against data breaches, ransomware attacks, and electronic theft of customer or driver information." },
+    { name: "Crime Coverage", slug: "crime-coverage", desc: "Covers losses from employee theft, forgery, fraud, and other criminal acts committed against your business." },
+    { name: "Freight Broker Bonds", slug: "freight-broker-bonds", desc: "The BMC-84 surety bond required by FMCSA for all licensed freight brokers — protects carriers and shippers." },
+    { name: "Contractors", slug: "contractors", desc: "General liability and commercial auto coverage tailored for construction-related trucking and hauling operations." },
+  ];
+
+  return (
+    <div>
+      <h3 className="mb-4 text-ink">Workforce &amp; Specialty</h3>
+      <ul className="space-y-0">
+        {items.map((item, idx) => (
+          <li key={item.name} className="border-b border-[var(--hair)]">
+            <button
+              onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+              className="w-full flex items-center gap-2 py-3 text-left group cursor-pointer"
+              aria-expanded={openIndex === idx}
+            >
+              <span className="text-purple shrink-0">·</span>
+              <span className="font-sans text-[15px] text-muted-custom group-hover:text-ink transition-colors flex-1">{item.name}</span>
+              <ChevronDown className={`w-4 h-4 text-taupe transition-transform duration-200 ${openIndex === idx ? 'rotate-180' : ''}`} />
+            </button>
+            <div className={`overflow-hidden transition-all duration-200 ease-out ${openIndex === idx ? 'max-h-40 pb-3' : 'max-h-0'}`}>
+              <p className="text-[13px] text-taupe leading-relaxed pl-5 pr-4">{item.desc}</p>
+              <Link href={`/coverages/${item.slug}`} className="text-[12px] text-purple hover:text-ink pl-5 mt-1 inline-block transition-colors">
+                Learn more →
+              </Link>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

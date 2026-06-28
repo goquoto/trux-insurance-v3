@@ -260,3 +260,8 @@
 - [x] Audit all vehicle images and regenerate mismatched ones (dry van, commercial fleet, freight truck, gooseneck, mobile home mover)
 - [x] Commercial Fleets vehicle page already exists with proper fleet image
 - [x] Pre-select vehicle type in quote form via ?vehicle= URL param from vehicle detail pages
+
+## Collapsible Coverage Columns & Map Fix
+- [x] Make Trucking & Auto column collapsible (same pattern as Endorsements)
+- [x] Make Workforce & Specialty column collapsible (same pattern as Endorsements)
+- [x] Replace interactive state map with proper full 50-state US SVG (21 licensed states active/clickable, rest grayed out)
