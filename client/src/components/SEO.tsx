@@ -14,13 +14,14 @@ interface SEOProps {
   title: string;
   description: string;
   canonical?: string;
+  keywords?: string;
   breadcrumbs?: BreadcrumbItem[];
   faq?: FAQItem[];
   type?: "website" | "article" | "service";
   serviceName?: string;
 }
 
-export default function SEO({ title, description, canonical, breadcrumbs, faq, type = "website", serviceName }: SEOProps) {
+export default function SEO({ title, description, canonical, keywords, breadcrumbs, faq, type = "website", serviceName }: SEOProps) {
   useEffect(() => {
     // Set document title
     document.title = `${title} | Trux Insurance Services`;
@@ -33,6 +34,17 @@ export default function SEO({ title, description, canonical, breadcrumbs, faq, t
       document.head.appendChild(metaDesc);
     }
     metaDesc.setAttribute("content", description);
+
+    // Set or update meta keywords
+    if (keywords) {
+      let metaKeywords = document.querySelector('meta[name="keywords"]');
+      if (!metaKeywords) {
+        metaKeywords = document.createElement("meta");
+        metaKeywords.setAttribute("name", "keywords");
+        document.head.appendChild(metaKeywords);
+      }
+      metaKeywords.setAttribute("content", keywords);
+    }
 
     // Set canonical
     let canonicalEl = document.querySelector('link[rel="canonical"]');

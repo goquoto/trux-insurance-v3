@@ -59,7 +59,7 @@ export default function VehicleDetail() {
               <h1 className="mt-4 mb-4">{vehicle.name} Insurance</h1>
               <p className="lead mb-8">{vehicle.description}</p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/quote" className="btn-solid no-underline text-center">
+                <Link href={`/quote?vehicle=${encodeURIComponent(vehicle.name)}`} className="btn-solid no-underline text-center">
                   Get a Quote
                 </Link>
                 <a href="tel:18773508789" className="btn-ghost no-underline text-center">

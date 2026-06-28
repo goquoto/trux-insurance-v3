@@ -12,6 +12,7 @@ interface PageSEO {
   canonical: string;
   h1: string;
   schemas: object[];
+  keywords?: string;
   breadcrumbs?: { name: string; url: string }[];
   preContent?: string; // Key text content for crawlers
 }
@@ -119,9 +120,10 @@ function getPageSEO(path: string): PageSEO | null {
   if (path === "/" || path === "") {
     return {
       title: "Commercial Trucking Insurance — Trux Insurance Services",
-      description: "Trux Insurance Services provides commercial trucking and fleet insurance in 21 states. Auto liability, cargo, physical damage, and more from specialists who only do trucking.",
+      description: "Trucking insurance specialists in 21 states. Auto liability, cargo, physical damage, and more for owner-operators and fleets.",
       canonical: BASE_URL,
       h1: "Every mile covered — by people who only do trucking.",
+      keywords: "trucking insurance, commercial truck insurance, auto liability, cargo insurance, physical damage, owner operator insurance, fleet insurance, trucking company insurance, motor carrier insurance",
       schemas: [orgSchema],
       breadcrumbs: [{ name: "Home", url: "/" }],
       preContent: "Trux Insurance Services places commercial trucking and fleet coverage across 21 states — auto liability, cargo, physical damage, trailer interchange and more. We market your account once, to the carriers that fit your risk, and stand behind it at claim time and renewal. 5.0 Google rating. New authorities welcome. 10+ years experience."
@@ -335,6 +337,12 @@ export function injectSEO(html: string, requestPath: string): string {
     /<meta name="description" content="[^"]*" \/>/,
     `<meta name="description" content="${escapeAttr(seo.description)}" />`
   );
+
+  // Add keywords meta tag if present
+  if (seo.keywords) {
+    const keywordsTag = `<meta name="keywords" content="${escapeAttr(seo.keywords)}" />`;
+    html = html.replace("</head>", `${keywordsTag}\n  </head>`);
+  }
 
   // Add canonical link before </head>
   const canonicalTag = `<link rel="canonical" href="${escapeAttr(seo.canonical)}" />`;

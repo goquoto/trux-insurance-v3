@@ -3,7 +3,7 @@ import Layout from "@/components/Layout";
 import SEO from "@/components/SEO";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { toast } from "sonner";
-import { Link } from "wouter";
+import { Link, useSearch } from "wouter";
 
 const US_STATES = [
   "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
@@ -61,6 +61,7 @@ interface FormDataType {
   dot: string;
   state: string;
   powerUnits: string;
+  vehicleType: string;
   
   // Step 2 (optional)
   authorityType: string;
@@ -93,6 +94,7 @@ export default function Quote() {
     dot: "",
     state: "",
     powerUnits: "",
+    vehicleType: "",
     authorityType: "",
     ein: "",
     yearsInBusiness: "",
@@ -111,18 +113,34 @@ export default function Quote() {
     files: [],
   });
 
-  // Load saved form data from localStorage on mount
+  // Pre-fill vehicle type from URL params (e.g., /quote?vehicle=18%20Wheelers&state=Illinois)
+  const searchString = useSearch();
+
+  // Load saved form data from localStorage on mount, then apply URL params on top
   useEffect(() => {
     const saved = localStorage.getItem("quoteFormData");
+    let base: Partial<FormDataType> = {};
     if (saved) {
       try {
-        const parsed = JSON.parse(saved);
-        setFormData(parsed);
+        base = JSON.parse(saved);
       } catch (e) {
         console.error("Failed to load saved form data");
       }
     }
-  }, []);
+    // Apply URL params on top of saved data (URL params take priority)
+    const params = new URLSearchParams(searchString);
+    const vehicleParam = params.get("vehicle");
+    const stateParam = params.get("state");
+    if (vehicleParam) {
+      base.vehicleType = vehicleParam;
+    }
+    if (stateParam && LICENSED_STATES.includes(stateParam)) {
+      base.state = stateParam;
+    }
+    if (Object.keys(base).length > 0) {
+      setFormData(prev => ({ ...prev, ...base }));
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Save form data to localStorage whenever it changes
   useEffect(() => {
@@ -382,6 +400,19 @@ export default function Quote() {
                       onChange={handleChange}
                       placeholder="e.g. 5"
                       min="1"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="form-label" htmlFor="vehicleType">Vehicle Type</label>
+                    <input
+                      type="text"
+                      id="vehicleType"
+                      name="vehicleType"
+                      className="form-input"
+                      value={formData.vehicleType}
+                      onChange={handleChange}
+                      placeholder="e.g. 18 Wheelers, Flatbed, Tanker"
                     />
                   </div>
 

@@ -8,7 +8,8 @@ export default function Home() {
     <Layout>
       <SEO
         title="Commercial Trucking Insurance"
-        description="Trux Insurance Services — commercial trucking insurance specialists licensed in 21 states. Auto liability, cargo, physical damage, and more for owner-operators and fleets."
+        description="Trucking insurance specialists in 21 states. Auto liability, cargo, physical damage, and more for owner-operators and fleets."
+        keywords="trucking insurance, commercial truck insurance, auto liability, cargo insurance, physical damage, owner operator insurance, fleet insurance, trucking company insurance, motor carrier insurance"
         canonical="/"
       />
       {/* Hero Section */}

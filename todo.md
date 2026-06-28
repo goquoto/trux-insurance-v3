@@ -253,3 +253,10 @@
 ## Vehicle Detail & Homepage Map Enhancements
 - [x] Enlarge vehicle detail page hero image (larger sand panel, decorative border, max-w-lg, min-h-420px)
 - [x] Embed interactive clickable state map on the homepage (replaced static PNG with InteractiveStateMap component)
+
+
+## Map & Vehicle Enhancements (Round 2)
+- [x] Fix interactive state map: replace circle dots with proper SVG state outlines (geographic shapes)
+- [x] Audit all vehicle images and regenerate mismatched ones (dry van, commercial fleet, freight truck, gooseneck, mobile home mover)
+- [x] Commercial Fleets vehicle page already exists with proper fleet image
+- [x] Pre-select vehicle type in quote form via ?vehicle= URL param from vehicle detail pages

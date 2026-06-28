@@ -258,7 +258,7 @@ export const vehicleDetails: Record<string, VehicleDetail> = {
     name: "Commercial Fleets",
     slug: "commercial-fleets",
     category: "Fleet",
-    image: "/manus-storage/vehicle-double-trailer_fdb9a752.png",
+    image: "/manus-storage/vehicle-commercial-fleet_6079cb83.png",
     description: "Fleet insurance programs for 2–200+ trucks. Volume discounts, centralized management, and coverage tailored to your operation's risk profile.",
     overview: "Managing insurance for a commercial fleet requires a fundamentally different approach than insuring individual trucks. Fleet programs offer volume pricing, centralized certificate management, streamlined claims handling, and the ability to add/remove units without rewriting the entire policy. At Trux Insurance Services, we build fleet programs that scale with your business — whether you're running 3 trucks or 300. Our markets offer experience-rated programs where your loss history directly impacts your premium, rewarding safe operations with meaningful savings. We handle the complexity of multi-state filings, driver management, and equipment schedules so you can focus on running your business.",
     whoNeedsIt: [
@@ -306,7 +306,7 @@ export const vehicleDetails: Record<string, VehicleDetail> = {
     name: "Dry Vans",
     slug: "dry-vans",
     category: "Long Haul",
-    image: "/manus-storage/vehicle-18-wheeler_50e1411c.png",
+    image: "/manus-storage/vehicle-dry-van_b4660204.png",
     description: "Insurance for dry van semi-trailer operations hauling general freight. Auto liability, cargo coverage, physical damage, and trailer interchange.",
     overview: "Dry van trailers are the most common trailer type on American highways, hauling everything from packaged consumer goods to industrial supplies. These enclosed 53-foot trailers protect cargo from weather and theft while providing maximum versatility for general freight operations. Insurance for dry van operations must account for the diverse cargo types, multi-state routing, and the frequency of loading dock incidents. We place dry van coverage with markets that offer competitive rates for experienced operators and programs designed for new authorities building their business.",
     whoNeedsIt: [
@@ -533,7 +533,7 @@ export const vehicleDetails: Record<string, VehicleDetail> = {
     name: "Freight Trucks",
     slug: "freight-trucks",
     category: "Long Haul",
-    image: "/manus-storage/vehicle-straight-truck_7dac0152.png",
+    image: "/manus-storage/vehicle-freight-truck_80a73978.png",
     description: "Comprehensive freight truck insurance for single operators and growing fleets — auto liability, cargo, physical damage, and bobtail coverage.",
     overview: "Freight trucks encompass the broad category of commercial vehicles used to transport goods for compensation. Whether you're running a single straight truck on local routes or managing a fleet of tractor-trailers across multiple states, your freight operation needs insurance that matches your specific risk profile. We specialize in freight truck coverage for motor carriers of all sizes, with programs that grow with your business from a single unit to a full fleet. Our markets offer competitive rates for experienced operators and accessible programs for new authorities entering the freight industry.",
     whoNeedsIt: [
@@ -669,7 +669,7 @@ export const vehicleDetails: Record<string, VehicleDetail> = {
     name: "Gooseneck Trailers",
     slug: "gooseneck-trailers",
     category: "Specialty",
-    image: "/manus-storage/vehicle-hotshot_28901d59.png",
+    image: "/manus-storage/vehicle-gooseneck_77436de6.png",
     description: "Coverage for gooseneck trailer operations including physical damage, cargo, and liability — whether hauling equipment, livestock, or materials.",
     overview: "Gooseneck trailers are versatile hauling platforms used across agriculture, construction, and general freight. Connected to the truck bed via a gooseneck hitch, these trailers offer superior stability and higher weight capacity than bumper-pull alternatives. Insurance for gooseneck operations varies significantly based on what you're hauling — livestock, equipment, vehicles, or general materials — and whether you're operating for hire or hauling your own goods. We match your gooseneck operation with the right coverage structure, whether that's a full commercial trucking policy or a more targeted program for specific hauling needs.",
     whoNeedsIt: [
@@ -889,7 +889,7 @@ export const vehicleDetails: Record<string, VehicleDetail> = {
     name: "Mobile Home Movers",
     slug: "mobile-home-movers",
     category: "Specialty",
-    image: "/manus-storage/vehicle-oversized_915b9e40.png",
+    image: "/manus-storage/vehicle-mobile-home-mover_6ddad765.png",
     description: "Insurance for mobile home and manufactured housing transport — covering oversized load liability, cargo damage, and escort requirements.",
     overview: "Mobile home and manufactured housing transport is a highly specialized operation requiring oversized load permits, escort vehicles, and careful route planning. These wide loads create significant liability exposure on public roads, and the cargo itself — often valued at $50,000–$200,000+ — requires specialized coverage that standard trucking policies don't provide. Insurance for mobile home movers must address the unique risks of transporting structures that are wider than standard lanes, taller than standard clearances, and more fragile than typical freight. We work with markets that understand manufactured housing transport and can provide the coverage your operation needs.",
     whoNeedsIt: [
