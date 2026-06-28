@@ -4,6 +4,7 @@ import SEO from "@/components/SEO";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import FAQSection from "@/components/FAQSection";
 import { stateContent } from "@/data/stateContentData";
+import { vehicleDetails } from "@/data/vehicleDetailData";
 
 interface LegacyStateData {
   name: string;
@@ -233,6 +234,47 @@ export default function StatePage() {
           </div>
         </section>
       )}
+
+      {/* Popular Vehicles in This State */}
+      <section className="py-12 md:py-16 bg-sand">
+        <div className="container">
+          <p className="eyebrow">VEHICLES WE INSURE IN {data.abbr}</p>
+          <div className="tick" />
+          <h2 className="text-[26px] md:text-[32px] mb-8">Popular vehicles we cover in {data.name}</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            {["18-wheelers", "flatbeds", "dump-trucks", "box-trucks", "reefer-trailers", "tanker-trucks"].map((slug) => {
+              const v = vehicleDetails[slug];
+              if (!v) return null;
+              return (
+                <Link
+                  key={slug}
+                  href={`/vehicles-we-cover/${slug}`}
+                  className="group no-underline border border-[var(--hair)] hover:border-[var(--ink)] transition-all"
+                >
+                  <div className="bg-white p-3 flex items-center justify-center h-20">
+                    <img
+                      src={v.image}
+                      alt={v.name}
+                      className="h-full w-auto object-contain opacity-70 group-hover:opacity-100 transition-opacity"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="px-2 py-2 text-center">
+                    <span className="font-sans text-[12px] text-[var(--head)] group-hover:text-[var(--ink)] font-medium">
+                      {v.name}
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+          <div className="mt-6 text-center">
+            <Link href="/vehicles-we-cover" className="font-sans text-[14px] font-medium text-[var(--ink)] hover:text-[var(--tick)] transition-colors no-underline">
+              View all 27 vehicle types we insure →
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* CTA */}
       <section className="py-16 md:py-20 bg-[var(--purple)] text-white">

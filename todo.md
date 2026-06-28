@@ -240,3 +240,11 @@
 - [x] Add to Insurance dropdown navigation
 - [x] Add route to App.tsx
 - [x] Include in sitemap
+
+
+## Vehicles We Cover Enhancements
+- [x] Fix Insurance dropdown: Vehicles We Cover as 3rd column/tab (not just a link)
+- [x] Create individual vehicle detail pages at /vehicles-we-cover/:slug with comprehensive content
+- [x] Generate pencil-sketch images for 28 unique vehicle illustrations (uploaded to storage; similar types like Big Rigs/18-Wheelers share images by design)
+- [x] Add images to vehicle listing page (grid + list views)
+- [x] Cross-link popular vehicles from state landing pages (6 vehicle types per state)

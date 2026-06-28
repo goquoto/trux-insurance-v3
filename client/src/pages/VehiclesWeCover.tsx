@@ -3,6 +3,7 @@ import Layout from "@/components/Layout";
 import SEO from "@/components/SEO";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { Link } from "wouter";
+import { vehicleDetails } from "@/data/vehicleDetailData";
 
 const VEHICLES = [
   {
@@ -257,56 +258,84 @@ export default function VehiclesWeCover() {
           {/* Grid view */}
           {viewMode === "grid" && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredVehicles.map((vehicle) => (
-                <Link
-                  key={vehicle.slug}
-                  href={`/vehicles-we-cover/${vehicle.slug}`}
-                  className="group block border border-[var(--hair)] p-6 transition-all hover:border-[var(--ink)] hover:shadow-sm no-underline"
-                >
-                  <span className="font-sans text-[11px] font-medium tracking-[0.18em] uppercase text-[var(--taupe)]">
-                    {vehicle.category}
-                  </span>
-                  <h3 className="mt-2 mb-3 text-[18px] group-hover:text-[var(--purple)]">
-                    {vehicle.name}
-                  </h3>
-                  <p className="font-sans text-[14px] text-muted-custom leading-relaxed line-clamp-3">
-                    {vehicle.description}
-                  </p>
-                  <span className="inline-block mt-4 font-sans text-[13px] font-medium text-[var(--ink)] group-hover:text-[var(--purple)] transition-colors">
-                    Learn more →
-                  </span>
-                </Link>
-              ))}
+              {filteredVehicles.map((vehicle) => {
+                const detail = vehicleDetails[vehicle.slug];
+                return (
+                  <Link
+                    key={vehicle.slug}
+                    href={`/vehicles-we-cover/${vehicle.slug}`}
+                    className="group block border border-[var(--hair)] transition-all hover:border-[var(--ink)] hover:shadow-sm no-underline overflow-hidden"
+                  >
+                    {detail?.image && (
+                      <div className="bg-[var(--sand)] p-4 flex items-center justify-center h-36">
+                        <img
+                          src={detail.image}
+                          alt={vehicle.name}
+                          className="h-full w-auto object-contain opacity-80 group-hover:opacity-100 transition-opacity"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+                    <div className="p-6">
+                      <span className="font-sans text-[11px] font-medium tracking-[0.18em] uppercase text-[var(--taupe)]">
+                        {vehicle.category}
+                      </span>
+                      <h3 className="mt-2 mb-3 text-[18px] group-hover:text-[var(--ink)]">
+                        {vehicle.name}
+                      </h3>
+                      <p className="font-sans text-[14px] text-muted-custom leading-relaxed line-clamp-3">
+                        {vehicle.description}
+                      </p>
+                      <span className="inline-block mt-4 font-sans text-[13px] font-medium text-[var(--ink)] group-hover:text-[var(--tick)] transition-colors">
+                        Learn more →
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           )}
 
           {/* List view */}
           {viewMode === "list" && (
             <div className="divide-y divide-[var(--hair)]">
-              {filteredVehicles.map((vehicle) => (
-                <Link
-                  key={vehicle.slug}
-                  href={`/vehicles-we-cover/${vehicle.slug}`}
-                  className="group flex items-start gap-6 py-5 no-underline transition-colors hover:bg-paper-2 px-4 -mx-4"
-                >
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-3 mb-1">
-                      <h3 className="text-[17px] mb-0 group-hover:text-[var(--purple)]">
-                        {vehicle.name}
-                      </h3>
-                      <span className="font-sans text-[11px] font-medium tracking-[0.15em] uppercase text-[var(--taupe)] bg-paper-2 px-2 py-0.5">
-                        {vehicle.category}
-                      </span>
+              {filteredVehicles.map((vehicle) => {
+                const detail = vehicleDetails[vehicle.slug];
+                return (
+                  <Link
+                    key={vehicle.slug}
+                    href={`/vehicles-we-cover/${vehicle.slug}`}
+                    className="group flex items-start gap-6 py-5 no-underline transition-colors hover:bg-paper-2 px-4 -mx-4"
+                  >
+                    {detail?.image && (
+                      <div className="hidden sm:flex bg-[var(--sand)] w-20 h-14 items-center justify-center shrink-0">
+                        <img
+                          src={detail.image}
+                          alt={vehicle.name}
+                          className="h-10 w-auto object-contain opacity-70 group-hover:opacity-100 transition-opacity"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-3 mb-1">
+                        <h3 className="text-[17px] mb-0 group-hover:text-[var(--ink)]">
+                          {vehicle.name}
+                        </h3>
+                        <span className="font-sans text-[11px] font-medium tracking-[0.15em] uppercase text-[var(--taupe)] bg-paper-2 px-2 py-0.5">
+                          {vehicle.category}
+                        </span>
+                      </div>
+                      <p className="font-sans text-[14px] text-muted-custom leading-relaxed mb-0">
+                        {vehicle.description}
+                      </p>
                     </div>
-                    <p className="font-sans text-[14px] text-muted-custom leading-relaxed mb-0">
-                      {vehicle.description}
-                    </p>
-                  </div>
-                  <span className="font-sans text-[13px] font-medium text-[var(--ink)] group-hover:text-[var(--purple)] transition-colors whitespace-nowrap mt-1">
-                    Learn more →
-                  </span>
-                </Link>
-              ))}
+                    <span className="font-sans text-[13px] font-medium text-[var(--ink)] group-hover:text-[var(--tick)] transition-colors whitespace-nowrap mt-1">
+                      Learn more →
+                    </span>
+                  </Link>
+                );
+              })}
             </div>
           )}
         </div>

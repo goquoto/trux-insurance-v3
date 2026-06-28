@@ -32,6 +32,17 @@ const insureLinks = [
   { label: "Hot-Shot", href: "/who-we-insure/hotshot" },
 ];
 
+const vehicleLinks = [
+  { label: "All Vehicles", href: "/vehicles-we-cover" },
+  { label: "18 Wheelers", href: "/vehicles-we-cover/18-wheelers" },
+  { label: "Semi Trucks", href: "/vehicles-we-cover/semi-trucks" },
+  { label: "Flatbeds", href: "/vehicles-we-cover/flatbeds" },
+  { label: "Dump Trucks", href: "/vehicles-we-cover/dump-trucks" },
+  { label: "Reefer Trailers", href: "/vehicles-we-cover/reefer-trailers" },
+  { label: "Box Trucks", href: "/vehicles-we-cover/box-trucks" },
+  { label: "Tow Trucks", href: "/vehicles-we-cover/tow-trucks" },
+];
+
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -67,7 +78,7 @@ export default function Header() {
     timeoutRef.current = setTimeout(() => setDropdownOpen(false), 150);
   };
 
-  const isInsurancePage = location.startsWith("/coverages") || location.startsWith("/who-we-insure");
+  const isInsurancePage = location.startsWith("/coverages") || location.startsWith("/who-we-insure") || location.startsWith("/vehicles-we-cover");
 
   return (
     <>
@@ -134,19 +145,12 @@ export default function Header() {
               {/* Dropdown mega-menu */}
               {dropdownOpen && (
                 <div
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-4 bg-paper border border-[var(--hair)] shadow-lg z-50 min-w-[520px]"
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-4 bg-paper border border-[var(--hair)] shadow-lg z-50 min-w-[760px]"
                   style={{ transformOrigin: "top center" }}
                 >
-                  <div className="grid grid-cols-2 gap-0">
+                  <div className="grid grid-cols-3 gap-0">
                     {/* Coverages column */}
                     <div className="p-6 border-r border-[var(--hair)]">
-                      {/* Vehicles We Cover link */}
-                      <Link
-                        href="/vehicles-we-cover"
-                        className="font-sans text-[13px] font-medium text-purple no-underline block mb-4 pb-3 border-b border-[var(--hair)] hover:underline"
-                      >
-                        🚛 Vehicles We Cover →
-                      </Link>
                       <span className="eyebrow text-[11px] tracking-[0.2em] text-taupe font-sans font-medium uppercase block mb-3">
                         Coverages
                       </span>
@@ -178,7 +182,7 @@ export default function Header() {
                     </div>
 
                     {/* Who We Insure column */}
-                    <div className="p-6">
+                    <div className="p-6 border-r border-[var(--hair)]">
                       <span className="eyebrow text-[11px] tracking-[0.2em] text-taupe font-sans font-medium uppercase block mb-3">
                         Who We Insure
                       </span>
@@ -204,6 +208,38 @@ export default function Header() {
                             className="font-sans text-[13px] text-purple no-underline block pt-2 mt-1 border-t border-[var(--hair)] hover:underline"
                           >
                             View all operations →
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+
+                    {/* Vehicles We Cover column */}
+                    <div className="p-6">
+                      <span className="eyebrow text-[11px] tracking-[0.2em] text-taupe font-sans font-medium uppercase block mb-3">
+                        Vehicles We Cover
+                      </span>
+                      <div className="tick mb-3" style={{ width: "30px" }}></div>
+                      <ul className="space-y-2 list-none p-0 m-0">
+                        {vehicleLinks.map((link) => (
+                          <li key={link.href}>
+                            <Link
+                              href={link.href}
+                              className={`font-sans text-[14px] no-underline block py-1 transition-colors ${
+                                link.href === "/vehicles-we-cover"
+                                  ? "font-medium text-ink hover:text-purple"
+                                  : "text-muted-custom hover:text-ink"
+                              }`}
+                            >
+                              {link.label}
+                            </Link>
+                          </li>
+                        ))}
+                        <li>
+                          <Link
+                            href="/vehicles-we-cover"
+                            className="font-sans text-[13px] text-purple no-underline block pt-2 mt-1 border-t border-[var(--hair)] hover:underline"
+                          >
+                            View all 27 vehicles →
                           </Link>
                         </li>
                       </ul>
