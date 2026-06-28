@@ -121,9 +121,24 @@ export default function Home() {
             <div>
               <h3 className="mb-4 text-ink">Endorsements &amp; Broadening</h3>
               <ul className="space-y-3">
-                {["Broadened Pollution (CA 9948)", "Blanket Additional Insured", "Blanket Waiver of Subrogation", "Blanket 30-Day Notice", "Reefer Reimbursement", "Driver Other Car", "Refrigeration Breakdown", "Towing & Labor"].map((item) => (
-                  <li key={item} className="font-sans text-[15px] text-muted-custom border-b border-[var(--hair)] pb-2 flex items-start gap-2">
-                    <span className="text-purple mt-1">·</span> {item}
+                {[
+                  { name: "Broadened Pollution (CA 9948)", slug: "pollution-liability", desc: "Extends pollution coverage beyond standard exclusions — covers fuel spills, chemical releases, and cleanup costs during transit." },
+                  { name: "Blanket Additional Insured", slug: "general-liability", desc: "Automatically adds shippers, brokers, and facility owners as additional insureds without individual endorsement requests." },
+                  { name: "Blanket Waiver of Subrogation", slug: "general-liability", desc: "Waives your insurer’s right to recover from third parties — often required by shipper and broker contracts." },
+                  { name: "Blanket 30-Day Notice", slug: "auto-liability", desc: "Guarantees certificate holders receive 30 days’ written notice before policy cancellation or non-renewal." },
+                  { name: "Reefer Reimbursement", slug: "cargo", desc: "Reimburses the cost of spoiled cargo when your refrigeration unit breaks down mechanically during transit." },
+                  { name: "Driver Other Car", slug: "auto-liability", desc: "Extends liability coverage to drivers operating personal vehicles not listed on the commercial policy." },
+                  { name: "Refrigeration Breakdown", slug: "physical-damage", desc: "Covers repair or replacement of the reefer unit itself when it suffers mechanical or electrical failure." },
+                  { name: "Towing & Labor", slug: "physical-damage", desc: "Pays for emergency towing and roadside labor when your truck is disabled — up to the policy limit per occurrence." },
+                ].map((item) => (
+                  <li key={item.name} className="font-sans text-[15px] border-b border-[var(--hair)] pb-3">
+                    <Link href={`/coverages/${item.slug}`} className="flex items-start gap-2 group">
+                      <span className="text-purple mt-1 shrink-0">·</span>
+                      <div>
+                        <span className="text-muted-custom group-hover:text-ink transition-colors">{item.name}</span>
+                        <p className="text-[13px] text-taupe mt-1 leading-relaxed">{item.desc}</p>
+                      </div>
+                    </Link>
                   </li>
                 ))}
               </ul>
