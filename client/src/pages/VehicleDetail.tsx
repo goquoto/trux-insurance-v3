@@ -62,8 +62,8 @@ export default function VehicleDetail() {
                 <Link href={`/quote?vehicle=${encodeURIComponent(vehicle.name)}`} className="btn-solid no-underline text-center">
                   Get a Quote
                 </Link>
-                <a href="tel:18773508789" className="btn-ghost no-underline text-center">
-                  Call 1-877-350-8789
+                <a href="tel:3312401101" className="btn-ghost no-underline text-center">
+                  Call (331) 240-1101
                 </a>
               </div>
             </div>
@@ -280,8 +280,8 @@ export default function VehicleDetail() {
             <Link href="/quote" className="btn-solid no-underline">
               Get a Quote
             </Link>
-            <a href="tel:18773508789" className="btn-ghost no-underline">
-              Call 1-877-350-8789
+            <a href="tel:3312401101" className="btn-ghost no-underline">
+              Call (331) 240-1101
             </a>
           </div>
         </div>

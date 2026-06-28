@@ -3,14 +3,14 @@ import { describe, expect, it } from "vitest";
 describe("Trux Insurance Website - Content Validation", () => {
   it("should have correct company contact information", () => {
     const phone = "(331) 240-1101";
-    const tollFree = "1-877-350-8789";
+    const tollFree = "(331) 240-1101";
     const fax = "331-240-1055";
     const email = "info@truxins.com";
     const address = "1 Tiffany Pt Suite G2";
     const city = "Bloomingdale, Illinois 60108";
 
     expect(phone).toBe("(331) 240-1101");
-    expect(tollFree).toBe("1-877-350-8789");
+    expect(tollFree).toBe("(331) 240-1101");
     expect(fax).toBe("331-240-1055");
     expect(email).toBe("info@truxins.com");
     expect(address).toBe("1 Tiffany Pt Suite G2");

@@ -27,7 +27,7 @@ const orgSchema = {
   "url": BASE_URL,
   "logo": `${BASE_URL}/manus-storage/trux-logo-dark_9f1c7375.png`,
   "telephone": "+1-331-240-1101",
-  "tollFree": "+1-877-350-8789",
+  "tollFree": "+1-331-240-1101",
   "faxNumber": "+1-331-240-1055",
   "email": "info@truxins.com",
   "address": {
@@ -265,7 +265,7 @@ function getPageSEO(path: string): PageSEO | null {
   if (path === "/contact") {
     return {
       title: "Contact Trux Insurance Services",
-      description: "Contact Trux Insurance Services in Bloomingdale, IL. Phone (331) 240-1101, toll-free 1-877-350-8789. Monday–Friday 9am–5pm CT.",
+      description: "Contact Trux Insurance Services in Bloomingdale, IL. Phone (331) 240-1101, toll-free (331) 240-1101. Monday–Friday 9am–5pm CT.",
       canonical: `${BASE_URL}/contact`,
       h1: "Contact Us",
       schemas: [orgSchema, breadcrumbSchema([{ name: "Home", url: "/" }, { name: "Contact", url: "/contact" }])],

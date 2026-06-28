@@ -21,7 +21,7 @@ export default function Footer() {
               1 Tiffany Pt Suite G2<br />
               Bloomingdale, IL 60108<br /><br />
               Phone: <a href="tel:3312401101" className="text-purple">(331) 240-1101</a><br />
-              Toll-free: <a href="tel:18773508789" className="text-purple">1-877-350-8789</a><br />
+              Toll-free: <a href="tel:3312401101" className="text-purple">(331) 240-1101</a><br />
               Fax: 331-240-1055<br />
               <a href="mailto:info@truxins.com" className="text-purple">info@truxins.com</a>
             </address>

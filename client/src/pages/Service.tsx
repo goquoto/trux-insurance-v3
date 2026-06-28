@@ -203,7 +203,7 @@ export default function Service() {
             </div>
             <div className="border-b border-[var(--hair)] pb-4">
               <h3 className="text-[16px] font-sans font-medium text-ink mb-1">Toll-Free</h3>
-              <a href="tel:18773508789" className="font-sans text-[15px] text-purple">1-877-350-8789</a>
+              <a href="tel:3312401101" className="font-sans text-[15px] text-purple">(331) 240-1101</a>
             </div>
             <div className="border-b border-[var(--hair)] pb-4">
               <h3 className="text-[16px] font-sans font-medium text-ink mb-1">Fax</h3>

@@ -70,7 +70,7 @@ export default function Contact() {
                     <h3 className="font-sans text-[15px] font-medium text-ink mb-1">Phone</h3>
                     <p className="font-sans text-[15px] text-muted-custom">
                       Main: <a href="tel:3312401101" className="text-purple">(331) 240-1101</a><br />
-                      Toll-free: <a href="tel:18773508789" className="text-purple">1-877-350-8789</a><br />
+                      Toll-free: <a href="tel:3312401101" className="text-purple">(331) 240-1101</a><br />
                       Fax: 331-240-1055
                     </p>
                   </div>
