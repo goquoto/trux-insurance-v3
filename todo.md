@@ -163,3 +163,15 @@
 - [x] Fix routing for multi-word states (north-carolina, south-carolina) with hyphenated slugs
 - [x] Verify all state pages load with complete content (tested North Carolina)
 - [x] Embed interactive map on homepage (optional for future)
+
+
+## Safety-Focused Blog Articles (5 New Articles)
+- [x] Add "Safety" category to blogCategories
+- [x] Create 5 comprehensive safety articles:
+  - Driver Fatigue: The Silent Killer in Trucking
+  - Pre-Trip Inspections: The Checklist Every Driver Should Complete
+  - Distracted Driving in Trucking: The Risks, The Law, and How to Stop It
+  - Weather-Related Trucking Accidents: How to Prepare, Adjust, and Stay Safe
+  - Backing Accidents: The #1 Preventable Accident in Trucking
+- [x] Integrate safety articles into blog listing and filtering
+- [x] Verify all articles display correctly on blog page

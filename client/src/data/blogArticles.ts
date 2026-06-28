@@ -9,7 +9,7 @@ export interface BlogArticle {
   content: string;
 }
 
-export const blogArticles: BlogArticle[] = [
+const blogArticles: BlogArticle[] = [
   {
     slug: "primary-liability-cargo-physical-damage-what-every-fleet-owner-needs",
     title: "Primary Liability, Cargo, Physical Damage: What Every Fleet Owner Needs to Know",
@@ -1436,5 +1436,631 @@ export const blogCategories = [
   "Risk",
   "Compliance",
   "Claims",
-  "Cost Savings"
+  "Cost Savings",
+  "Safety"
 ];
+
+// Add the 5 new safety articles to the existing blogArticles array
+const safetyArticles: BlogArticle[] = [
+  {
+    slug: "driver-fatigue-management-trucking-safety",
+    title: "Driver Fatigue: The Silent Killer in Trucking — How to Manage Hours and Stay Safe",
+    excerpt: "Fatigue is a factor in 10% of all trucking accidents. Learn how to recognize fatigue, manage hours of service, and implement fatigue-fighting strategies that actually work.",
+    category: "Safety",
+    readTime: "7 min read",
+    publishDate: "2026-06-25",
+    author: "Trux Insurance Services",
+    content: `Driver fatigue is the most preventable cause of serious trucking accidents. Yet it remains one of the leading factors in crashes, injuries, and fatalities across the industry. The problem isn't that drivers don't know they're tired — it's that the economics of trucking often force them to push through fatigue anyway.
+
+## The Scale of the Problem
+
+The FMCSA estimates that fatigue is a contributing factor in approximately 10% of all trucking accidents and 13% of accidents resulting in injury or death. The National Highway Traffic Safety Administration (NHTSA) puts the number higher — suggesting that fatigue plays a role in up to 20% of serious crashes.
+
+What makes fatigue particularly dangerous is that it impairs judgment in ways drivers don't recognize. A driver who's been awake for 18 hours has reaction times comparable to someone with a blood alcohol level of 0.08% — the legal limit for DUI. But they don't feel drunk. They feel fine.
+
+## Why Trucking Amplifies Fatigue
+
+Several factors make trucking uniquely vulnerable to fatigue:
+
+**Irregular sleep schedules.** Most truckers sleep in short, interrupted bursts in their cab. This fragmented sleep is far less restorative than consolidated 7-8 hour blocks at home. A driver may log 6 hours of sleep but feel as if they've only slept 4.
+
+**Circadian rhythm disruption.** Long-haul drivers work across multiple time zones and often drive during their body's natural sleep window (10 PM – 6 AM). This creates constant circadian misalignment.
+
+**Pressure to move freight.** Shippers and brokers have tight delivery windows. Detention charges, fuel costs, and the pressure to maximize miles per day create incentives to push through fatigue.
+
+**Monotonous driving.** Highway driving is cognitively understimulating — your brain isn't engaged, which accelerates fatigue. This is different from city driving, which keeps you alert.
+
+## Recognizing Fatigue in Yourself and Your Drivers
+
+Early warning signs of fatigue include:
+
+- Difficulty focusing or frequent blinking
+- Drifting between lanes or missing exits
+- Difficulty remembering the last few miles
+- Irritability or mood changes
+- Slower reaction times (you notice it when you nearly miss a turn)
+- Yawning, even after sleep
+- Micro-sleeps (brief, involuntary sleep episodes)
+
+If you notice any of these signs in yourself or your drivers, it's time to stop. Not in 30 miles. Now.
+
+## Hours of Service Regulations
+
+The FMCSA's Hours of Service (HOS) rules are designed to prevent fatigue:
+
+- 11-hour driving limit per 14-hour on-duty window
+- 10-hour off-duty minimum between shifts
+- 60-hour in 7 days or 70-hour in 8 days limit
+- 30-minute break required after 8 hours of driving
+
+These rules exist because research shows that driving beyond these limits significantly increases accident risk. Yet many drivers and carriers view them as obstacles rather than safety tools.
+
+**Critical point:** ELDs have made HOS violations visible and traceable. Violations create liability for both the driver and the carrier. If you're in an accident and your ELD shows an HOS violation, that becomes evidence of negligence.
+
+## Fatigue Management Strategies That Work
+
+**1. Prioritize consolidated sleep over fragmented sleep.**
+A 6-hour consolidated sleep is more restorative than three 2-hour naps. Build your routes and schedules to allow for longer sleep periods whenever possible.
+
+**2. Manage circadian rhythm disruption.**
+If you're driving overnight, use bright light exposure during the day and darkness during sleep to help your body adjust. Some drivers use melatonin supplements (consult a doctor first).
+
+**3. Avoid caffeine dependency.**
+Caffeine can mask fatigue without actually restoring alertness. Drivers who rely on energy drinks and coffee often don't realize how impaired they actually are.
+
+**4. Build in buffer time.**
+Tight delivery windows force drivers to choose between safety and on-time delivery. Build 1-2 hours of buffer into every route so drivers have the option to take a break without losing money.
+
+**5. Use co-drivers on long hauls.**
+If you have the capacity, co-drivers allow for longer sleep periods and reduce the pressure on any single driver.
+
+**6. Implement mandatory rest policies.**
+As a fleet owner or carrier, establish a clear policy: if a driver reports fatigue, they stop. No exceptions. No pressure. Document this policy in writing and enforce it consistently.
+
+**7. Install fatigue-detection technology.**
+Some modern dashcams and telematics systems include AI-powered fatigue detection that alerts drivers when their behavior suggests drowsiness. These systems provide data that can inform coaching conversations.
+
+## The Insurance Connection
+
+Fatigue-related accidents are increasingly scrutinized in litigation. If a driver causes an accident while fatigued, and the carrier knew or should have known the driver was fatigued, the carrier faces liability beyond the insurance limits.
+
+Plaintiff attorneys argue that fatigue is foreseeable and preventable — and therefore evidence of negligence. They'll subpoena your ELD records, your dispatch logs, and your safety policies. If you don't have a documented fatigue management program, you're vulnerable.
+
+Carriers with strong fatigue management programs — documented rest policies, fatigue training, technology implementation, and consistent enforcement — see lower insurance premiums and, more importantly, fewer accidents.
+
+## What Trux Recommends
+
+We review your operations, your driver schedules, and your safety policies to identify fatigue risk. We help you implement fatigue management strategies that are both safe and economically viable. And we make sure your insurance program reflects your commitment to fatigue prevention.
+
+If fatigue has been a factor in any of your accidents, tell us. We can help you develop a remediation plan that demonstrates to underwriters that you're taking the issue seriously.`
+  },
+  {
+    slug: "pre-trip-inspection-checklist-trucking-safety",
+    title: "Pre-Trip Inspections: The Checklist Every Driver Should Complete Before Every Load",
+    excerpt: "A thorough pre-trip inspection takes 15 minutes and can prevent 80% of roadside violations and mechanical failures. Here's the exact checklist professional drivers use.",
+    category: "Safety",
+    readTime: "6 min read",
+    publishDate: "2026-06-22",
+    author: "Trux Insurance Services",
+    content: `A pre-trip inspection is a systematic walk-around of your truck and trailer designed to catch mechanical issues, safety violations, and cargo problems before you hit the road. It takes 15 minutes. It prevents roadside violations, breakdowns, and accidents.
+
+Yet many drivers skip it or do a cursory version that misses critical issues.
+
+## Why Pre-Trip Inspections Matter
+
+**Regulatory compliance.** The FMCSA requires drivers to perform pre-trip inspections and document them. Failure to perform inspections is a violation. Failure to document them is a violation. Roadside inspectors check for documentation.
+
+**Accident prevention.** Many accidents are caused by mechanical failures that could have been caught during a pre-trip: brake failure, tire blowout, steering issues, lighting problems. A thorough inspection catches these before they become accidents.
+
+**Insurance implications.** If you're in an accident and your pre-trip inspection report shows you didn't check your brakes, you've just provided evidence of negligence. Conversely, if you have documented pre-trip inspections showing you checked everything, you've documented due diligence.
+
+**Roadside inspection results.** Drivers with a history of thorough pre-trip inspections have fewer roadside violations. Inspectors can tell when a driver takes inspections seriously.
+
+## The Complete Pre-Trip Inspection Checklist
+
+### Exterior Walk-Around (Driver Side)
+
+**Tires and wheels:**
+- Check tire pressure and condition (no bald spots, uneven wear, or bulges)
+- Look for debris embedded in tires
+- Check for proper wheel fasteners (no missing lug nuts)
+- Verify wheel seals aren't leaking
+
+**Lights and reflectors:**
+- Headlights (both high and low beam)
+- Parking lights
+- Clearance lights
+- Reflectors (all sides)
+- Brake lights
+- Turn signals
+- Backup lights (if equipped)
+
+**Mirrors and glass:**
+- All mirrors intact and properly adjusted
+- Windshield and windows clear (no cracks in critical viewing areas)
+- Wipers and washers functional
+
+**Coupling and fifth wheel:**
+- Fifth wheel properly secured to frame
+- No cracks or damage to fifth wheel
+- Kingpin and locking mechanism secure
+- Sliding fifth wheel in locked position
+
+### Exterior Walk-Around (Passenger Side)
+
+Repeat the tire, light, mirror, and glass checks on the passenger side.
+
+**Doors and latches:**
+- All doors open and close properly
+- Door latches secure
+- No damage to door frames
+
+### Under the Truck
+
+**Engine compartment:**
+- Oil level adequate
+- Coolant level adequate
+- Brake fluid level adequate
+- Power steering fluid level adequate
+- No visible leaks
+- Battery secure and terminals clean
+- Belts and hoses in good condition (no cracks, fraying, or leaks)
+
+**Undercarriage:**
+- No visible leaks under engine
+- Brake lines intact (no cracks, fraying, or separation)
+- Fuel lines intact
+- Exhaust system secure (no dragging or separation)
+- Frame and suspension components intact
+
+**Brakes:**
+- Brake pedal firm (not spongy)
+- Brake lines and hoses intact
+- No visible brake fluid leaks
+- Brake chambers secure
+- Slack adjusters properly adjusted
+
+### Cargo and Securing Equipment
+
+- Cargo properly loaded and distributed
+- Cargo secured with appropriate tie-downs or straps
+- No cargo protruding from the sides or rear
+- Doors and gates secure
+- Placards (if hazmat) properly displayed and secure
+
+### Trailer Inspection (if applicable)
+
+- Tires and wheels (same checks as tractor)
+- Lights and reflectors
+- Coupling connection secure
+- Trailer brake connections secure
+- Cargo door latches secure
+- Trailer frame and structure intact
+
+## Documentation
+
+The FMCSA requires drivers to document pre-trip inspections. This can be done on paper or electronically. The documentation should include:
+
+- Date and time
+- Vehicle identification number (VIN)
+- Odometer reading
+- Specific items inspected
+- Any defects noted
+- Driver signature
+
+If you find a defect, you must report it to your carrier or fleet manager. Defects must be corrected before the vehicle can be operated again.
+
+## Common Mistakes Drivers Make
+
+**Skipping the inspection entirely.** This is a violation and an accident waiting to happen.
+
+**Doing a visual-only inspection.** You have to actually check things — tire pressure, brake pedal feel, fluid levels. Looking at a tire from 10 feet away doesn't count.
+
+**Not documenting findings.** If you didn't write it down, the FMCSA assumes you didn't check it.
+
+**Ignoring minor issues.** A small brake fluid leak today becomes a brake failure tomorrow. Report everything.
+
+**Rushing the inspection.** A thorough inspection takes 15 minutes. If you're doing it in 5 minutes, you're missing things.
+
+## The Insurance Perspective
+
+Carriers with documented pre-trip inspection programs see fewer accidents and lower insurance premiums. Underwriters view pre-trip inspections as evidence of a safety-conscious operation.
+
+If you're in an accident and you have documented pre-trip inspections showing you checked everything, you've demonstrated due diligence. If you don't have documentation, you're vulnerable to claims that you were negligent.
+
+## What Trux Recommends
+
+Implement a mandatory pre-trip inspection program for all drivers. Provide training on the checklist. Use electronic documentation so records are automatically saved. Review inspection reports monthly to identify patterns (e.g., if multiple drivers report the same issue, there's a systemic problem).
+
+If you're a driver, spend the 15 minutes. It's the most important 15 minutes of your day.`
+  },
+  {
+    slug: "distracted-driving-trucking-safety",
+    title: "Distracted Driving in Trucking: The Risks, The Law, and How to Stop It",
+    excerpt: "Distracted driving is now the leading cause of accidents in trucking. Learn what counts as distracted driving, the legal penalties, and how to build a culture of focus.",
+    category: "Safety",
+    readTime: "6 min read",
+    publishDate: "2026-06-19",
+    author: "Trux Insurance Services",
+    content: `Distracted driving has surpassed fatigue as the leading cause of accidents in commercial trucking. A driver taking their eyes off the road for just 5 seconds at 65 mph travels the length of a football field blind.
+
+Yet many drivers still use phones, eat, adjust GPS, or engage in other distracting activities while driving. And many carriers don't have clear policies against it.
+
+## What Counts as Distracted Driving
+
+Distracted driving includes anything that takes your attention away from the road:
+
+**Phone use:**
+- Texting or reading messages
+- Making or receiving calls (even hands-free)
+- Using apps (maps, music, social media)
+- Taking photos or videos
+
+**Eating and drinking:**
+- Eating meals while driving
+- Drinking beverages (even water)
+
+**Adjusting controls:**
+- Changing radio stations
+- Adjusting climate controls
+- Adjusting mirrors or seats
+
+**Grooming:**
+- Shaving, applying makeup, combing hair
+- Changing clothes
+
+**Passenger interaction:**
+- Talking to passengers
+- Disciplining children (if applicable)
+
+**Fatigue-related:**
+- Rubbing eyes or adjusting posture to stay awake
+- Nodding off momentarily
+
+**Vehicle maintenance:**
+- Checking gauges or warning lights excessively
+- Adjusting cargo while driving
+
+## The Legal Reality
+
+The FMCSA has strict rules about phone use while driving:
+
+**Prohibited:**
+- Holding a phone while driving
+- Dialing a phone while driving
+- Reading text messages or emails while driving
+- Reaching for a phone in a way that requires removing your hands from the steering wheel or your eyes from the road
+
+**Allowed:**
+- Hands-free phone calls using Bluetooth
+- Using a phone mounted on the dashboard (if you can reach it without removing your hands from the wheel)
+- Using a phone for GPS navigation (if mounted)
+
+Violations carry fines up to $2,750 for drivers and up to $27,500 for carriers.
+
+## The Insurance Impact
+
+Distracted driving accidents are increasingly scrutinized in litigation. Plaintiff attorneys will subpoena phone records to prove a driver was texting at the time of an accident. Dashcam footage showing a driver on their phone is devastating evidence.
+
+Carriers with documented distracted driving policies, training, and enforcement see lower accident rates and lower insurance premiums. Carriers without these policies face higher premiums and increased liability exposure.
+
+## How Dashcams Help
+
+Driver-facing dashcams provide objective evidence of whether a driver was distracted at the time of an accident. This evidence is invaluable in litigation:
+
+- If your driver was distracted and caused an accident, the video proves it — but it also shows what happened and may reveal that the other driver was at fault despite the distraction.
+- If your driver was not distracted, the video proves it — eliminating a major line of attack by the plaintiff.
+
+Drivers who know they're being recorded are significantly less likely to use their phones while driving.
+
+## Building a Distracted Driving Prevention Program
+
+**1. Establish a clear policy.**
+Define what counts as distracted driving. Specify consequences for violations. Make it clear that distracted driving is a terminable offense.
+
+**2. Train all drivers.**
+Provide training on the policy, the legal requirements, and the safety risks. Make it clear that this isn't about micromanagement — it's about everyone going home safe.
+
+**3. Install driver-facing dashcams.**
+Make it clear that cameras are there to protect drivers, not spy on them. The footage protects drivers when they're not at fault and helps identify coaching opportunities when they are.
+
+**4. Review footage regularly.**
+Don't just install cameras and forget about them. Review footage from accidents and near-misses. Use it as a coaching tool.
+
+**5. Enforce consistently.**
+If you have a policy against distracted driving, enforce it. If you let some drivers slide, others will feel the policy isn't real.
+
+**6. Lead by example.**
+If you're a fleet owner or manager, don't use your phone while driving. Your drivers are watching.
+
+## The Conversation with Drivers
+
+Many drivers resist distracted driving policies, arguing that they need to check their phones for dispatch messages or GPS directions. Address this head-on:
+
+- Provide a phone mount so drivers can use GPS without holding their phone
+- Use a dispatch system that sends alerts through the truck's communication system, not the driver's personal phone
+- Allow drivers to pull over safely if they need to check their phone
+- Acknowledge that some phone use is necessary, but it must be done safely
+
+## What Trux Recommends
+
+We work with carriers to develop distracted driving prevention programs that are practical, enforceable, and effective. We help you select and implement dashcam systems that capture driver-facing footage. We review your policies to ensure they align with FMCSA regulations.
+
+Most importantly, we help you build a culture where safety is valued over speed. A driver who arrives 5 minutes late but arrives alive is a win.`
+  },
+  {
+    slug: "weather-driving-safety-trucking",
+    title: "Weather-Related Trucking Accidents: How to Prepare, Adjust, and Stay Safe",
+    excerpt: "Weather causes 21% of trucking accidents. Learn how to prepare your truck, adjust your driving technique, and make the right call to pull over before conditions become dangerous.",
+    category: "Safety",
+    readTime: "7 min read",
+    publishDate: "2026-06-16",
+    author: "Trux Insurance Services",
+    content: `Weather is a factor in approximately 21% of all trucking accidents. Rain, snow, ice, fog, and wind all create unique challenges for large vehicles. Yet many drivers and carriers don't adequately prepare for weather conditions or adjust their driving accordingly.
+
+## Weather-Specific Risks
+
+### Rain
+
+Rain reduces tire traction and visibility. At highway speeds, water can build up between the tire and the road surface, causing hydroplaning — where the tire loses contact with the road entirely.
+
+**Risks:**
+- Hydroplaning and loss of control
+- Reduced visibility for other drivers
+- Brake fade (brakes become less effective when wet)
+- Jackknifing (trailer swings out from behind the tractor)
+
+### Snow and Ice
+
+Snow and ice dramatically reduce traction. A truck that can stop in 100 feet on dry pavement may need 300+ feet on ice.
+
+**Risks:**
+- Loss of traction and control
+- Jackknifing
+- Rollovers on curves
+- Getting stuck and blocking traffic
+
+### Fog
+
+Fog reduces visibility to dangerous levels, often without warning.
+
+**Risks:**
+- Collision with vehicles ahead due to inability to see them
+- Other drivers not seeing your truck
+- Difficulty judging distance and speed
+
+### High Winds
+
+High winds can push a large truck sideways, particularly when passing other vehicles or when the truck is empty (less weight = more susceptibility to wind).
+
+**Risks:**
+- Lateral movement into other lanes
+- Rollovers on curves
+- Loss of control when passing
+
+## Pre-Weather Preparation
+
+### Truck Maintenance
+
+**Tires:**
+- Check tread depth (minimum 4/32 inch; 6/32 inch is better for wet conditions)
+- Ensure even wear (misaligned wheels reduce traction)
+- Verify proper inflation (underinflated tires are more prone to hydroplaning)
+
+**Brakes:**
+- Ensure brakes are in good condition (worn brakes are less effective in wet conditions)
+- Check brake fluid level and condition
+
+**Wipers and washers:**
+- Replace wiper blades if they streak or skip
+- Ensure washer fluid is full
+
+**Lights:**
+- All lights functional and clean (mud and dirt reduce visibility)
+
+**Engine:**
+- Ensure engine is running smoothly (hesitation or misfiring in wet conditions can be dangerous)
+
+### Route Planning
+
+- Check weather forecasts before starting
+- Identify alternate routes if weather is severe
+- Know where truck stops and rest areas are located
+- Plan for longer travel times in bad weather
+
+### Load Securing
+
+- Ensure cargo is properly secured (wind and sudden braking can shift cargo)
+- Verify that cargo weight is properly distributed
+
+## Adjusting Your Driving
+
+### In Rain
+
+- Reduce speed (the faster you go, the more likely hydroplaning becomes)
+- Increase following distance (you need more room to stop)
+- Avoid sudden maneuvers (smooth steering and braking reduce hydroplaning risk)
+- Use headlights to increase visibility
+- Avoid puddles (you don't know how deep they are)
+
+### In Snow and Ice
+
+- Reduce speed significantly (you may need to go 20-30 mph on icy roads)
+- Increase following distance dramatically (you may need 8-10 truck lengths)
+- Avoid sudden acceleration or braking (this causes loss of traction)
+- Use lower gears to maintain traction
+- If you start to skid, stay calm and avoid sudden steering corrections
+
+### In Fog
+
+- Reduce speed
+- Use low-beam headlights (high beams reflect off fog and reduce visibility further)
+- Increase following distance
+- Use hazard lights if visibility is extremely limited
+- Consider pulling over if visibility becomes too limited
+
+### In High Winds
+
+- Reduce speed
+- Grip the steering wheel firmly
+- Avoid sudden lane changes
+- Be particularly careful when passing other vehicles
+- Be aware that empty trailers are more susceptible to wind
+
+## When to Pull Over
+
+There are conditions where the right decision is to stop:
+
+- Visibility is so limited you can't see the road ahead
+- Ice or snow is accumulating on the road
+- Winds are so strong you're having difficulty controlling the truck
+- You're too tired to drive safely
+- Your truck is having mechanical issues in bad weather
+
+Pulling over is not a failure. It's the right call. You won't make your delivery if you're in an accident.
+
+## The Insurance Perspective
+
+Weather-related accidents are generally not considered the driver's fault — unless the driver was speeding for conditions, was fatigued, or failed to adjust their driving appropriately.
+
+However, if you're in an accident in bad weather and your pre-trip inspection report shows you didn't check your tires or brakes, you've just provided evidence that you didn't take reasonable precautions.
+
+Carriers with documented weather safety training and policies see lower accident rates in bad weather and lower insurance premiums.
+
+## What Trux Recommends
+
+Implement a weather safety program that includes:
+
+- Pre-season truck maintenance checklist
+- Weather-specific driving training
+- Clear policies on when drivers should pull over
+- Regular review of weather-related accidents to identify patterns
+
+If you're a driver, check the weather before you leave. Adjust your speed and following distance. And if conditions become too severe, pull over. Your safety is worth more than any delivery deadline.`
+  },
+  {
+    slug: "backing-accidents-prevention-trucking",
+    title: "Backing Accidents: The #1 Preventable Accident in Trucking — How to Stop Them",
+    excerpt: "Backing accidents account for 14% of all trucking accidents and are almost entirely preventable. Learn the techniques, the spotters, and the technology that eliminate backing accidents.",
+    category: "Safety",
+    readTime: "6 min read",
+    publishDate: "2026-06-13",
+    author: "Trux Insurance Services",
+    content: `Backing accidents are the #1 preventable accident in trucking. They account for approximately 14% of all trucking accidents, and nearly all of them could have been prevented with proper technique, spotters, or technology.
+
+Yet many drivers back up without spotters, without cameras, and without taking the time to do it right.
+
+## Why Backing Is So Dangerous
+
+Backing a large truck is inherently difficult:
+
+- Limited visibility (you can't see directly behind you)
+- Trailer swing (the trailer moves in the opposite direction of the steering wheel)
+- Pedestrians and other vehicles in blind spots
+- Tight spaces with little margin for error
+- Pressure to move quickly
+
+## The Most Common Backing Accidents
+
+**Hitting a pedestrian or cyclist.** Someone is standing or walking behind the truck, and the driver doesn't see them.
+
+**Hitting a parked vehicle.** The driver misjudges distance or trailer swing and hits a nearby vehicle.
+
+**Hitting a loading dock or structure.** The driver misjudges the angle or distance and hits the dock, building, or other structure.
+
+**Jackknifing.** The driver loses control while backing, causing the trailer to swing out.
+
+**Hitting overhead structures.** The driver backs into a low-clearance area without realizing the height restriction.
+
+## Prevention Techniques
+
+### The Walk-Around
+
+Before backing, walk around the truck and trailer. Identify:
+
+- Pedestrians or cyclists in the area
+- Parked vehicles nearby
+- Obstacles (loading docks, poles, overhead structures)
+- Uneven ground or debris
+- The path you need to take
+
+This takes 2 minutes and prevents 80% of backing accidents.
+
+### The Spotter
+
+A spotter is a person who stands outside the truck and guides the driver while backing. The spotter:
+
+- Walks around the truck to identify hazards
+- Positions themselves where the driver can see them
+- Uses hand signals or radio communication to guide the driver
+- Stops the driver if a hazard appears
+
+**Critical rule:** The driver must see the spotter at all times. If the driver can't see the spotter, the spotter can't see the truck. Stop immediately.
+
+**Spotter training:** Spotters should be trained on proper positioning, hand signals, and hazard identification. A poorly trained spotter can make things worse.
+
+### Backing Technique
+
+- Back slowly (walking speed or slower)
+- Use smooth steering inputs (jerky movements cause trailer swing)
+- Adjust your angle frequently (small corrections are better than large ones)
+- Stop frequently to reassess
+- If you're not sure, get out and look
+
+### Technology: Backup Cameras and Sensors
+
+Modern backup cameras and sensors provide visibility that mirrors can't:
+
+**Backup cameras:**
+- Provide a view directly behind the truck
+- Can be mounted at multiple angles (rear, sides, overhead)
+- Record footage for training and accident investigation
+
+**Proximity sensors:**
+- Alert the driver when an object is within a certain distance
+- Can be programmed to alert at different distances for different speeds
+
+**360-degree camera systems:**
+- Provide a bird's-eye view of the truck and surrounding area
+- Extremely effective for backing in tight spaces
+
+**Automatic braking systems:**
+- Some systems can automatically apply brakes if an object is detected in the backing path
+
+## When NOT to Back
+
+- If you can't see the entire backing path
+- If there are pedestrians or cyclists in the area
+- If you're too tired or distracted
+- If the area is too tight and you can't safely back
+- If you're unsure of the clearances
+
+In these cases, the right answer is to ask for help, reposition the truck, or find an alternate route.
+
+## The Insurance Perspective
+
+Backing accidents are considered preventable because they're almost entirely within the driver's control. A backing accident on your record is a red flag to underwriters.
+
+Carriers with strong backing safety programs — documented procedures, spotter training, backup camera systems, and regular training — see fewer backing accidents and lower insurance premiums.
+
+If you're in a backing accident and you didn't use a spotter or didn't have a backup camera, you've just provided evidence that you didn't take reasonable precautions.
+
+## What Trux Recommends
+
+Implement a mandatory backing safety program:
+
+1. **Require spotters for all backing in congested areas.** Train spotters on proper positioning and hand signals.
+2. **Install backup cameras on all trucks.** Review footage from backing accidents to identify what went wrong.
+3. **Establish a clear backing policy.** When to use spotters, when to use cameras, when to reposition the truck.
+4. **Train all drivers on backing technique.** Make it clear that backing slowly and safely is more important than backing quickly.
+5. **Review backing accidents monthly.** Identify patterns and provide coaching.
+
+Backing accidents are preventable. The question is whether you're willing to invest the time and resources to prevent them.`
+  }
+];
+
+// Combine all articles
+export const allBlogArticles = [...blogArticles, ...safetyArticles];
+
+// Re-export for backward compatibility
+export { allBlogArticles as blogArticles };
