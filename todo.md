@@ -133,7 +133,7 @@
 - [x] Create quotes database table with all fields
 - [x] Build backend tRPC procedures (submit, getById, getAll, updateStatus)
 - [x] Build 8-step quote form UI with progress indicator
-- [ ] Add quote confirmation page with tracking link
-- [ ] Add admin dashboard to manage quotes
-- [ ] Wire form submissions to email notifications
+- [x] Add quote confirmation page with tracking link
+- [x] Add admin dashboard to manage quotes
+- [x] Wire form submissions to email notifications
 - [ ] Add "Save and Continue Later" functionality

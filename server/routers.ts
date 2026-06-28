@@ -5,6 +5,7 @@ import { publicProcedure, router, protectedProcedure } from "./_core/trpc";
 import { createQuote, getQuoteById, getAllQuotes, updateQuoteStatus } from "./db";
 import { InsertQuote } from "../drizzle/schema";
 import { z } from "zod";
+import { notifyOwner } from "./_core/notification";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -26,6 +27,18 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         const quote = input as InsertQuote;
         const created = await createQuote(quote);
+        
+        if (created?.id) {
+          try {
+            await notifyOwner({
+              title: `New Quote: ${quote.businessName}`,
+              content: `Business: ${quote.businessName}\nContact: ${quote.contactFirstName} ${quote.contactLastName}\nEmail: ${quote.contactEmail}\nPhone: ${quote.contactPhone}\nState: ${quote.policyState}\n\nView: /admin/quotes`,
+            });
+          } catch (error) {
+            console.error('Notification failed:', error);
+          }
+        }
+        
         return { id: created?.id, success: !!created };
       }),
     
