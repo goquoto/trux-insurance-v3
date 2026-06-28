@@ -136,4 +136,4 @@
 - [x] Add quote confirmation page with tracking link
 - [x] Add admin dashboard to manage quotes
 - [x] Wire form submissions to email notifications
-- [ ] Add "Save and Continue Later" functionality
+- [x] Add "Save and Continue Later" functionality (auto-save + manual save button + draft restoration)

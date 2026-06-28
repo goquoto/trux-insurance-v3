@@ -108,11 +108,30 @@ const initialFormData: FormData = {
   commodities: [],
 };
 
+const STORAGE_KEY = 'trux_quote_draft';
+
 export default function QuoteForm() {
   const [, setLocation] = useLocation();
-  const [currentStep, setCurrentStep] = useState<FormStep>('basic');
-  const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [currentStep, setCurrentStep] = useState<FormStep>(() => {
+    if (typeof window === 'undefined') return 'basic';
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return saved ? JSON.parse(saved).step : 'basic';
+    } catch {
+      return 'basic';
+    }
+  });
+  const [formData, setFormData] = useState<FormData>(() => {
+    if (typeof window === 'undefined') return initialFormData;
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return saved ? JSON.parse(saved).data : initialFormData;
+    } catch {
+      return initialFormData;
+    }
+  });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [saveMessage, setSaveMessage] = useState<string>('');
 
   const submitQuoteMutation = trpc.quotes.submit.useMutation({
     onSuccess: (data) => {
@@ -125,14 +144,47 @@ export default function QuoteForm() {
     },
   });
 
+  const saveProgress = () => {
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ step: currentStep, data: formData }));
+        setSaveMessage('✓ Progress saved! You can close and return later.');
+        setTimeout(() => setSaveMessage(''), 4000);
+      } catch (e) {
+        console.error('Failed to save:', e);
+      }
+    }
+  };
+
+  const clearDraft = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(STORAGE_KEY);
+      setFormData(initialFormData);
+      setCurrentStep('basic');
+      setSaveMessage('Draft cleared.');
+      setTimeout(() => setSaveMessage(''), 2000);
+    }
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
 
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
+    setFormData(prev => {
+      const updated = {
+        ...prev,
+        [name]: type === 'checkbox' ? checked : value,
+      };
+      // Auto-save to localStorage
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify({ step: currentStep, data: updated }));
+        } catch (e) {
+          console.error('Auto-save failed:', e);
+        }
+      }
+      return updated;
+    });
     
     // Clear error for this field
     if (errors[name]) {
@@ -175,20 +227,40 @@ export default function QuoteForm() {
 
     const currentIndex = STEPS.findIndex(s => s.id === currentStep);
     if (currentIndex < STEPS.length - 1) {
-      setCurrentStep(STEPS[currentIndex + 1].id);
+      const nextStep = STEPS[currentIndex + 1].id;
+      setCurrentStep(nextStep);
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify({ step: nextStep, data: formData }));
+        } catch (e) {
+          console.error('Save failed:', e);
+        }
+      }
     }
   };
 
   const goToPreviousStep = () => {
     const currentIndex = STEPS.findIndex(s => s.id === currentStep);
     if (currentIndex > 0) {
-      setCurrentStep(STEPS[currentIndex - 1].id);
+      const prevStep = STEPS[currentIndex - 1].id;
+      setCurrentStep(prevStep);
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify({ step: prevStep, data: formData }));
+        } catch (e) {
+          console.error('Save failed:', e);
+        }
+      }
     }
   };
 
   const handleSubmit = async () => {
     if (!validateStep()) return;
     await submitQuoteMutation.mutateAsync(formData as any);
+    // Clear draft on successful submission
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(STORAGE_KEY);
+    }
   };
 
   const currentStepData = STEPS.find(s => s.id === currentStep);
@@ -843,7 +915,7 @@ export default function QuoteForm() {
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex gap-4 justify-between max-w-2xl">
+        <div className="flex gap-4 justify-between max-w-2xl mb-6">
           <button
             onClick={goToPreviousStep}
             disabled={currentStepIndex === 0}
@@ -864,6 +936,39 @@ export default function QuoteForm() {
             >
               {submitQuoteMutation.isPending ? 'Submitting...' : 'Submit Quote'}
             </button>
+          )}
+        </div>
+
+        {/* Save Progress Section */}
+        <div className="max-w-2xl space-y-4">
+          <div className="flex gap-2">
+            <button
+              onClick={saveProgress}
+              className="text-sm text-purple hover:underline"
+            >
+              💾 Save Progress
+            </button>
+            {typeof window !== 'undefined' && localStorage.getItem(STORAGE_KEY) && (
+              <button
+                onClick={clearDraft}
+                className="text-sm text-muted hover:text-warn"
+              >
+                Clear Draft
+              </button>
+            )}
+          </div>
+
+          {saveMessage && (
+            <div className="p-3 bg-sand border border-hair rounded text-sm text-muted">
+              {saveMessage}
+            </div>
+          )}
+
+          {typeof window !== 'undefined' && localStorage.getItem(STORAGE_KEY) && !saveMessage && (
+            <div className="p-3 bg-paper-2 border border-hair rounded text-sm text-muted">
+              <p className="mb-2">You have a saved draft from a previous session.</p>
+              <p className="text-xs">Your progress is automatically saved as you fill out the form.</p>
+            </div>
           )}
         </div>
       </div>
