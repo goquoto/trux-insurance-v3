@@ -248,3 +248,8 @@
 - [x] Generate pencil-sketch images for 28 unique vehicle illustrations (uploaded to storage; similar types like Big Rigs/18-Wheelers share images by design)
 - [x] Add images to vehicle listing page (grid + list views)
 - [x] Cross-link popular vehicles from state landing pages (6 vehicle types per state)
+
+
+## Vehicle Detail & Homepage Map Enhancements
+- [x] Enlarge vehicle detail page hero image (larger sand panel, decorative border, max-w-lg, min-h-420px)
+- [x] Embed interactive clickable state map on the homepage (replaced static PNG with InteractiveStateMap component)

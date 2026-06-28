@@ -67,12 +67,13 @@ export default function VehicleDetail() {
                 </a>
               </div>
             </div>
-            <div className="bg-[var(--sand)] p-8 flex items-center justify-center">
+            <div className="relative bg-[var(--sand)] p-6 lg:p-10 flex items-center justify-center min-h-[320px] lg:min-h-[420px]">
+              {/* Pencil-sketch decorative border */}
+              <div className="absolute inset-3 border border-[var(--hair)] pointer-events-none" />
               <img
                 src={vehicle.image}
-                alt={`${vehicle.name} illustration`}
-                className="w-full max-w-md h-auto object-contain"
-                loading="lazy"
+                alt={`${vehicle.name} — pencil sketch illustration`}
+                className="w-full max-w-lg h-auto object-contain relative z-10 drop-shadow-sm"
               />
             </div>
           </div>

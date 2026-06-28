@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import Layout from "@/components/Layout";
 import SEO from "@/components/SEO";
 import { Shield, FileText, AlertTriangle, CreditCard, Award } from "lucide-react";
+import InteractiveStateMap from "@/components/InteractiveStateMap";
 export default function Home() {
   return (
     <Layout>
@@ -205,22 +206,18 @@ export default function Home() {
 
       <hr className="hairline" />
 
-      {/* Licensed States Map */}
+      {/* Licensed States Map — Interactive */}
       <section className="section bg-paper">
         <div className="container">
           <span className="eyebrow">Where We Operate</span>
           <div className="tick mt-4"></div>
           <h2 className="mt-4 mb-4">Licensed in 21 states — and growing.</h2>
           <p className="font-sans text-[16px] text-muted-custom max-w-2xl mb-8">
-            Trux Insurance Services is licensed to place commercial trucking coverage in the following states. If your authority operates in any of these states, we can help.
+            Trux Insurance Services is licensed to place commercial trucking coverage in the following states. Click any state to see local freight hubs, regulations, and get a state-specific quote.
           </p>
           <div className="flex flex-col lg:flex-row gap-10 items-start">
             <div className="flex-1">
-              <img
-                src="/manus-storage/us-state-map-abbreviations_0ad32b5b.png"
-                alt="US map showing 21 states where Trux Insurance Services is licensed, highlighted in purple"
-                className="w-full h-auto"
-              />
+              <InteractiveStateMap showLabels={true} />
             </div>
             <div className="lg:w-[320px]">
               <h3 className="text-[18px] mb-4">States licensed</h3>
