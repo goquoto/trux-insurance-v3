@@ -801,7 +801,7 @@ export const vehicleDetails: Record<string, VehicleDetail> = {
     name: "Limousines",
     slug: "limousines",
     category: "Passenger",
-    image: "/manus-storage/vehicle-straight-truck_7dac0152.png",
+    image: "/manus-storage/vehicle-limousine_8076b294.png",
     description: "Commercial auto coverage for limousine and livery services — including passenger liability, physical damage, and hired/non-owned auto.",
     overview: "Limousine and livery services carry passengers — making liability exposure significantly higher than freight operations. A single accident can result in multiple injury claims, and the high-profile nature of limousine services means claims are often pursued aggressively. Insurance for limousines must include robust passenger liability, physical damage for expensive vehicles, and coverage for the unique risks of chauffeured transportation. We work with markets that specialize in passenger-carrying vehicles and understand the regulatory requirements that vary by state and municipality.",
     whoNeedsIt: [
