@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import Layout from "@/components/Layout";
 import SEO from "@/components/SEO";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import GoogleReviews from "@/components/GoogleReviews";
 
 export default function About() {
   return (
@@ -120,6 +121,11 @@ export default function About() {
         </div>
       </section>
 
+      <hr className="hairline" />
+
+      {/* Google Reviews */}
+      <GoogleReviews />
+
       {/* CTA Band */}
       <section className="section bg-[#1A1A1A] text-center">
         <div className="container">
@@ -128,10 +134,10 @@ export default function About() {
             Every mile covered — <em className="italic">by people who only do trucking.</em>
           </h2>
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="https://truxins.com/trucking-insurance-quote/" className="btn-solid">
+            <Link href="/quote" className="btn-solid">
               Start Trucking Application
-            </a>
-            <Link href="/quote" className="btn-ghost border-white text-white hover:bg-white hover:text-[#1A1A1A]">
+            </Link>
+            <Link href="/quick-quote" className="btn-ghost border-white text-white hover:bg-white hover:text-[#1A1A1A]">
               Get a Fast Quote
             </Link>
           </div>

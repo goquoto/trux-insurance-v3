@@ -145,3 +145,9 @@
 
 ## MOTUS Blog Post
 - [x] Add extensive MOTUS blog article (14 min read, covers what it is, timeline, who's affected, what changed, insurance implications, action checklist, FAQ)
+
+## Google Reviews Widget
+- [x] Find Google Place ID for Trux Insurance Services (ChIJq6pq55utD4gR7mAyuFzJt34)
+- [x] Create tRPC procedure to fetch Google reviews via Places API (server-side, cached 1 hour)
+- [x] Build GoogleReviews component with star ratings, review cards, and "See all reviews" link
+- [x] Integrate GoogleReviews component into the About page

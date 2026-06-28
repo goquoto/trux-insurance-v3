@@ -6,6 +6,14 @@ import { createQuote, getQuoteById, getAllQuotes, updateQuoteStatus } from "./db
 import { InsertQuote } from "../drizzle/schema";
 import { z } from "zod";
 import { notifyOwner } from "./_core/notification";
+import { makeRequest, PlaceDetailsResult } from "./_core/map";
+
+// Google Place ID for Trux Insurance Services
+const TRUX_PLACE_ID = "ChIJq6pq55utD4gR7mAyuFzJt34";
+
+// Cache reviews for 1 hour to avoid excessive API calls
+let reviewsCache: { data: any; timestamp: number } | null = null;
+const CACHE_DURATION = 60 * 60 * 1000; // 1 hour
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -18,6 +26,53 @@ export const appRouter = router({
       return {
         success: true,
       } as const;
+    }),
+  }),
+
+  reviews: router({
+    getGoogleReviews: publicProcedure.query(async () => {
+      // Return cached data if still valid
+      if (reviewsCache && Date.now() - reviewsCache.timestamp < CACHE_DURATION) {
+        return reviewsCache.data;
+      }
+
+      try {
+        const details = await makeRequest<PlaceDetailsResult>(
+          '/maps/api/place/details/json',
+          {
+            place_id: TRUX_PLACE_ID,
+            fields: 'name,rating,user_ratings_total,reviews',
+          }
+        );
+
+        if (details.status !== 'OK') {
+          throw new Error(`Places API returned status: ${details.status}`);
+        }
+
+        const result = {
+          name: details.result.name,
+          rating: details.result.rating ?? 5,
+          totalReviews: details.result.user_ratings_total ?? 0,
+          reviews: (details.result.reviews ?? []).map((r) => ({
+            authorName: r.author_name,
+            rating: r.rating,
+            text: r.text,
+            time: r.time,
+          })),
+          placeId: TRUX_PLACE_ID,
+        };
+
+        // Cache the result
+        reviewsCache = { data: result, timestamp: Date.now() };
+        return result;
+      } catch (error) {
+        console.error('Failed to fetch Google Reviews:', error);
+        // Return cached data even if expired, or null
+        if (reviewsCache) {
+          return reviewsCache.data;
+        }
+        return null;
+      }
     }),
   }),
 
