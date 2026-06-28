@@ -25,7 +25,7 @@ export default function Home() {
                 Trux Insurance Services places commercial trucking and fleet coverage across 21 states — auto liability, cargo, physical damage, trailer interchange and more. We market your account once, to the carriers that fit your risk, and stand behind it at claim time and renewal.
               </p>
               <div className="flex flex-wrap gap-4 mb-8">
-                <a href="https://truxins.com/trucking-insurance-quote/" className="btn-solid">
+                <a href="/quote" className="btn-solid">
                   Start Trucking Application
                 </a>
                 <a href="/quick-quote" className="btn-ghost">
