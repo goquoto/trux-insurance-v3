@@ -232,3 +232,11 @@
 - [x] Add partner section (Bizee, Blue Ink Tech, Motive, RTS)
 - [x] Phone number already prominent in header
 - [x] Add sticky mobile CTA bar (Get a Quote + Call Now) on homepage
+
+
+## Vehicles We Cover Page
+- [x] Create /vehicles-we-cover page with all 27 vehicle types from truxins.com
+- [x] Style consistently with existing site (editorial layout, eyebrow/tick/hairline)
+- [x] Add to Insurance dropdown navigation
+- [x] Add route to App.tsx
+- [x] Include in sitemap

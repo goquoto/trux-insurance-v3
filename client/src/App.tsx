@@ -32,6 +32,7 @@ const FreightBrokerInsurance = lazy(() => import("./pages/FreightBrokerInsurance
 const UsageBasedSolutions = lazy(() => import("./pages/UsageBasedSolutions"));
 const SafetyHub = lazy(() => import("./pages/SafetyHub"));
 const ClientLoginHub = lazy(() => import("./pages/ClientLoginHub"));
+const VehiclesWeCover = lazy(() => import("./pages/VehiclesWeCover"));
 
 // Minimal loading fallback that matches the site's style
 function PageLoader() {
@@ -67,6 +68,8 @@ function Router() {
         <Route path={"/usage-based-solutions"} component={UsageBasedSolutions} />
         <Route path={"/safety"} component={SafetyHub} />
         <Route path={"/client-login"} component={ClientLoginHub} />
+        <Route path={"/vehicles-we-cover"} component={VehiclesWeCover} />
+        <Route path={"/vehicles-we-cover/:slug"} component={VehiclesWeCover} />
         <Route path={"/contact"} component={Contact} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />

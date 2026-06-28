@@ -38,6 +38,7 @@ function getAllUrls(): SitemapEntry[] {
     { path: "/freight-broker-insurance", priority: "0.8", changefreq: "monthly" },
     { path: "/usage-based-solutions", priority: "0.8", changefreq: "monthly" },
     { path: "/safety", priority: "0.8", changefreq: "weekly" },
+    { path: "/vehicles-we-cover", priority: "0.8", changefreq: "monthly" },
   ];
 
   for (const page of staticPages) {

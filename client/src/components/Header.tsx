@@ -140,6 +140,13 @@ export default function Header() {
                   <div className="grid grid-cols-2 gap-0">
                     {/* Coverages column */}
                     <div className="p-6 border-r border-[var(--hair)]">
+                      {/* Vehicles We Cover link */}
+                      <Link
+                        href="/vehicles-we-cover"
+                        className="font-sans text-[13px] font-medium text-purple no-underline block mb-4 pb-3 border-b border-[var(--hair)] hover:underline"
+                      >
+                        🚛 Vehicles We Cover →
+                      </Link>
                       <span className="eyebrow text-[11px] tracking-[0.2em] text-taupe font-sans font-medium uppercase block mb-3">
                         Coverages
                       </span>
