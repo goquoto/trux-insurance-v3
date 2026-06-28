@@ -26,6 +26,7 @@ const Cost = lazy(() => import("./pages/Cost"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogArticle = lazy(() => import("./pages/BlogArticle"));
 const StatePage = lazy(() => import("./pages/StatePage"));
+const ClientCenter = lazy(() => import("./pages/ClientCenter"));
 
 // Minimal loading fallback that matches the site's style
 function PageLoader() {
@@ -55,6 +56,7 @@ function Router() {
         <Route path={"/quick-quote"} component={QuickQuote} />
         <Route path={"/quote-confirmation/:id"} component={QuoteConfirmation} />
         <Route path={"/admin/quotes"} component={AdminQuotes} />
+        <Route path={"/client-center"} component={ClientCenter} />
         <Route path={"/contact"} component={Contact} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />

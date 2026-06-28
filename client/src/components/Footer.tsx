@@ -34,7 +34,7 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2">
               <li><Link href="/quote" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Trucking Quick Quote</Link></li>
-              <li><a href="https://truxins.com/trucking-insurance-quote/" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Trucking Application</a></li>
+              <li><Link href="/quote" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Trucking Application</Link></li>
               <li><Link href="/coverages" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Types of Coverage</Link></li>
             </ul>
           </div>
@@ -45,9 +45,9 @@ export default function Footer() {
               For Clients
             </h4>
             <ul className="space-y-2">
-              <li><a href="https://truxins.com/client/" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Client Center</a></li>
-              <li><a href="https://truxins.com/service/" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Policy Service</a></li>
-              <li><a href="https://truxins.com/certificate/" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Request a Certificate</a></li>
+              <li><Link href="/client-center" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Client Center</Link></li>
+              <li><Link href="/service" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Policy Service</Link></li>
+              <li><a href="https://identity.nowcerts.com/Account/Login?ReturnUrl=%2FAccount%2FLoginRedirectUrl" target="_blank" rel="noopener noreferrer" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Request a Certificate</a></li>
               <li><a href="https://truxins.com/claim/" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Report a Claim</a></li>
               <li><a href="https://truxins.com/pay/" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Make a Payment</a></li>
             </ul>

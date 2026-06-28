@@ -183,14 +183,9 @@ export default function Service() {
           <p className="font-sans text-[16px] text-white/80 max-w-xl mx-auto mb-8">
             Access your account through our two client portals — one for certificates and one for policy changes and support.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="https://identity.nowcerts.com/Account/Login?ReturnUrl=%2FAccount%2FLoginRedirectUrl" target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-purple font-sans font-medium text-[14px] px-8 py-3 tracking-wider uppercase hover:bg-white/90 transition-colors">
-              Certificates Portal
-            </a>
-            <a href="https://support.truxins.com/" target="_blank" rel="noopener noreferrer" className="inline-block bg-transparent border-2 border-white text-white font-sans font-medium text-[14px] px-8 py-3 tracking-wider uppercase hover:bg-white/10 transition-colors">
-              Policy Changes Portal
-            </a>
-          </div>
+          <a href="/client-center" className="inline-block bg-white text-purple font-sans font-medium text-[14px] px-8 py-3 tracking-wider uppercase hover:bg-white/90 transition-colors">
+            Visit Client Center
+          </a>
         </div>
       </section>
 
