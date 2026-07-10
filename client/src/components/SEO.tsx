@@ -79,10 +79,10 @@ export default function SEO({ title, description, canonical, keywords, breadcrum
       "areaServed": [
         "Arizona", "Colorado", "Florida", "Georgia", "Illinois", "Indiana", "Iowa",
         "Kentucky", "Michigan", "Minnesota", "Mississippi", "Missouri", "Nevada",
-        "North Carolina", "Ohio", "Pennsylvania", "South Carolina", "Tennessee",
+        "New Jersey", "North Carolina", "Ohio", "Pennsylvania", "South Carolina", "Tennessee",
         "Texas", "Virginia", "Wisconsin"
       ],
-      "description": "Commercial trucking insurance specialists serving motor carriers in 21 states."
+      "description": "Commercial trucking insurance specialists serving motor carriers in 22 states."
     };
     addSchema(orgSchema);
 

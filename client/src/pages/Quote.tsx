@@ -898,9 +898,9 @@ export default function Quote() {
 
               {/* Licensed states note */}
               <div className="border border-[var(--hair)] p-6">
-                <h4 className="font-serif text-[16px] text-ink mb-3">Licensed in 21 states</h4>
+                <h4 className="font-serif text-[16px] text-ink mb-3">Licensed in 22 states</h4>
                 <p className="font-sans text-[13px] text-muted-custom mb-3">
-                  AZ · CO · FL · GA · IL · IN · IA · KY · MI · MN · MS · MO · NV · NC · OH · PA · SC · TN · TX · VA · WI
+                  AZ · CO · FL · GA · IL · IN · IA · KY · MI · MN · MS · MO · NV · NJ · NC · OH · PA · SC · TN · TX · VA · WI
                 </p>
                 <Link href="/states" className="font-sans text-[13px] text-purple">
                   View state map →

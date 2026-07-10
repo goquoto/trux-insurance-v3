@@ -9,7 +9,7 @@ export default function Home() {
     <Layout>
       <SEO
         title="Commercial Trucking Insurance"
-        description="Trucking insurance specialists in 21 states. Auto liability, cargo, physical damage, and more for owner-operators and fleets."
+        description="Trucking insurance specialists in 22 states. Auto liability, cargo, physical damage, and more for owner-operators and fleets."
         keywords="trucking insurance, commercial truck insurance, auto liability, cargo insurance, physical damage, owner operator insurance, fleet insurance, trucking company insurance, motor carrier insurance"
         canonical="/"
       />
@@ -25,7 +25,7 @@ export default function Home() {
                 Every mile covered — <em className="font-serif italic">by people who only do trucking.</em>
               </h1>
               <p className="text-[17px] leading-relaxed mb-8 max-w-lg">
-                Trux Insurance Services places commercial trucking and fleet coverage across 21 states — auto liability, cargo, physical damage, trailer interchange and more. We market your account once, to the carriers that fit your risk, and stand behind it at claim time and renewal.
+                Trux Insurance Services places commercial trucking and fleet coverage across 22 states — auto liability, cargo, physical damage, trailer interchange and more. We market your account once, to the carriers that fit your risk, and stand behind it at claim time and renewal.
               </p>
               <div className="flex flex-wrap gap-4 mb-8">
                 <a href="/quote" className="btn-solid">
@@ -166,7 +166,7 @@ export default function Home() {
         <div className="container">
           <span className="eyebrow">Where We Operate</span>
           <div className="tick mt-4"></div>
-          <h2 className="mt-4 mb-4">Licensed in 21 states — and growing.</h2>
+          <h2 className="mt-4 mb-4">Licensed in 22 states — and growing.</h2>
           <p className="font-sans text-[16px] text-muted-custom max-w-2xl mb-8">
             Trux Insurance Services is licensed to place commercial trucking coverage in the following states. Click any state to see local freight hubs, regulations, and get a state-specific quote.
           </p>
@@ -266,7 +266,7 @@ export default function Home() {
       {/* Trust / Social Proof Block */}
       <section className="py-12 bg-paper-2 border-t border-[var(--hair)]">
         <div className="container">
-          <p className="font-sans text-[12px] text-taupe uppercase tracking-[0.2em] text-center mb-8">Trusted by carriers across 21 states</p>
+          <p className="font-sans text-[12px] text-taupe uppercase tracking-[0.2em] text-center mb-8">Trusted by carriers across 22 states</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center">
             <div className="text-center">
               <span className="font-serif text-[28px] text-ink font-bold">5.0</span>

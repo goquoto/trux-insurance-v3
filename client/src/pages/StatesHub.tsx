@@ -18,6 +18,7 @@ const LICENSED_STATES = [
   { name: "Mississippi", abbr: "MS", slug: "mississippi" },
   { name: "Missouri", abbr: "MO", slug: "missouri" },
   { name: "Nevada", abbr: "NV", slug: "nevada" },
+  { name: "New Jersey", abbr: "NJ", slug: "new-jersey" },
   { name: "North Carolina", abbr: "NC", slug: "north-carolina" },
   { name: "Ohio", abbr: "OH", slug: "ohio" },
   { name: "Pennsylvania", abbr: "PA", slug: "pennsylvania" },
@@ -33,7 +34,7 @@ export default function StatesHub() {
     <Layout>
       <SEO
         title="Trucking Insurance by State"
-        description="Trux Insurance Services is licensed in 21 states. Find state-specific coverage details, regulations, and get a quote for your state."
+        description="Trux Insurance Services is licensed in 22 states. Find state-specific coverage details, regulations, and get a quote for your state."
         canonical="/states"
       />
       <Breadcrumbs items={[{ label: "States" }]} />
@@ -43,9 +44,9 @@ export default function StatesHub() {
         <div className="container">
           <span className="eyebrow">Coverage by State</span>
           <div className="tick mt-4"></div>
-          <h1 className="mt-4 mb-4">Trucking insurance across 21 states.</h1>
+          <h1 className="mt-4 mb-4">Trucking insurance across 22 states.</h1>
           <p className="lead max-w-2xl">
-            Trux Insurance Services is licensed in 21 states across the country. Click your state to learn about coverage requirements, regulations, and get a quote.
+            Trux Insurance Services is licensed in 22 states across the country. Click your state to learn about coverage requirements, regulations, and get a quote.
           </p>
         </div>
       </section>
