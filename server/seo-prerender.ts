@@ -98,7 +98,7 @@ const stateNames: Record<string, string> = {
   "ohio": "Ohio", "indiana": "Indiana", "michigan": "Michigan", "pennsylvania": "Pennsylvania",
   "tennessee": "Tennessee", "missouri": "Missouri", "arizona": "Arizona", "colorado": "Colorado",
   "iowa": "Iowa", "kentucky": "Kentucky", "minnesota": "Minnesota", "mississippi": "Mississippi",
-  "nevada": "Nevada", "north-carolina": "North Carolina", "south-carolina": "South Carolina",
+  "nevada": "Nevada", "new-jersey": "New Jersey", "north-carolina": "North Carolina", "south-carolina": "South Carolina",
   "virginia": "Virginia", "wisconsin": "Wisconsin"
 };
 

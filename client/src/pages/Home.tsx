@@ -184,11 +184,11 @@ export default function Home() {
                   { name: "Iowa", slug: "iowa" }, { name: "Kentucky", slug: "kentucky" },
                   { name: "Michigan", slug: "michigan" }, { name: "Minnesota", slug: "minnesota" },
                   { name: "Mississippi", slug: "mississippi" }, { name: "Missouri", slug: "missouri" },
-                  { name: "Nevada", slug: "nevada" }, { name: "North Carolina", slug: "north-carolina" },
-                  { name: "Ohio", slug: "ohio" }, { name: "Pennsylvania", slug: "pennsylvania" },
-                  { name: "South Carolina", slug: "south-carolina" }, { name: "Tennessee", slug: "tennessee" },
-                  { name: "Texas", slug: "texas" }, { name: "Virginia", slug: "virginia" },
-                  { name: "Wisconsin", slug: "wisconsin" }
+                  { name: "Nevada", slug: "nevada" }, { name: "New Jersey", slug: "new-jersey" },
+                  { name: "North Carolina", slug: "north-carolina" }, { name: "Ohio", slug: "ohio" },
+                  { name: "Pennsylvania", slug: "pennsylvania" }, { name: "South Carolina", slug: "south-carolina" },
+                  { name: "Tennessee", slug: "tennessee" }, { name: "Texas", slug: "texas" },
+                  { name: "Virginia", slug: "virginia" }, { name: "Wisconsin", slug: "wisconsin" }
                 ].map((state) => (
                   <Link key={state.slug} href={`/states/${state.slug}`} className="font-sans text-[14px] text-muted-custom border-b border-[var(--hair)] pb-1.5 flex items-center gap-1.5 no-underline hover:text-ink transition-colors">
                     <span className="text-purple text-[10px]">&#9632;</span> {state.name}

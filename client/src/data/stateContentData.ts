@@ -1699,4 +1699,112 @@ export const stateContent: Record<string, StateContent> = {
       },
     ],
   },
+  "new-jersey": {
+    name: "New Jersey",
+    abbr: "NJ",
+    headline: "Trucking Insurance in New Jersey — Gateway to the Northeast",
+    intro:
+      "New Jersey is one of the most freight-intensive states in the country. Positioned between New York City and Philadelphia, it serves as the gateway to the entire Northeast corridor. The Port of New York and New Jersey is the third-busiest container port in the United States, generating massive drayage and distribution activity. Trux insures carriers throughout New Jersey — from port drayage operators in Newark and Elizabeth to last-mile delivery fleets in the suburbs and long-haul OTR carriers running I-95 and I-78.",
+    freightHubs: [
+      {
+        name: "Port of New York and New Jersey",
+        description:
+          "Third-busiest container port in the US. Massive drayage activity in Newark, Elizabeth, and Bayonne. Container volumes drive constant demand for port trucking operations.",
+      },
+      {
+        name: "Newark / Elizabeth Distribution",
+        description:
+          "Major warehouse and distribution cluster serving the NYC metro area. Heavy last-mile and regional LTL operations.",
+      },
+      {
+        name: "Meadowlands / Secaucus Hub",
+        description:
+          "Dense logistics and distribution corridor serving New York City with same-day and next-day delivery operations.",
+      },
+      {
+        name: "South Jersey / Philadelphia Metro",
+        description:
+          "Cherry Hill, Mount Laurel, and the I-295 corridor serve as a distribution gateway for the Philadelphia region and Delaware Valley.",
+      },
+    ],
+    corridors: [
+      {
+        name: "New Jersey Turnpike (I-95)",
+        description:
+          "The backbone of Northeast freight. One of the highest-volume truck corridors in the country, connecting New York to Philadelphia and beyond.",
+      },
+      {
+        name: "I-78 East-West",
+        description:
+          "Connects Newark/Elizabeth port area to Pennsylvania and the Lehigh Valley distribution hub.",
+      },
+      {
+        name: "I-287 Outer Ring",
+        description:
+          "Outer beltway connecting distribution centers throughout central and northern New Jersey.",
+      },
+      {
+        name: "Garden State Parkway",
+        description:
+          "North-south corridor serving coastal and southern New Jersey freight operations.",
+      },
+    ],
+    regulations: {
+      intrastate:
+        "New Jersey Motor Vehicle Commission regulates intrastate carriers. NJ requires intrastate carriers to register with the NJMVC and meet state-specific insurance minimums.",
+      interstate:
+        "Interstate carriers follow FMCSA requirements: $750K minimum auto liability for general freight, $1M for hazmat. NJ also requires proof of financial responsibility for all commercial vehicles.",
+      stateAgency: "New Jersey Motor Vehicle Commission (NJMVC)",
+    },
+    commonClaims: [
+      "Port drayage incidents and container accidents",
+      "Urban congestion collisions on the Turnpike and I-78",
+      "Cargo theft (high-value freight in dense metro areas)",
+      "Last-mile delivery accidents in residential areas",
+      "Rear-end collisions in heavy Turnpike traffic",
+    ],
+    typicalCarriers: [
+      "Port drayage operators (Newark/Elizabeth)",
+      "Last-mile delivery fleets (NYC metro)",
+      "Regional LTL carriers",
+      "OTR carriers on I-95 corridor",
+      "Hazmat carriers (chemical plants in South Jersey)",
+      "Refrigerated carriers (food distribution)",
+    ],
+    endorsements: [
+      "Cargo theft coverage (high-value freight)",
+      "Pollution liability (chemical and hazmat haulers)",
+      "Uninsured motorist (high UM rates in NJ)",
+      "Port authority endorsements",
+      "Trailer interchange (port drayage)",
+      "Hired and non-owned auto",
+    ],
+    faq: [
+      {
+        question: "Is New Jersey expensive for trucking insurance?",
+        answer:
+          "New Jersey is one of the more expensive states due to high population density, heavy traffic, elevated litigation costs, and high uninsured motorist rates. However, carriers with clean records operating in established corridors can still access competitive markets through Trux.",
+      },
+      {
+        question: "Do you cover port drayage operators in Newark and Elizabeth?",
+        answer:
+          "Yes. Port drayage is a specialty we handle regularly. We understand the unique exposures of container port operations — chassis interchange, port authority requirements, and the high-frequency short-haul risk profile of drayage carriers.",
+      },
+      {
+        question: "What are New Jersey's minimum insurance requirements for trucks?",
+        answer:
+          "New Jersey requires commercial vehicles to carry minimum liability coverage as mandated by the NJMVC. Interstate carriers must meet FMCSA minimums ($750K for general freight, $1M for hazmat). We ensure your program meets both state and federal requirements.",
+      },
+      {
+        question: "Do you cover last-mile delivery fleets in the NYC metro area?",
+        answer:
+          "Yes. We insure last-mile delivery operations throughout New Jersey and the NYC metro. Urban delivery fleets have unique exposure profiles — high frequency, dense traffic, pedestrian risk — and we work with markets that understand and price this correctly.",
+      },
+      {
+        question: "Is cargo theft coverage important in New Jersey?",
+        answer:
+          "Absolutely. New Jersey and the surrounding metro area consistently rank among the highest in the country for cargo theft. We strongly recommend cargo theft endorsements for any carrier moving high-value freight through the state.",
+      },
+    ],
+  },
 };
