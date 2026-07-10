@@ -265,3 +265,4 @@
 - [x] Make Trucking & Auto column collapsible (same pattern as Endorsements)
 - [x] Make Workforce & Specialty column collapsible (same pattern as Endorsements)
 - [x] Replace interactive state map with proper full 50-state US SVG (21 licensed states active/clickable, rest grayed out)
+- [x] Add New Jersey as a licensed state (now 22 states licensed)
