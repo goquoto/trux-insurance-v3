@@ -100,7 +100,12 @@ export async function createQuote(quote: InsertQuote): Promise<Quote | null> {
   }
 
   try {
-    const result = await db.insert(quotes).values(quote);
+    // Ensure effectiveDate is a Date object (frontend sends it as a string)
+    const values = {
+      ...quote,
+      effectiveDate: quote.effectiveDate instanceof Date ? quote.effectiveDate : new Date(quote.effectiveDate as any),
+    };
+    const result = await db.insert(quotes).values(values);
     const insertedId = (result as any).insertId;
     const created = await db.select().from(quotes).where(eq(quotes.id, insertedId)).limit(1);
     return created.length > 0 ? created[0] : null;
