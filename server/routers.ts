@@ -7,6 +7,7 @@ import { InsertQuote } from "../drizzle/schema";
 import { z } from "zod";
 import { notifyOwner } from "./_core/notification";
 import { makeRequest, PlaceDetailsResult } from "./_core/map";
+import { sendQuoteNotification, sendContactNotification } from "./email";
 
 // Google Place ID for Trux Insurance Services
 const TRUX_PLACE_ID = "ChIJq6pq55utD4gR7mAyuFzJt34";
@@ -92,6 +93,22 @@ export const appRouter = router({
           } catch (error) {
             console.error('Notification failed:', error);
           }
+
+          // Send email notification via Resend
+          try {
+            await sendQuoteNotification({
+              businessName: quote.businessName || "",
+              contactName: `${quote.contactFirstName} ${quote.contactLastName}`,
+              email: quote.contactEmail || "",
+              phone: quote.contactPhone || "",
+              dotNumber: quote.dotNumber || undefined,
+              state: quote.policyState || undefined,
+              notes: quote.notes || undefined,
+              submittedAt: new Date().toLocaleString("en-US", { timeZone: "America/Chicago" }),
+            });
+          } catch (error) {
+            console.error('Email notification failed:', error);
+          }
         }
         
         return { id: created?.id, success: !!created };
@@ -122,6 +139,37 @@ export const appRouter = router({
           throw new Error('Unauthorized');
         }
         return await updateQuoteStatus(input.id, input.status, input.notes);
+      }),
+  }),
+
+  contact: router({
+    submit: publicProcedure
+      .input(z.object({
+        name: z.string().min(1),
+        email: z.string().email(),
+        phone: z.string().optional(),
+        company: z.string().optional(),
+        message: z.string().min(1),
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          await sendContactNotification({
+            name: input.name,
+            email: input.email,
+            phone: input.phone,
+            company: input.company,
+            message: input.message,
+            submittedAt: new Date().toLocaleString("en-US", { timeZone: "America/Chicago" }),
+          });
+
+          await notifyOwner({
+            title: `Contact Form: ${input.name}`,
+            content: `Name: ${input.name}\nEmail: ${input.email}\nPhone: ${input.phone || "—"}\nMessage: ${input.message}`,
+          });
+        } catch (error) {
+          console.error('Contact form email failed:', error);
+        }
+        return { success: true };
       }),
   }),
 });

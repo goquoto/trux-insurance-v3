@@ -266,3 +266,23 @@
 - [x] Make Workforce & Specialty column collapsible (same pattern as Endorsements)
 - [x] Replace interactive state map with proper full 50-state US SVG (21 licensed states active/clickable, rest grayed out)
 - [x] Add New Jersey as a licensed state (now 22 states licensed)
+
+## Resources Hub & Tool Pages Rebuild
+- [ ] Rebuild Resources hub page at /resources
+- [ ] Rebuild VIN Check tool page at /resources/vin-check
+- [ ] Build High-Risk Truck Insurance page at /resources/high-risk-truck-insurance
+- [ ] Build Glossary of Terms page at /resources/glossary
+- [ ] Build New Venture Trucking Insurance page at /resources/new-venture-trucking-insurance
+- [ ] Build Owner-Operator Insurance page at /resources/owner-operator-insurance
+- [ ] Build Towing Insurance page at /resources/towing-insurance
+- [ ] Build Truck Fleet Insurance page at /resources/truck-fleet-insurance
+- [ ] Register all routes in App.tsx
+- [ ] Add Resources and VIN Check links to Footer
+- [ ] Remove Blog and Resources from header nav (keep in footer only)
+
+## Resend Email Integration
+- [x] Install Resend SDK and add API key
+- [x] Create email service (server/email.ts) with quote and contact notification functions
+- [x] Wire quote form submission to send email to info@truxins.com and milen@truxins.com
+- [x] Wire contact form to send email via tRPC contact.submit mutation
+- [x] Validate Resend API key with vitest

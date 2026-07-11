@@ -4,6 +4,7 @@ import SEO from "@/components/SEO";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { MapPin, Phone, Clock, Mail } from "lucide-react";
 import { toast } from "sonner";
+import { trpc } from "@/lib/trpc";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -13,9 +14,24 @@ export default function Contact() {
     message: "",
   });
 
+  const contactMutation = trpc.contact.submit.useMutation({
+    onSuccess: () => {
+      toast.success("Message sent! We'll get back to you within one business day.");
+      setFormData({ name: "", email: "", phone: "", message: "" });
+    },
+    onError: () => {
+      toast.error("Something went wrong. Please call us at (331) 240-1101.");
+    },
+  });
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Message sent! We'll get back to you within one business day.");
+    contactMutation.mutate({
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone || undefined,
+      message: formData.message,
+    });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -187,8 +203,8 @@ export default function Contact() {
                       placeholder="How can we help?"
                     />
                   </div>
-                  <button type="submit" className="btn-solid w-full">
-                    Send Message
+                  <button type="submit" className="btn-solid w-full" disabled={contactMutation.isPending}>
+                    {contactMutation.isPending ? 'Sending...' : 'Send Message'}
                   </button>
                 </form>
               </div>
