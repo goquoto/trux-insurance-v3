@@ -15,14 +15,25 @@ export default function NewVentureInsurance() {
 
       <section className="section bg-[var(--sand)]">
         <div className="container">
-          <div className="w-[46px] h-[2px] bg-[var(--tick)] mb-4" />
-          <span className="eyebrow">NEW AUTHORITY</span>
-          <h1 className="mt-3 font-serif text-[36px] md:text-[48px] font-medium text-[var(--head)] leading-[1.15]">
-            New Venture Trucking Insurance
-          </h1>
-          <p className="mt-4 font-sans text-[16px] text-[var(--muted)] leading-[1.7] max-w-[600px]">
-            Coverage for carriers with less than 2 years of operating authority. We help new trucking companies get proper insurance from day one — so you can focus on building your business.
-          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            <div>
+              <div className="w-[46px] h-[2px] bg-[var(--tick)] mb-4" />
+              <span className="eyebrow">NEW AUTHORITY</span>
+              <h1 className="mt-3 font-serif text-[36px] md:text-[48px] font-medium text-[var(--head)] leading-[1.15]">
+                New Venture Trucking Insurance
+              </h1>
+              <p className="mt-4 font-sans text-[16px] text-[var(--muted)] leading-[1.7] max-w-[600px]">
+                Coverage for carriers with less than 2 years of operating authority. We help new trucking companies get proper insurance from day one — so you can focus on building your business.
+              </p>
+            </div>
+            <div className="hidden md:block">
+              <img
+                src="/manus-storage/tool-new-venture_510e0618.png"
+                alt="Pencil sketch of a new truck at a trucking company startup, representing new venture insurance"
+                className="w-full h-auto"
+              />
+            </div>
+          </div>
         </div>
       </section>
 

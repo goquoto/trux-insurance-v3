@@ -15,6 +15,13 @@
       "when": 1782613867149,
       "tag": "0001_youthful_lizard",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1783812026215,
+      "tag": "0002_rare_tomas",
+      "breakpoints": true
     }
   ]
 }

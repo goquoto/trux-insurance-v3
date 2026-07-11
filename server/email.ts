@@ -155,6 +155,48 @@ export async function sendContactNotification(data: ContactEmailData): Promise<b
   }
 }
 
+export async function sendNewsletterWelcome(email: string): Promise<boolean> {
+  try {
+    const { error } = await resend.emails.send({
+      from: FROM_ADDRESS,
+      to: [email],
+      subject: "Welcome to Trux Insurance Insights",
+      html: `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px;">
+          <h1 style="font-size: 22px; color: #1A1A1A; margin-bottom: 16px;">Welcome to Trux Insurance Insights</h1>
+          
+          <p style="font-size: 15px; color: #6E6B66; line-height: 1.7; margin-bottom: 16px;">
+            Thank you for subscribing. You'll receive periodic updates on trucking insurance trends, regulatory changes, risk management tips, and industry news — written by people who work exclusively with motor carriers.
+          </p>
+
+          <div style="margin: 24px 0; padding: 16px; background: #F2EEE6; border-left: 4px solid #1A1A1A;">
+            <p style="font-size: 14px; color: #2E2E2E; margin: 0; font-style: italic;">
+              "Every mile covered — by people who only do trucking."
+            </p>
+          </div>
+
+          <p style="font-size: 14px; color: #6E6B66; line-height: 1.7; margin-bottom: 24px;">
+            In the meantime, explore our <a href="https://truxins.net/resources" style="color: #1A1A1A; text-decoration: underline;">Resources hub</a> for tools, guides, and insurance education tailored to trucking operations.
+          </p>
+
+          <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #CEC9BF;">
+            <p style="font-size: 12px; color: #8A8783; margin: 0;">Trux Insurance Services &middot; 1 Tiffany Point, Bloomington, IL 61704 &middot; (331) 240-1101</p>
+          </div>
+        </div>
+      `,
+    });
+
+    if (error) {
+      console.error("[Email] Newsletter welcome failed:", error);
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error("[Email] Newsletter welcome error:", err);
+    return false;
+  }
+}
+
 // Lightweight API key validation
 export async function validateResendKey(): Promise<boolean> {
   try {

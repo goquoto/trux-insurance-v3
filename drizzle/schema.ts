@@ -90,3 +90,15 @@ export const quotes = mysqlTable('quotes', {
 
 export type Quote = typeof quotes.$inferSelect;
 export type InsertQuote = typeof quotes.$inferInsert;
+
+// Newsletter subscribers table
+export const newsletterSubscribers = mysqlTable('newsletter_subscribers', {
+  id: int('id').autoincrement().primaryKey(),
+  email: varchar('email', { length: 320 }).notNull().unique(),
+  subscribedAt: timestamp('subscribedAt').defaultNow().notNull(),
+  unsubscribedAt: timestamp('unsubscribedAt'),
+  isActive: int('isActive').default(1).notNull(),
+});
+
+export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;
+export type InsertNewsletterSubscriber = typeof newsletterSubscribers.$inferInsert;

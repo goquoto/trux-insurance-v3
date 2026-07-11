@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { trpc } from "../lib/trpc";
 import { Link } from "wouter";
 import Layout from "../components/Layout";
 import SEO from "../components/SEO";
@@ -58,7 +59,23 @@ export default function Resources() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [currentPage, setCurrentPage] = useState(1);
   const [newsletterEmail, setNewsletterEmail] = useState("");
-  const [newsletterStatus, setNewsletterStatus] = useState<"idle" | "success">("idle");
+  const [newsletterStatus, setNewsletterStatus] = useState<"idle" | "success" | "error" | "loading">("idle");
+  const [newsletterError, setNewsletterError] = useState("");
+  const newsletterMutation = trpc.newsletter.subscribe.useMutation({
+    onSuccess: (data) => {
+      if (data.success) {
+        setNewsletterStatus("success");
+        setNewsletterEmail("");
+      } else {
+        setNewsletterStatus("error");
+        setNewsletterError("Unable to subscribe at this time. Please try again later.");
+      }
+    },
+    onError: (err) => {
+      setNewsletterStatus("error");
+      setNewsletterError(err.message || "Something went wrong. Please try again.");
+    },
+  });
 
   const filteredArticles = useMemo(() => {
     let articles = [...blogArticles];
@@ -374,8 +391,8 @@ export default function Resources() {
             </p>
             {newsletterStatus === "success" ? (
               <div className="flex items-center justify-center gap-2 py-4">
-                <CheckCircle size={18} className="text-green-700" />
-                <p className="font-sans text-[15px] text-ink font-medium">You're subscribed! Check your inbox for a confirmation.</p>
+                <CheckCircle size={18} className="text-[#4a9a6b]" />
+                <p className="font-sans text-[15px] text-ink font-medium">You're subscribed! Check your inbox for a welcome email.</p>
               </div>
             ) : (
               <>
@@ -383,8 +400,9 @@ export default function Resources() {
                   onSubmit={(e) => {
                     e.preventDefault();
                     if (newsletterEmail.trim()) {
-                      setNewsletterStatus("success");
-                      setNewsletterEmail("");
+                      setNewsletterStatus("loading");
+                      setNewsletterError("");
+                      newsletterMutation.mutate({ email: newsletterEmail.trim() });
                     }
                   }}
                   className="flex flex-col sm:flex-row gap-3 max-w-[440px] mx-auto"
@@ -396,14 +414,19 @@ export default function Resources() {
                     placeholder="Enter your email"
                     className="flex-1 px-4 py-3 text-[14px] font-sans border border-[var(--hair)] bg-paper focus:border-[var(--tick)] focus:outline-none"
                     required
+                    disabled={newsletterStatus === "loading"}
                   />
                   <button
                     type="submit"
-                    className="px-6 py-3 bg-ink text-white font-sans text-[13px] font-medium uppercase tracking-[0.08em] hover:bg-head transition-colors whitespace-nowrap"
+                    disabled={newsletterStatus === "loading"}
+                    className="px-6 py-3 bg-ink text-white font-sans text-[13px] font-medium uppercase tracking-[0.08em] hover:bg-head transition-colors whitespace-nowrap disabled:opacity-60"
                   >
-                    Subscribe
+                    {newsletterStatus === "loading" ? "Subscribing..." : "Subscribe"}
                   </button>
                 </form>
+                {newsletterStatus === "error" && (
+                  <p className="font-sans text-[12px] text-[var(--warn)] mt-2">{newsletterError}</p>
+                )}
                 <p className="font-sans text-[11px] text-[var(--taupe)] mt-3">
                   We respect your privacy. Unsubscribe at any time.
                 </p>

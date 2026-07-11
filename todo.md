@@ -286,3 +286,8 @@
 - [x] Wire quote form submission to send email to info@truxins.com and milen@truxins.com
 - [x] Wire contact form to send email via tRPC contact.submit mutation
 - [x] Validate Resend API key with vitest
+
+## Newsletter Signup, Tool Page Images, SEO Keywords
+- [x] Wire newsletter signup: add newsletter_subscribers table, tRPC procedure, Resend welcome email
+- [x] Generate pencil-sketch hero images for 6 tool pages (High-Risk, Glossary, New Venture, Owner-Operator, Towing, Fleet)
+- [x] Optimize homepage SEO keywords (trim from 9 to 3-5 focused terms)

@@ -2,12 +2,12 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router, protectedProcedure } from "./_core/trpc";
-import { createQuote, getQuoteById, getAllQuotes, updateQuoteStatus } from "./db";
+import { createQuote, getQuoteById, getAllQuotes, updateQuoteStatus, subscribeNewsletter } from "./db";
 import { InsertQuote } from "../drizzle/schema";
 import { z } from "zod";
 import { notifyOwner } from "./_core/notification";
 import { makeRequest, PlaceDetailsResult } from "./_core/map";
-import { sendQuoteNotification, sendContactNotification } from "./email";
+import { sendQuoteNotification, sendContactNotification, sendNewsletterWelcome } from "./email";
 
 // Google Place ID for Trux Insurance Services
 const TRUX_PLACE_ID = "ChIJq6pq55utD4gR7mAyuFzJt34";
@@ -170,6 +170,25 @@ export const appRouter = router({
           console.error('Contact form email failed:', error);
         }
         return { success: true };
+      }),
+  }),
+
+  newsletter: router({
+    subscribe: publicProcedure
+      .input(z.object({
+        email: z.string().email(),
+      }))
+      .mutation(async ({ input }) => {
+        const result = await subscribeNewsletter(input.email);
+        
+        if (result.success && !result.alreadySubscribed) {
+          // Send welcome email (non-blocking)
+          sendNewsletterWelcome(input.email).catch((err) => {
+            console.error('[Newsletter] Welcome email failed:', err);
+          });
+        }
+
+        return result;
       }),
   }),
 });

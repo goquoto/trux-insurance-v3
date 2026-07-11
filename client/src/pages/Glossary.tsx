@@ -78,14 +78,25 @@ export default function Glossary() {
       {/* Hero */}
       <section className="section bg-[var(--sand)]">
         <div className="container">
-          <div className="w-[46px] h-[2px] bg-[var(--tick)] mb-4" />
-          <span className="eyebrow">REFERENCE</span>
-          <h1 className="mt-3 font-serif text-[36px] md:text-[48px] font-medium text-[var(--head)] leading-[1.15]">
-            Glossary of Terms
-          </h1>
-          <p className="mt-4 font-sans text-[16px] text-[var(--muted)] leading-[1.7] max-w-[560px]">
-            Insurance terminology explained in plain language. No jargon, no legalese — just clear definitions for the terms that matter to your operation.
-          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            <div>
+              <div className="w-[46px] h-[2px] bg-[var(--tick)] mb-4" />
+              <span className="eyebrow">REFERENCE</span>
+              <h1 className="mt-3 font-serif text-[36px] md:text-[48px] font-medium text-[var(--head)] leading-[1.15]">
+                Glossary of Terms
+              </h1>
+              <p className="mt-4 font-sans text-[16px] text-[var(--muted)] leading-[1.7] max-w-[560px]">
+                Insurance terminology explained in plain language. No jargon, no legalese — just clear definitions for the terms that matter to your operation.
+              </p>
+            </div>
+            <div className="hidden md:block">
+              <img
+                src="/manus-storage/tool-glossary_68446d25.png"
+                alt="Pencil sketch of an open reference book with magnifying glass, representing insurance terminology research"
+                className="w-full h-auto"
+              />
+            </div>
+          </div>
         </div>
       </section>
 

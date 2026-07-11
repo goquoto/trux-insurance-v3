@@ -10,7 +10,7 @@ export default function Home() {
       <SEO
         title="Commercial Trucking Insurance"
         description="Trucking insurance specialists in 22 states. Auto liability, cargo, physical damage, and more for owner-operators and fleets."
-        keywords="trucking insurance, commercial truck insurance, auto liability, cargo insurance, physical damage, owner operator insurance, fleet insurance, trucking company insurance, motor carrier insurance"
+        keywords="commercial truck insurance, trucking insurance, motor carrier insurance, fleet insurance, owner operator insurance"
         canonical="/"
       />
       {/* Hero Section */}

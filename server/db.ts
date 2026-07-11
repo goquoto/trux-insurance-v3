@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, quotes, Quote, InsertQuote } from "../drizzle/schema";
+import { InsertUser, users, quotes, Quote, InsertQuote, newsletterSubscribers, NewsletterSubscriber } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -173,6 +173,56 @@ export async function updateQuoteStatus(id: number, status: Quote['status'], not
     return getQuoteById(id);
   } catch (error) {
     console.error("[Database] Failed to update quote:", error);
+    throw error;
+  }
+}
+
+// Newsletter subscriber helpers
+export async function subscribeNewsletter(email: string): Promise<{ success: boolean; alreadySubscribed: boolean }> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot subscribe: database not available");
+    return { success: false, alreadySubscribed: false };
+  }
+
+  try {
+    // Check if already subscribed
+    const existing = await db.select().from(newsletterSubscribers).where(eq(newsletterSubscribers.email, email)).limit(1);
+    
+    if (existing.length > 0) {
+      // If previously unsubscribed, reactivate
+      if (!existing[0].isActive) {
+        await db.update(newsletterSubscribers)
+          .set({ isActive: 1, unsubscribedAt: null })
+          .where(eq(newsletterSubscribers.email, email));
+        return { success: true, alreadySubscribed: false };
+      }
+      return { success: true, alreadySubscribed: true };
+    }
+
+    // Insert new subscriber
+    await db.insert(newsletterSubscribers).values({ email });
+    return { success: true, alreadySubscribed: false };
+  } catch (error) {
+    console.error("[Database] Failed to subscribe newsletter:", error);
+    throw error;
+  }
+}
+
+export async function unsubscribeNewsletter(email: string): Promise<boolean> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot unsubscribe: database not available");
+    return false;
+  }
+
+  try {
+    await db.update(newsletterSubscribers)
+      .set({ isActive: 0, unsubscribedAt: new Date() })
+      .where(eq(newsletterSubscribers.email, email));
+    return true;
+  } catch (error) {
+    console.error("[Database] Failed to unsubscribe newsletter:", error);
     throw error;
   }
 }

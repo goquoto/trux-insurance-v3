@@ -15,14 +15,25 @@ export default function FleetInsurance() {
 
       <section className="section bg-[var(--sand)]">
         <div className="container">
-          <div className="w-[46px] h-[2px] bg-[var(--tick)] mb-4" />
-          <span className="eyebrow">FLEET PROGRAMS</span>
-          <h1 className="mt-3 font-serif text-[36px] md:text-[48px] font-medium text-[var(--head)] leading-[1.15]">
-            Truck Fleet Insurance
-          </h1>
-          <p className="mt-4 font-sans text-[16px] text-[var(--muted)] leading-[1.7] max-w-[600px]">
-            Programs for fleets of 10+ power units. Volume pricing, dedicated account management, and risk management solutions that reduce your total cost of risk.
-          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            <div>
+              <div className="w-[46px] h-[2px] bg-[var(--tick)] mb-4" />
+              <span className="eyebrow">FLEET PROGRAMS</span>
+              <h1 className="mt-3 font-serif text-[36px] md:text-[48px] font-medium text-[var(--head)] leading-[1.15]">
+                Truck Fleet Insurance
+              </h1>
+              <p className="mt-4 font-sans text-[16px] text-[var(--muted)] leading-[1.7] max-w-[600px]">
+                Programs for fleets of 10+ power units. Volume pricing, dedicated account management, and risk management solutions that reduce your total cost of risk.
+              </p>
+            </div>
+            <div className="hidden md:block">
+              <img
+                src="/manus-storage/tool-fleet-insurance_5d0800f6.png"
+                alt="Pencil sketch of a fleet of commercial trucks lined up at a terminal, representing fleet insurance programs"
+                className="w-full h-auto"
+              />
+            </div>
+          </div>
         </div>
       </section>
 

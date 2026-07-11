@@ -15,14 +15,25 @@ export default function OwnerOperatorInsurance() {
 
       <section className="section bg-[var(--sand)]">
         <div className="container">
-          <div className="w-[46px] h-[2px] bg-[var(--tick)] mb-4" />
-          <span className="eyebrow">SINGLE-TRUCK PROGRAMS</span>
-          <h1 className="mt-3 font-serif text-[36px] md:text-[48px] font-medium text-[var(--head)] leading-[1.15]">
-            Owner-Operator Insurance
-          </h1>
-          <p className="mt-4 font-sans text-[16px] text-[var(--muted)] leading-[1.7] max-w-[600px]">
-            Tailored programs for single-truck operators. Whether you're leased on to a carrier or running under your own authority, we build coverage around how you actually operate.
-          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            <div>
+              <div className="w-[46px] h-[2px] bg-[var(--tick)] mb-4" />
+              <span className="eyebrow">SINGLE-TRUCK PROGRAMS</span>
+              <h1 className="mt-3 font-serif text-[36px] md:text-[48px] font-medium text-[var(--head)] leading-[1.15]">
+                Owner-Operator Insurance
+              </h1>
+              <p className="mt-4 font-sans text-[16px] text-[var(--muted)] leading-[1.7] max-w-[600px]">
+                Tailored programs for single-truck operators. Whether you're leased on to a carrier or running under your own authority, we build coverage around how you actually operate.
+              </p>
+            </div>
+            <div className="hidden md:block">
+              <img
+                src="/manus-storage/tool-owner-operator_1ed9b175.png"
+                alt="Pencil sketch of an owner-operator standing proudly beside their truck, representing independent trucking"
+                className="w-full h-auto"
+              />
+            </div>
+          </div>
         </div>
       </section>
 

@@ -16,14 +16,25 @@ export default function HighRiskInsurance() {
       {/* Hero */}
       <section className="section bg-[var(--sand)]">
         <div className="container">
-          <div className="w-[46px] h-[2px] bg-[var(--tick)] mb-4" />
-          <span className="eyebrow">SPECIALTY COVERAGE</span>
-          <h1 className="mt-3 font-serif text-[36px] md:text-[48px] font-medium text-[var(--head)] leading-[1.15]">
-            High-Risk Truck Insurance
-          </h1>
-          <p className="mt-4 font-sans text-[16px] text-[var(--muted)] leading-[1.7] max-w-[600px]">
-            Solutions for carriers with challenging loss history, new authority, safety violations, or non-standard risks. We specialize in finding coverage when standard markets decline.
-          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            <div>
+              <div className="w-[46px] h-[2px] bg-[var(--tick)] mb-4" />
+              <span className="eyebrow">SPECIALTY COVERAGE</span>
+              <h1 className="mt-3 font-serif text-[36px] md:text-[48px] font-medium text-[var(--head)] leading-[1.15]">
+                High-Risk Truck Insurance
+              </h1>
+              <p className="mt-4 font-sans text-[16px] text-[var(--muted)] leading-[1.7] max-w-[600px]">
+                Solutions for carriers with challenging loss history, new authority, safety violations, or non-standard risks. We specialize in finding coverage when standard markets decline.
+              </p>
+            </div>
+            <div className="hidden md:block">
+              <img
+                src="/manus-storage/tool-high-risk-insurance_95bf0445.png"
+                alt="Pencil sketch of a truck navigating a challenging mountain road, representing high-risk trucking scenarios"
+                className="w-full h-auto"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
