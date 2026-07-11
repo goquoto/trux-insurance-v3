@@ -175,15 +175,15 @@ export default function VinCheck() {
 
   // VIN segment coloring
   function getSegmentColor(index: number): string {
-    if (index < 3) return "bg-blue-500"; // WMI
+    if (index < 3) return "bg-[#4a7ab5]"; // WMI
     if (index < 8) return "bg-[var(--tick)]"; // Descriptor
     if (index === 8) { // Check digit
       if (normalizedVin.length === 17) {
-        return checkDigit ? "bg-green-500" : "bg-[var(--warn)]";
+        return checkDigit ? "bg-[#4a9a6b]" : "bg-[var(--warn)]";
       }
-      return "bg-gray-300";
+      return "bg-[var(--hair)]";
     }
-    return "bg-purple-500"; // Serial
+    return "bg-[#7a6b8a]"; // Serial
   }
 
   return (
@@ -270,10 +270,10 @@ export default function VinCheck() {
                   ))}
                 </div>
                 <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3 text-[11px] font-sans text-[var(--taupe)]">
-                  <span><span className="inline-block w-2 h-2 bg-blue-500 mr-1" />1–3 · WMI — manufacturer & country</span>
+                  <span><span className="inline-block w-2 h-2 bg-[#4a7ab5] mr-1" />1–3 · WMI — manufacturer & country</span>
                   <span><span className="inline-block w-2 h-2 bg-[var(--tick)] mr-1" />4–8 · Descriptor — model, body, engine</span>
-                  <span><span className="inline-block w-2 h-2 bg-gray-300 mr-1" />9 · Check digit</span>
-                  <span><span className="inline-block w-2 h-2 bg-purple-500 mr-1" />10–17 · Serial — year, plant & unit</span>
+                  <span><span className="inline-block w-2 h-2 bg-[var(--hair)] mr-1" />9 · Check digit</span>
+                  <span><span className="inline-block w-2 h-2 bg-[#7a6b8a] mr-1" />10–17 · Serial — year, plant & unit</span>
                 </div>
               </div>
             )}
@@ -293,15 +293,15 @@ export default function VinCheck() {
         <section className="bg-paper-2">
           <div className="container py-10 md:py-14">
             {/* Status Banner */}
-            <div className={`p-4 mb-8 border-l-4 ${
-              result.status === "verified" ? "border-green-500 bg-green-50" :
-              result.status === "failed" ? "border-[var(--warn)] bg-red-50" :
-              "border-amber-500 bg-amber-50"
+            <div className={`p-4 mb-8 border-l-[4px] ${
+              result.status === "verified" ? "border-l-[#4a9a6b] bg-[#f0f8f3]" :
+              result.status === "failed" ? "border-l-[var(--warn)] bg-[#fdf4f3]" :
+              "border-l-[#b8860b] bg-[#fdf8ef]"
             }`}>
               <div className="flex items-start gap-3">
-                {result.status === "verified" && <CheckCircle size={20} className="text-green-600 shrink-0 mt-0.5" />}
+                {result.status === "verified" && <CheckCircle size={20} className="text-[#4a9a6b] shrink-0 mt-0.5" />}
                 {result.status === "failed" && <XCircle size={20} className="text-[var(--warn)] shrink-0 mt-0.5" />}
-                {result.status === "warning" && <AlertTriangle size={20} className="text-amber-600 shrink-0 mt-0.5" />}
+                {result.status === "warning" && <AlertTriangle size={20} className="text-[#b8860b] shrink-0 mt-0.5" />}
                 <div>
                   <p className="font-sans text-[14px] font-medium text-ink">
                     {result.status === "verified" && "VIN verified — clean decode against the federal database."}
