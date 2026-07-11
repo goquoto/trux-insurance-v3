@@ -61,6 +61,8 @@ export default function Footer() {
             <ul className="space-y-2">
               <li><Link href="/about" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">About Us</Link></li>
               <li><Link href="/blog" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Blog</Link></li>
+              <li><Link href="/resources" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Resources</Link></li>
+              <li><Link href="/resources/vin-check" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">VIN Check</Link></li>
               <li><Link href="/contact" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Contact</Link></li>
               <li><a href="https://truxins.com/partners/" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Partners</a></li>
               <li><a href="https://truxins.com/faqs/" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">FAQs</a></li>
