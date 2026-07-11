@@ -260,7 +260,7 @@ export default function VinCheck() {
                   {Array.from({ length: 17 }, (_, i) => (
                     <div
                       key={i}
-                      className={`w-8 h-10 flex items-center justify-center text-[13px] font-mono font-medium border border-[var(--hair)] ${
+                      className={`relative w-8 h-10 flex items-center justify-center text-[13px] font-mono font-medium border border-[var(--hair)] ${
                         i < normalizedVin.length ? "text-ink bg-paper" : "text-[var(--taupe)] bg-paper-2"
                       }`}
                     >

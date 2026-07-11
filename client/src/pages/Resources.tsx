@@ -8,13 +8,23 @@ import { Search, LayoutGrid, List, ChevronLeft, ChevronRight, Mail, CheckCircle 
 
 // Category images for cards
 const CATEGORY_IMAGES: Record<string, string> = {
-  "Regulatory & Compliance": "/manus-storage/coverage-auto-liability_c0e89d8f.png",
-  "Insurance Education": "/manus-storage/coverage-physical-damage_e3a3e7a5.png",
-  "Cost & Rate Drivers": "/manus-storage/coverage-cargo_9b5e3d0a.png",
-  "Freight Fraud & Cargo Theft": "/manus-storage/coverage-general-liability_3d7e1f2c.png",
-  "Cross-Border & International": "/manus-storage/coverage-non-trucking_7a2b4c1e.png",
-  "Safety & Driver Management": "/manus-storage/coverage-workers-comp_5f8d2a9b.png",
-  "Market & Economic Outlook": "/manus-storage/coverage-trailer-interchange_8c4e6f3d.png",
+  "Regulatory & Compliance": "/manus-storage/resource-regulatory-compliance_93e17c88.png",
+  "Insurance Education": "/manus-storage/resource-insurance-education_32994b06.png",
+  "Cost & Rate Drivers": "/manus-storage/resource-cost-rate-drivers_37a61aa3.png",
+  "Freight Fraud & Cargo Theft": "/manus-storage/resource-freight-fraud_741cacd7.png",
+  "Cross-Border & International": "/manus-storage/resource-cross-border_769338c3.png",
+  "Safety & Driver Management": "/manus-storage/resource-safety-management_0aae5328.png",
+  "Market & Economic Outlook": "/manus-storage/resource-market-outlook_2da18698.png",
+};
+
+// Tool images for the tools section
+const TOOL_IMAGES: Record<string, string> = {
+  "VIN Check": "/manus-storage/resource-vin-check-tool_f04aa753.png",
+  "Glossary of Terms": "/manus-storage/resource-glossary-terms_ec38b66e.png",
+  "Quote Application": "/manus-storage/resource-quote-application_e4079ccc.png",
+  "Trucking Insurance": "/manus-storage/resource-insurance-education_32994b06.png",
+  "Workers' Compensation": "/manus-storage/resource-safety-management_0aae5328.png",
+  "Trucking Equipment": "/manus-storage/resource-market-outlook_2da18698.png",
 };
 
 // Resource categories mapped from existing blog categories
@@ -373,27 +383,41 @@ export default function Resources() {
           <h2 className="font-serif text-[28px] md:text-[36px] font-medium text-head leading-[1.2] mb-8">
             Insurance tools & resources
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { label: "VIN Check", href: "/resources/vin-check" },
-              { label: "Trucking Insurance", href: "/coverages" },
-              { label: "High-Risk Truck Insurance", href: "/coverages/auto-liability" },
-              { label: "Workers' Compensation", href: "/coverages/workers-compensation" },
-              { label: "Glossary of Terms", href: "/resources" },
-              { label: "Trucking Equipment", href: "/vehicles-we-cover" },
-              { label: "Commercial Truck Insurance Quotes", href: "/quote" },
-              { label: "New Venture Trucking Insurance", href: "/who-we-insure/new-ventures" },
-              { label: "Owner-Operator Insurance", href: "/who-we-insure/owner-operators" },
-              { label: "Towing Insurance", href: "/coverages/auto-liability" },
-              { label: "Truck Fleet Insurance", href: "/who-we-insure/large-fleets" },
-              { label: "Quote Application", href: "/quote" },
+              { label: "VIN Check", href: "/resources/vin-check", desc: "Decode any VIN instantly against the NHTSA federal database.", image: TOOL_IMAGES["VIN Check"] },
+              { label: "Trucking Insurance", href: "/coverages", desc: "All lines of coverage for motor carriers in one place.", image: TOOL_IMAGES["Trucking Insurance"] },
+              { label: "High-Risk Truck Insurance", href: "/coverages/auto-liability", desc: "Solutions for carriers with challenging loss history.", image: "/manus-storage/resource-cost-rate-drivers_37a61aa3.png" },
+              { label: "Workers' Compensation", href: "/coverages/workers-compensation", desc: "Statutory coverage for employee injuries on the job.", image: TOOL_IMAGES["Workers' Compensation"] },
+              { label: "Glossary of Terms", href: "/resources", desc: "Insurance terminology explained in plain language.", image: TOOL_IMAGES["Glossary of Terms"] },
+              { label: "Trucking Equipment", href: "/vehicles-we-cover", desc: "Coverage by vehicle type — from day cabs to reefers.", image: TOOL_IMAGES["Trucking Equipment"] },
+              { label: "Commercial Truck Insurance Quotes", href: "/quote", desc: "Get a tailored quote for your fleet in minutes.", image: TOOL_IMAGES["Quote Application"] },
+              { label: "New Venture Trucking Insurance", href: "/who-we-insure/new-ventures", desc: "Coverage for carriers with less than 2 years of authority.", image: "/manus-storage/resource-regulatory-compliance_93e17c88.png" },
+              { label: "Owner-Operator Insurance", href: "/who-we-insure/owner-operators", desc: "Tailored programs for single-truck operators.", image: "/manus-storage/resource-freight-fraud_741cacd7.png" },
+              { label: "Towing Insurance", href: "/coverages/auto-liability", desc: "Specialized coverage for tow truck operators.", image: "/manus-storage/resource-cross-border_769338c3.png" },
+              { label: "Truck Fleet Insurance", href: "/who-we-insure/large-fleets", desc: "Programs for fleets of 10+ power units.", image: "/manus-storage/resource-market-outlook_2da18698.png" },
+              { label: "Quote Application", href: "/quote", desc: "Full trucking insurance application form.", image: TOOL_IMAGES["Quote Application"] },
             ].map(link => (
               <Link
                 key={link.label}
                 href={link.href}
-                className="font-sans text-[14px] text-muted-custom border-b border-[var(--hair)] pb-2 hover:text-ink hover:border-[var(--tick)] transition-colors no-underline"
+                className="group block bg-[var(--sand)] border border-[var(--hair)] overflow-hidden hover:border-[var(--tick)] transition-colors no-underline"
               >
-                {link.label}
+                <div className="h-[80px] overflow-hidden">
+                  <img
+                    src={link.image}
+                    alt=""
+                    className="w-full h-full object-cover opacity-50 group-hover:opacity-70 transition-opacity"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="font-serif text-[16px] font-medium text-head leading-[1.3] mb-1 group-hover:text-ink transition-colors">
+                    {link.label}
+                  </h3>
+                  <p className="font-sans text-[12px] text-muted-custom leading-[1.5] line-clamp-2">
+                    {link.desc}
+                  </p>
+                </div>
               </Link>
             ))}
           </div>
