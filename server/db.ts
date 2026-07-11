@@ -101,9 +101,24 @@ export async function createQuote(quote: InsertQuote): Promise<Quote | null> {
 
   try {
     // Ensure effectiveDate is a Date object (frontend sends it as a string)
+    // Also ensure all required fields have proper values (not undefined/default)
     const values = {
       ...quote,
       effectiveDate: quote.effectiveDate instanceof Date ? quote.effectiveDate : new Date(quote.effectiveDate as any),
+      hasDba: quote.hasDba ?? 0,
+      sameAsMailingAddress: quote.sameAsMailingAddress ?? 0,
+      allVehiclesSameLocation: quote.allVehiclesSameLocation ?? 0,
+      selectedCoverages: quote.selectedCoverages ?? [],
+      trucks: quote.trucks ?? [],
+      trailers: quote.trailers ?? [],
+      drivers: quote.drivers ?? [],
+      commodities: quote.commodities ?? [],
+      mailingAddress: quote.mailingAddress || '',
+      mailingCity: quote.mailingCity || '',
+      mailingState: quote.mailingState || quote.policyState || '',
+      mailingZip: quote.mailingZip || '',
+      yearEstablished: quote.yearEstablished || new Date().getFullYear(),
+      businessStructure: quote.businessStructure || 'Other',
     };
     const result = await db.insert(quotes).values(values);
     const insertedId = (result as any).insertId;
