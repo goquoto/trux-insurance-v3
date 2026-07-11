@@ -268,17 +268,17 @@
 - [x] Add New Jersey as a licensed state (now 22 states licensed)
 
 ## Resources Hub & Tool Pages Rebuild
-- [ ] Rebuild Resources hub page at /resources
-- [ ] Rebuild VIN Check tool page at /resources/vin-check
-- [ ] Build High-Risk Truck Insurance page at /resources/high-risk-truck-insurance
-- [ ] Build Glossary of Terms page at /resources/glossary
-- [ ] Build New Venture Trucking Insurance page at /resources/new-venture-trucking-insurance
-- [ ] Build Owner-Operator Insurance page at /resources/owner-operator-insurance
-- [ ] Build Towing Insurance page at /resources/towing-insurance
-- [ ] Build Truck Fleet Insurance page at /resources/truck-fleet-insurance
-- [ ] Register all routes in App.tsx
-- [ ] Add Resources and VIN Check links to Footer
-- [ ] Remove Blog and Resources from header nav (keep in footer only)
+- [x] Rebuild Resources hub page at /resources
+- [x] Rebuild VIN Check tool page at /resources/vin-check
+- [x] Build High-Risk Truck Insurance page at /resources/high-risk-insurance
+- [x] Build Glossary of Terms page at /resources/glossary
+- [x] Build New Venture Trucking Insurance page at /resources/new-venture-insurance
+- [x] Build Owner-Operator Insurance page at /resources/owner-operator-insurance
+- [x] Build Towing Insurance page at /resources/towing-insurance
+- [x] Build Truck Fleet Insurance page at /resources/fleet-insurance
+- [x] Register all routes in App.tsx
+- [x] Add Resources and VIN Check links to Footer
+- [x] Remove Blog and Resources from header nav (keep in footer only)
 
 ## Resend Email Integration
 - [x] Install Resend SDK and add API key

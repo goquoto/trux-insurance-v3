@@ -1,6 +1,8 @@
 import { useState, useMemo } from "react";
 import { Link } from "wouter";
+import Layout from "../components/Layout";
 import SEO from "../components/SEO";
+import Breadcrumbs from "../components/Breadcrumbs";
 import { blogArticles } from "../data/blogArticles";
 import { Search, LayoutGrid, List, ChevronLeft, ChevronRight, Mail, CheckCircle } from "lucide-react";
 
@@ -86,7 +88,7 @@ export default function Resources() {
     : paginatedArticles;
 
   return (
-    <>
+    <Layout>
       <SEO
         title="Resources | Trux Insurance Services"
         description="Expert guides on compliance, coverage, cost management, and safety — written for carriers who move freight, not paperwork."
@@ -322,15 +324,15 @@ export default function Resources() {
             {[
               { label: "VIN Check", href: "/resources/vin-check", desc: "Decode any VIN instantly against the NHTSA federal database.", image: "/manus-storage/resource-vin-check-tool_f04aa753.png" },
               { label: "Trucking Insurance", href: "/coverages", desc: "All lines of coverage for motor carriers in one place.", image: "/manus-storage/resource-insurance-education_32994b06.png" },
-              { label: "High-Risk Truck Insurance", href: "/resources/high-risk-truck-insurance", desc: "Solutions for carriers with challenging loss history.", image: "/manus-storage/resource-cost-rate-drivers_37a61aa3.png" },
+              { label: "High-Risk Truck Insurance", href: "/resources/high-risk-insurance", desc: "Solutions for carriers with challenging loss history.", image: "/manus-storage/resource-cost-rate-drivers_37a61aa3.png" },
               { label: "Workers' Compensation", href: "/coverages/workers-compensation", desc: "Statutory coverage for employee injuries on the job.", image: "/manus-storage/resource-safety-management_0aae5328.png" },
               { label: "Glossary of Terms", href: "/resources/glossary", desc: "Insurance terminology explained in plain language.", image: "/manus-storage/resource-glossary-terms_ec38b66e.png" },
               { label: "Trucking Equipment", href: "/vehicles-we-cover", desc: "Coverage by vehicle type — from day cabs to reefers.", image: "/manus-storage/resource-market-outlook_2da18698.png" },
               { label: "Commercial Truck Insurance Quotes", href: "/quote", desc: "Get a tailored quote for your fleet in minutes.", image: "/manus-storage/resource-quote-application_e4079ccc.png" },
-              { label: "New Venture Trucking Insurance", href: "/resources/new-venture-trucking-insurance", desc: "Coverage for carriers with less than 2 years of authority.", image: "/manus-storage/resource-regulatory-compliance_93e17c88.png" },
+              { label: "New Venture Trucking Insurance", href: "/resources/new-venture-insurance", desc: "Coverage for carriers with less than 2 years of authority.", image: "/manus-storage/resource-regulatory-compliance_93e17c88.png" },
               { label: "Owner-Operator Insurance", href: "/resources/owner-operator-insurance", desc: "Tailored programs for single-truck operators.", image: "/manus-storage/resource-freight-fraud_741cacd7.png" },
               { label: "Towing Insurance", href: "/resources/towing-insurance", desc: "Specialized coverage for tow truck operators.", image: "/manus-storage/resource-cross-border_769338c3.png" },
-              { label: "Truck Fleet Insurance", href: "/resources/truck-fleet-insurance", desc: "Programs for fleets of 10+ power units.", image: "/manus-storage/resource-market-outlook_2da18698.png" },
+              { label: "Truck Fleet Insurance", href: "/resources/fleet-insurance", desc: "Programs for fleets of 10+ power units.", image: "/manus-storage/resource-market-outlook_2da18698.png" },
               { label: "Quote Application", href: "/quote", desc: "Full trucking insurance application form.", image: "/manus-storage/resource-quote-application_e4079ccc.png" },
             ].map(link => (
               <Link
@@ -437,6 +439,6 @@ export default function Resources() {
           </p>
         </div>
       </section>
-    </>
+    </Layout>
   );
 }

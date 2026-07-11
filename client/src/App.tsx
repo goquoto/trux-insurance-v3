@@ -36,6 +36,12 @@ const VehiclesWeCover = lazy(() => import("./pages/VehiclesWeCover"));
 const VehicleDetail = lazy(() => import("./pages/VehicleDetail"));
 const Resources = lazy(() => import("./pages/Resources"));
 const VinCheck = lazy(() => import("./pages/VinCheck"));
+const HighRiskInsurance = lazy(() => import("./pages/HighRiskInsurance"));
+const Glossary = lazy(() => import("./pages/Glossary"));
+const NewVentureInsurance = lazy(() => import("./pages/NewVentureInsurance"));
+const OwnerOperatorInsurance = lazy(() => import("./pages/OwnerOperatorInsurance"));
+const TowingInsurance = lazy(() => import("./pages/TowingInsurance"));
+const FleetInsurance = lazy(() => import("./pages/FleetInsurance"));
 
 // Minimal loading fallback that matches the site's style
 function PageLoader() {
@@ -75,6 +81,12 @@ function Router() {
         <Route path={"/vehicles-we-cover/:slug"} component={VehicleDetail} />
         <Route path={"/resources"} component={Resources} />
         <Route path={"/resources/vin-check"} component={VinCheck} />
+        <Route path={"/resources/high-risk-insurance"} component={HighRiskInsurance} />
+        <Route path={"/resources/glossary"} component={Glossary} />
+        <Route path={"/resources/new-venture-insurance"} component={NewVentureInsurance} />
+        <Route path={"/resources/owner-operator-insurance"} component={OwnerOperatorInsurance} />
+        <Route path={"/resources/towing-insurance"} component={TowingInsurance} />
+        <Route path={"/resources/fleet-insurance"} component={FleetInsurance} />
         <Route path={"/contact"} component={Contact} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
