@@ -266,3 +266,15 @@
 - [x] Make Workforce & Specialty column collapsible (same pattern as Endorsements)
 - [x] Replace interactive state map with proper full 50-state US SVG (21 licensed states active/clickable, rest grayed out)
 - [x] Add New Jersey as a licensed state (now 22 states licensed)
+
+## Resources Hub Page & VIN Check Tool
+- [x] Build Resources hub page at /resources with full-width hero banner
+- [x] Add category/tag filter system (Regulatory & Compliance, Insurance Education, Cost & Rate Drivers, Freight Fraud & Cargo Theft, Cross-Border/International, Safety & Driver Management, Market & Economic Outlook)
+- [x] Add search bar for filtering articles
+- [x] Feature cards layout: 2 large featured + 3-column grid for remaining articles
+- [x] Add pagination for article list
+- [x] Add email newsletter signup section
+- [x] Add insurance disclaimer at bottom
+- [x] Build VIN Check tool page at /resources/vin-check with NHTSA vPIC API integration
+- [x] Add Resources link to navigation and footer
+- [x] Add route to App.tsx

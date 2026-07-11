@@ -34,6 +34,8 @@ const SafetyHub = lazy(() => import("./pages/SafetyHub"));
 const ClientLoginHub = lazy(() => import("./pages/ClientLoginHub"));
 const VehiclesWeCover = lazy(() => import("./pages/VehiclesWeCover"));
 const VehicleDetail = lazy(() => import("./pages/VehicleDetail"));
+const Resources = lazy(() => import("./pages/Resources"));
+const VinCheck = lazy(() => import("./pages/VinCheck"));
 
 // Minimal loading fallback that matches the site's style
 function PageLoader() {
@@ -71,6 +73,8 @@ function Router() {
         <Route path={"/client-login"} component={ClientLoginHub} />
         <Route path={"/vehicles-we-cover"} component={VehiclesWeCover} />
         <Route path={"/vehicles-we-cover/:slug"} component={VehicleDetail} />
+        <Route path={"/resources"} component={Resources} />
+        <Route path={"/resources/vin-check"} component={VinCheck} />
         <Route path={"/contact"} component={Contact} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
