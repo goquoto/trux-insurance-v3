@@ -486,34 +486,58 @@ export default function VinCheck() {
                       </tr>
                     </thead>
                     <tbody>
-                      {bulkResults.map((br, idx) => (
-                        <tr key={br.vin} className="border-b border-[var(--hair)]">
-                          <td className="font-sans text-[13px] text-[var(--taupe)] py-3 pr-4">{idx + 1}</td>
-                          <td className="font-mono text-[12px] text-[var(--head)] py-3 pr-4">{br.vin}</td>
-                          <td className="font-sans text-[13px] text-[var(--muted)] py-3 pr-4">{br.result?.modelYear || "—"}</td>
-                          <td className="font-sans text-[13px] text-[var(--muted)] py-3 pr-4">{br.result?.make || "—"}</td>
-                          <td className="font-sans text-[13px] text-[var(--muted)] py-3 pr-4">{br.result?.model || "—"}</td>
-                          <td className="font-sans text-[13px] text-[var(--muted)] py-3 pr-4">{br.result?.vehicleType || "—"}</td>
-                          <td className="py-3">
-                            {br.status === "pending" && (
-                              <span className="font-sans text-[12px] text-[var(--taupe)]">Waiting</span>
+                      {bulkResults.map((br, idx) => {
+                        const hasNotes = br.status === "success" && br.result?.errorCode !== "0";
+                        return (
+                          <>
+                            <tr key={br.vin} className="border-b border-[var(--hair)]">
+                              <td className="font-sans text-[13px] text-[var(--taupe)] py-3 pr-4">{idx + 1}</td>
+                              <td className="font-mono text-[12px] text-[var(--head)] py-3 pr-4">{br.vin}</td>
+                              <td className="font-sans text-[13px] text-[var(--muted)] py-3 pr-4">{br.result?.modelYear || "—"}</td>
+                              <td className="font-sans text-[13px] text-[var(--muted)] py-3 pr-4">{br.result?.make || "—"}</td>
+                              <td className="font-sans text-[13px] text-[var(--muted)] py-3 pr-4">{br.result?.model || "—"}</td>
+                              <td className="font-sans text-[13px] text-[var(--muted)] py-3 pr-4">{br.result?.vehicleType || "—"}</td>
+                              <td className="py-3">
+                                {br.status === "pending" && (
+                                  <span className="font-sans text-[12px] text-[var(--taupe)]">Waiting</span>
+                                )}
+                                {br.status === "loading" && (
+                                  <span className="font-sans text-[12px] text-[var(--muted)]">Decoding...</span>
+                                )}
+                                {br.status === "success" && hasNotes && (
+                                  <span className="font-sans text-[12px] text-[var(--warn)] flex items-center gap-1">
+                                    <AlertTriangle size={12} /> Notes
+                                  </span>
+                                )}
+                                {br.status === "success" && !hasNotes && (
+                                  <span className="font-sans text-[12px] text-[var(--head)] flex items-center gap-1">
+                                    <CheckCircle2 size={12} /> Decoded
+                                  </span>
+                                )}
+                                {br.status === "error" && (
+                                  <span className="font-sans text-[12px] text-[var(--warn)] flex items-center gap-1">
+                                    <AlertTriangle size={12} /> {br.error}
+                                  </span>
+                                )}
+                              </td>
+                            </tr>
+                            {hasNotes && br.result?.errorText && (
+                              <tr key={`${br.vin}-note`} className="border-b border-[var(--hair)] bg-[var(--sand)]">
+                                <td></td>
+                                <td colSpan={6} className="py-2.5 px-0">
+                                  <div className="flex items-start gap-2">
+                                    <AlertTriangle size={13} className="text-[var(--warn)] mt-0.5 flex-shrink-0" />
+                                    <div>
+                                      <p className="font-sans text-[12px] font-medium text-[var(--head)]">Decode completed with notes</p>
+                                      <p className="font-sans text-[11px] text-[var(--muted)] mt-0.5">{br.result.errorText}</p>
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
                             )}
-                            {br.status === "loading" && (
-                              <span className="font-sans text-[12px] text-[var(--muted)]">Decoding...</span>
-                            )}
-                            {br.status === "success" && (
-                              <span className="font-sans text-[12px] text-[var(--head)] flex items-center gap-1">
-                                <CheckCircle2 size={12} /> Decoded
-                              </span>
-                            )}
-                            {br.status === "error" && (
-                              <span className="font-sans text-[12px] text-[var(--warn)] flex items-center gap-1">
-                                <AlertTriangle size={12} /> {br.error}
-                              </span>
-                            )}
-                          </td>
-                        </tr>
-                      ))}
+                          </>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>
