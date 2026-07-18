@@ -344,3 +344,17 @@
 - [x] Update auth: staff login via Microsoft → pending approval state
 - [x] Update auth: customers signup via Gmail/Microsoft/Apple/email → "account will be approved" message
 - [x] Send new account notifications to all managers and admins
+
+## Restore Hub Sidebar Tabs (Empty Shells)
+- [ ] Restore Carrier Directory page (empty shell)
+- [ ] Restore Knowledge Base page (empty shell)
+- [ ] Restore Training/Onboarding page (empty shell)
+- [ ] Restore Standards page (empty shell)
+- [ ] Restore Forms page (empty shell)
+- [ ] Restore Workflows page (empty shell)
+- [ ] Update sidebar navigation with all tabs
+- [ ] Update App.tsx routes for all hub pages
+
+## Bug Fixes
+- [x] Fix logout not working in the portal (added user dropdown with Sign Out button)
+- [x] Add sidebar collapse/expand toggle
