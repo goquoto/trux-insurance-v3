@@ -1,18 +1,42 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { Link } from "wouter";
+import { useState, useEffect } from "react";
 
 const LOGO_DARK = "/manus-storage/trux-logo-dark_ea3120b2.png";
+const LOGO_WHITE = "/manus-storage/trux-logo-white_f250e47b.png";
 
 export default function PortalLogin() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const [darkMode, setDarkMode] = useState(() => {
+    try { return localStorage.getItem('hub-login-dark') === 'true'; } catch { return false; }
+  });
+
+  useEffect(() => {
+    try { localStorage.setItem('hub-login-dark', String(darkMode)); } catch {}
+  }, [darkMode]);
+
+  const toggleDarkMode = () => setDarkMode(!darkMode);
+
+  const handleSignOut = async () => {
+    await logout();
+    window.location.href = '/portal/login';
+  };
 
   // If user is logged in but pending approval
   if (user && (user as any).accountStatus === "pending") {
     return (
-      <div className="portal-login-page">
+      <div className={`portal-login-page ${darkMode ? 'portal-dark' : ''}`}>
+        <div className="portal-login-dark-toggle">
+          <button onClick={toggleDarkMode} aria-label="Toggle dark mode" title={darkMode ? "Switch to light mode" : "Switch to dark mode"}>
+            {darkMode
+              ? <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+              : <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            }
+          </button>
+        </div>
         <div className="portal-login-card">
-          <img src={LOGO_DARK} alt="Trux Insurance Services" className="portal-login-logo" />
+          <img src={darkMode ? LOGO_WHITE : LOGO_DARK} alt="Trux Insurance Services" className="portal-login-logo" />
           <div className="portal-login-pill">AGENCY HUB</div>
           
           <div className="portal-pending-state">
@@ -25,6 +49,13 @@ export default function PortalLogin() {
             <p className="portal-pending-note">You will receive a notification once your account is approved. If you need immediate access, please contact the office at <a href="tel:3312401101">(331) 240-1101</a>.</p>
           </div>
 
+          <div className="portal-pending-actions">
+            <button onClick={handleSignOut} className="portal-provider-btn portal-provider-signout">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              <span>Sign in with a different account</span>
+            </button>
+          </div>
+
           <Link href="/" className="portal-back-link">← Back to Website</Link>
         </div>
       </div>
@@ -34,9 +65,17 @@ export default function PortalLogin() {
   // If user is logged in but rejected
   if (user && (user as any).accountStatus === "rejected") {
     return (
-      <div className="portal-login-page">
+      <div className={`portal-login-page ${darkMode ? 'portal-dark' : ''}`}>
+        <div className="portal-login-dark-toggle">
+          <button onClick={toggleDarkMode} aria-label="Toggle dark mode" title={darkMode ? "Switch to light mode" : "Switch to dark mode"}>
+            {darkMode
+              ? <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+              : <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            }
+          </button>
+        </div>
         <div className="portal-login-card">
-          <img src={LOGO_DARK} alt="Trux Insurance Services" className="portal-login-logo" />
+          <img src={darkMode ? LOGO_WHITE : LOGO_DARK} alt="Trux Insurance Services" className="portal-login-logo" />
           <div className="portal-login-pill">AGENCY HUB</div>
           
           <div className="portal-pending-state">
@@ -49,6 +88,13 @@ export default function PortalLogin() {
             <p>Your account request was not approved. If you believe this is an error, please contact the office.</p>
           </div>
 
+          <div className="portal-pending-actions">
+            <button onClick={handleSignOut} className="portal-provider-btn portal-provider-signout">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              <span>Sign in with a different account</span>
+            </button>
+          </div>
+
           <Link href="/" className="portal-back-link">← Back to Website</Link>
         </div>
       </div>
@@ -59,9 +105,17 @@ export default function PortalLogin() {
   const loginUrl = getLoginUrl("/portal");
 
   return (
-    <div className="portal-login-page">
+    <div className={`portal-login-page ${darkMode ? 'portal-dark' : ''}`}>
+      <div className="portal-login-dark-toggle">
+        <button onClick={toggleDarkMode} aria-label="Toggle dark mode" title={darkMode ? "Switch to light mode" : "Switch to dark mode"}>
+          {darkMode
+            ? <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            : <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          }
+        </button>
+      </div>
       <div className="portal-login-card">
-        <img src={LOGO_DARK} alt="Trux Insurance Services" className="portal-login-logo" />
+        <img src={darkMode ? LOGO_WHITE : LOGO_DARK} alt="Trux Insurance Services" className="portal-login-logo" />
         <div className="portal-login-pill">AGENCY HUB</div>
         
         <h2 className="portal-login-title">Sign in to your account</h2>

@@ -1286,6 +1286,100 @@
   text-decoration: none;
 }
 
+/* Pending actions (sign out / try again) */
+.portal-pending-actions {
+  margin: 20px 0 24px;
+}
+.portal-provider-signout {
+  justify-content: center;
+  cursor: pointer;
+  background: none;
+  width: 100%;
+}
+
+/* Dark mode toggle on login page */
+.portal-login-dark-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 100;
+}
+.portal-login-dark-toggle button {
+  background: none;
+  border: 1px solid var(--hair);
+  padding: 8px;
+  cursor: pointer;
+  color: var(--muted);
+  transition: all 0.15s;
+}
+.portal-login-dark-toggle button:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+/* Portal Login Dark Mode */
+.portal-login-page.portal-dark {
+  background: #1a1a1f;
+}
+.portal-dark .portal-login-card {
+  background: #232328;
+  border-color: #3a3a40;
+}
+.portal-dark .portal-login-pill {
+  color: #9a9690;
+  border-color: #3a3a40;
+}
+.portal-dark .portal-login-title {
+  color: #f0ede8;
+}
+.portal-dark .portal-login-subtitle {
+  color: #9a9690;
+}
+.portal-dark .portal-provider-btn {
+  border-color: #3a3a40;
+  color: #f0ede8;
+}
+.portal-dark .portal-provider-btn:hover {
+  border-color: #6a6a70;
+  background: #2a2a30;
+}
+.portal-dark .portal-login-divider {
+  border-top-color: #3a3a40;
+}
+.portal-dark .portal-login-divider span {
+  background: #232328;
+  color: #7a7a80;
+}
+.portal-dark .portal-login-note {
+  color: #8a8a90;
+}
+.portal-dark .portal-login-note a {
+  color: #f0ede8;
+}
+.portal-dark .portal-back-link {
+  color: #7a7a80;
+}
+.portal-dark .portal-back-link:hover {
+  color: #f0ede8;
+}
+.portal-dark .portal-pending-state h2 {
+  color: #f0ede8;
+}
+.portal-dark .portal-pending-state p {
+  color: #9a9690;
+}
+.portal-dark .portal-pending-note a {
+  color: #f0ede8;
+}
+.portal-dark .portal-login-dark-toggle button {
+  border-color: #3a3a40;
+  color: #9a9690;
+}
+.portal-dark .portal-login-dark-toggle button:hover {
+  border-color: #6a6a70;
+  color: #f0ede8;
+}
+
 
 /* ============================================================
    PENDING APPROVALS
@@ -1485,6 +1579,84 @@
 }
 .hub-dark .hub-user-dropdown-item:hover {
   background: rgba(255,255,255,0.08);
+}
+
+/* Hub Dark Mode — comprehensive overrides for all hub pages */
+.hub-dark .hub-eyebrow {
+  color: var(--hub-muted);
+}
+.hub-dark .hub-empty-state {
+  border-color: var(--hub-border);
+}
+.hub-dark .hub-empty-state p {
+  color: var(--hub-muted);
+}
+.hub-dark .hub-empty-state svg {
+  color: var(--hub-muted);
+}
+.hub-dark .hub-pending-item {
+  border-bottom-color: var(--hub-border);
+}
+.hub-dark .hub-pending-name {
+  color: var(--hub-text);
+}
+.hub-dark .hub-pending-meta {
+  color: var(--hub-muted);
+}
+.hub-dark .hub-btn-approve {
+  background: #e8e4dc;
+  border-color: #e8e4dc;
+  color: #1a1a1a;
+}
+.hub-dark .hub-btn-reject {
+  border-color: var(--warn);
+  color: var(--warn);
+}
+.hub-dark .hub-btn-reject:hover {
+  background: var(--warn);
+  color: #fff;
+}
+.hub-dark .hub-quick-card {
+  background: var(--hub-surface);
+  border-color: var(--hub-border);
+}
+.hub-dark .hub-quick-card h3 {
+  color: var(--hub-text);
+}
+.hub-dark .hub-quick-card p {
+  color: var(--hub-muted);
+}
+.hub-dark .hub-quick-card svg {
+  color: var(--hub-muted);
+}
+.hub-dark .hub-stat-card {
+  border-color: var(--hub-border);
+}
+.hub-dark .hub-stat-number {
+  color: var(--hub-text);
+}
+.hub-dark .hub-stat-label {
+  color: var(--hub-muted);
+}
+.hub-dark .hub-quicklink-card {
+  border-color: var(--hub-border);
+}
+.hub-dark .hub-quicklink-card h4 {
+  color: var(--hub-text);
+  border-bottom-color: var(--hub-border);
+}
+.hub-dark .hub-quicklink-card li {
+  border-bottom-color: var(--hub-border);
+}
+.hub-dark .hub-quicklink-card a {
+  color: var(--hub-muted);
+}
+.hub-dark .hub-quicklink-card a:hover {
+  color: var(--hub-text);
+}
+.hub-dark .hub-user-avatar {
+  background: #333;
+  color: #e8e4dc;
 }
 
 /* Sidebar Collapse */

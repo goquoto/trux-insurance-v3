@@ -373,3 +373,8 @@
 - [x] Add MGAs tab to sidebar navigation (under MAIN section, after Carrier Directory)
 - [x] Create HubMGAs empty shell page at /portal/mgas
 - [x] Add route in App.tsx
+
+## Portal Login & Dark Mode Fixes
+- [x] Add "Sign in with a different account" / "Try again" button on pending approval screen
+- [x] Add dark mode support to the portal login page (respect hub dark/light toggle)
+- [x] Ensure dark mode works properly on all hub pages
