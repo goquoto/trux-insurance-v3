@@ -309,3 +309,16 @@
 - [ ] (Future) Add route-level auth guards for /portal routes
 - [ ] (Future) Connect billing page to ePayPolicy API
 - [ ] (Future) Add certificate request/download workflow
+
+## Agency Hub Rebuild (Staff/Admin Internal Portal)
+- [x] Remove old portal pages and replace with new Agency Hub architecture
+- [x] Build AgencyHubLayout (navy sidebar, gradient header, breadcrumbs, footer)
+- [x] Build Hub Dashboard (hero tiles, stat row, quick links, latest resources)
+- [x] Build Carrier Directory (73 companies, faceted filtering, search)
+- [x] Build Knowledge Base with 20 seed articles and category filtering
+- [x] Build Onboarding/Training page (7-step stepper + curriculum tracks)
+- [x] Build Team Directory (12 employees, grouped by department)
+- [x] Build Standards & Best Practices page
+- [x] Build Intake Forms page (categorized forms with SOP links)
+- [x] Wire backend data (carrier data, articles, team) as static data files
+- [ ] Add global search across articles, companies, and people
