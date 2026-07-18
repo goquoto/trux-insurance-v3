@@ -3,8 +3,16 @@ import { useLocation } from 'wouter';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import JotformEmbed from '@/components/JotformEmbed';
 import { trpc } from '@/lib/trpc';
 import { LICENSED_STATES } from '@shared/states';
+
+// Jotform form ID for the fast quote form
+// Replace with your actual Jotform form ID once created
+const JOTFORM_FAST_QUOTE_FORM_ID = "PLACEHOLDER_FAST_QUOTE_FORM";
+
+// Toggle: set to true to use Jotform embed, false to use native form
+const USE_JOTFORM = true;
 
 interface QuickQuoteData {
   firstName: string;
@@ -135,6 +143,16 @@ export default function QuickQuote() {
             </p>
           </div>
 
+          {USE_JOTFORM ? (
+            <JotformEmbed
+              formId={JOTFORM_FAST_QUOTE_FORM_ID}
+              title="Get a Fast Quote"
+              minHeight={500}
+              onSubmit={() => {
+                // Optionally redirect or show inline success
+              }}
+            />
+          ) : (
           <form onSubmit={handleSubmit} className="space-y-6 bg-paper-2 p-8 rounded">
             {/* Name Fields */}
             <div className="grid grid-cols-2 gap-4">
@@ -293,6 +311,7 @@ export default function QuickQuote() {
               We'll review your application and contact you within 24 hours.
             </p>
           </form>
+          )}
         </div>
       </div>
     </Layout>

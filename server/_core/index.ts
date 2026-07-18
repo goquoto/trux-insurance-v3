@@ -10,6 +10,7 @@ import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { registerSitemapRoute } from "../sitemap";
 import { injectSEO } from "../seo-prerender";
+import { registerJotformWebhook } from "../jotform-webhook";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -39,6 +40,7 @@ async function startServer() {
   registerStorageProxy(app);
   registerOAuthRoutes(app);
   registerSitemapRoute(app);
+  registerJotformWebhook(app);
   // tRPC API
   app.use(
     "/api/trpc",

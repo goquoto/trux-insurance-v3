@@ -322,3 +322,14 @@
 - [x] Build Intake Forms page (categorized forms with SOP links)
 - [x] Wire backend data (carrier data, articles, team) as static data files
 - [ ] Add global search across articles, companies, and people
+
+## Jotform Integration
+- [x] Create JotformEmbed reusable component (JS embed, auto-resize, Trux styling overrides)
+- [x] Create webhook endpoint (POST /api/webhooks/jotform) to receive submissions into database
+- [x] Replace Quote page form with Jotform embed (placeholder form ID)
+- [x] Replace Fast Quote page form with Jotform embed (placeholder form ID)
+- [x] Replace Contact page form with Jotform embed (placeholder form ID)
+- [x] Add inline success message after submission
+- [x] Add Meta Pixel hook point (ready for future tracking ID)
+- [ ] Store Jotform API key server-side via secrets (when forms are created)
+- [x] Write integration documentation

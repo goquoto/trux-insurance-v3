@@ -2,9 +2,17 @@ import { useState } from "react";
 import Layout from "@/components/Layout";
 import SEO from "@/components/SEO";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import JotformEmbed from "@/components/JotformEmbed";
 import { MapPin, Phone, Clock, Mail } from "lucide-react";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
+
+// Jotform form ID for the contact form
+// Replace with your actual Jotform form ID once created
+const JOTFORM_CONTACT_FORM_ID = "PLACEHOLDER_CONTACT_FORM";
+
+// Toggle: set to true to use Jotform embed, false to use native form
+const USE_JOTFORM = true;
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -151,6 +159,16 @@ export default function Contact() {
             <div>
               <div className="bg-paper-2 border border-[var(--hair)] p-8">
                 <h3 className="mb-6">Send us a message</h3>
+                {USE_JOTFORM ? (
+                  <JotformEmbed
+                    formId={JOTFORM_CONTACT_FORM_ID}
+                    title="Contact Trux Insurance"
+                    minHeight={400}
+                    onSubmit={() => {
+                      toast.success("Message sent! We'll get back to you within one business day.");
+                    }}
+                  />
+                ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div>
                     <label className="form-label" htmlFor="name">Name *</label>
@@ -207,6 +225,7 @@ export default function Contact() {
                     {contactMutation.isPending ? 'Sending...' : 'Send Message'}
                   </button>
                 </form>
+                )}
               </div>
             </div>
           </div>

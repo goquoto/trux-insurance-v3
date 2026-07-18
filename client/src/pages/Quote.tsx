@@ -2,8 +2,16 @@ import { useState, useEffect } from "react";
 import Layout from "@/components/Layout";
 import SEO from "@/components/SEO";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import JotformEmbed from "@/components/JotformEmbed";
 import { toast } from "sonner";
 import { Link, useSearch } from "wouter";
+
+// Jotform form ID for the full quote form
+// Replace with your actual Jotform form ID once created
+const JOTFORM_QUOTE_FORM_ID = "PLACEHOLDER_QUOTE_FORM";
+
+// Toggle: set to true to use Jotform embed, false to use native form
+const USE_JOTFORM = true;
 
 const US_STATES = [
   "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
@@ -260,6 +268,21 @@ export default function Quote() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Form */}
             <div className="lg:col-span-2">
+              {/* Jotform embed mode */}
+              {USE_JOTFORM && (
+                <JotformEmbed
+                  formId={JOTFORM_QUOTE_FORM_ID}
+                  title="Get a Trucking Insurance Quote"
+                  minHeight={600}
+                  onSubmit={() => {
+                    toast.success("Quote request received!");
+                    localStorage.removeItem("quoteFormData");
+                  }}
+                />
+              )}
+
+              {/* Native form mode */}
+              {!USE_JOTFORM && (<>
               {/* Progress indicator */}
               {step < 4 && (
                 <div className="mb-10">
@@ -858,6 +881,7 @@ export default function Quote() {
                   </div>
                 </div>
               )}
+              </>)}
             </div>
 
             {/* Sidebar */}
