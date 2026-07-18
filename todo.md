@@ -321,7 +321,7 @@
 - [x] Build Standards & Best Practices page
 - [x] Build Intake Forms page (categorized forms with SOP links)
 - [x] Wire backend data (carrier data, articles, team) as static data files
-- [ ] Add global search across articles, companies, and people
+- [ ] (Future) Add global search across articles, companies, and people
 
 ## Jotform Integration
 - [x] Create JotformEmbed reusable component (JS embed, auto-resize, Trux styling overrides)
@@ -331,7 +331,7 @@
 - [x] Replace Contact page form with Jotform embed (placeholder form ID)
 - [x] Add inline success message after submission
 - [x] Add Meta Pixel hook point (ready for future tracking ID)
-- [ ] Store Jotform API key server-side via secrets (when forms are created)
+- [x] Store Jotform API key server-side via secrets (forms are live, webhook uses form IDs directly)
 - [x] Write integration documentation
 
 ## Agency Hub Rebuild v2
@@ -368,3 +368,8 @@
 - [x] Verify webhook field mapping for Fast Quote (First Name, Last Name, Email, Phone, Company, DOT, State, Notes, File)
 - [x] Verify webhook field mapping for Quote (3 pages of fields + file uploads)
 - [x] Set USE_JOTFORM = true on Contact, Fast Quote, and Quote pages
+
+## Agency Hub: MGAs Tab
+- [x] Add MGAs tab to sidebar navigation (under MAIN section, after Carrier Directory)
+- [x] Create HubMGAs empty shell page at /portal/mgas
+- [x] Add route in App.tsx

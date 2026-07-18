@@ -48,6 +48,7 @@ const PortalLogin = lazy(() => import("./pages/portal/PortalLogin"));
 const HubDashboard = lazy(() => import("./pages/portal/HubDashboard"));
 const HubTeam = lazy(() => import("./pages/portal/HubTeam"));
 const HubCarriers = lazy(() => import("./pages/portal/HubCarriers"));
+const HubMGAs = lazy(() => import("./pages/portal/HubMGAs"));
 const HubKnowledgeBase = lazy(() => import("./pages/portal/HubKnowledgeBase"));
 const HubWorkflows = lazy(() => import("./pages/portal/HubWorkflows"));
 const HubTraining = lazy(() => import("./pages/portal/HubTraining"));
@@ -104,6 +105,7 @@ function Router() {
         <Route path={"/portal/login"} component={PortalLogin} />
         <Route path={"/portal"} component={HubDashboard} />
         <Route path={"/portal/carriers"} component={HubCarriers} />
+        <Route path={"/portal/mgas"} component={HubMGAs} />
         <Route path={"/portal/kb"} component={HubKnowledgeBase} />
         <Route path={"/portal/workflows"} component={HubWorkflows} />
         <Route path={"/portal/training"} component={HubTraining} />

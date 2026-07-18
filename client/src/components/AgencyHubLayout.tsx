@@ -15,6 +15,7 @@ interface NavItem {
 const mainNav: NavItem[] = [
   { label: "Dashboard", path: "/portal", icon: <DashIcon /> },
   { label: "Carrier Directory", path: "/portal/carriers", icon: <CarrierIcon /> },
+  { label: "MGAs", path: "/portal/mgas", icon: <MGAIcon /> },
   { label: "Knowledge Base", path: "/portal/kb", icon: <KBIcon /> },
   { label: "Workflows", path: "/portal/workflows", icon: <WorkflowIcon /> },
 ];
@@ -36,6 +37,9 @@ function DashIcon() {
 }
 function CarrierIcon() {
   return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>;
+}
+function MGAIcon() {
+  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>;
 }
 function KBIcon() {
   return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>;
@@ -71,6 +75,7 @@ function MoonIcon() {
 function getPageTitle(path: string): string {
   if (path === "/portal") return "Dashboard";
   if (path.startsWith("/portal/carriers")) return "Carrier Directory";
+  if (path.startsWith("/portal/mgas")) return "MGAs";
   if (path.startsWith("/portal/kb")) return "Knowledge Base";
   if (path.startsWith("/portal/workflows")) return "Workflows";
   if (path.startsWith("/portal/training")) return "Onboarding & Training";
