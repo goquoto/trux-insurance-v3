@@ -712,6 +712,127 @@
   display: flex;
   gap: 8px;
 }
+.hub-btn-edit {
+  padding: 4px 8px;
+  font-size: 12px;
+  background: transparent;
+  color: var(--hub-muted, var(--muted));
+  border: 1px solid var(--hub-border, var(--hair));
+  cursor: pointer;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.hub-btn-edit:hover {
+  color: var(--hub-text, var(--ink));
+  border-color: var(--tick);
+}
+/* Modal */
+.hub-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.hub-modal {
+  background: var(--hub-bg, var(--paper));
+  border: 1px solid var(--hub-border, var(--hair));
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+.hub-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--hub-border, var(--hair));
+}
+.hub-modal-header h3 {
+  font-family: 'Lora', serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--hub-text, var(--head));
+  margin: 0;
+}
+.hub-modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--hub-muted, var(--muted));
+  cursor: pointer;
+  line-height: 1;
+}
+.hub-modal-close:hover { color: var(--hub-text, var(--ink)); }
+.hub-modal-body {
+  padding: 24px;
+}
+.hub-modal-field {
+  margin-bottom: 16px;
+}
+.hub-modal-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--hub-muted, var(--taupe));
+  margin-bottom: 6px;
+}
+.hub-modal-input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  border: 1px solid var(--hub-border, var(--hair));
+  background: var(--hub-surface, var(--paper-2));
+  color: var(--hub-text, var(--ink));
+  outline: none;
+  transition: border-color 0.15s;
+}
+.hub-modal-input:focus {
+  border-color: var(--tick);
+}
+.hub-modal-status-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.hub-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--hub-border, var(--hair));
+}
+.hub-btn-cancel {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-family: 'Poppins', sans-serif;
+  background: transparent;
+  color: var(--hub-muted, var(--muted));
+  border: 1px solid var(--hub-border, var(--hair));
+  cursor: pointer;
+}
+.hub-btn-cancel:hover { color: var(--hub-text, var(--ink)); }
+.hub-btn-save {
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.hub-btn-save:hover { opacity: 0.85; }
+.hub-btn-save:disabled { opacity: 0.5; cursor: not-allowed; }
 .hub-status-badge.rejected {
   background: rgba(156, 90, 79, 0.1);
   color: var(--warn, #9C5A4F);

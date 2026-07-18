@@ -9,7 +9,7 @@ type UserRecord = {
   name: string | null;
   email: string | null;
   loginMethod: string | null;
-  role: "user" | "staff" | "admin";
+  role: "user" | "staff" | "admin" | "customer";
   accountStatus: "pending" | "approved" | "rejected";
   createdAt: Date;
   lastSignedIn: Date;
@@ -21,6 +21,9 @@ type Tab = "team" | "customers";
 export default function HubUsers() {
   const [activeTab, setActiveTab] = useState<Tab>("team");
   const [view, setView] = useState<"list" | "grid">("list");
+  const [editingUser, setEditingUser] = useState<UserRecord | null>(null);
+  const [editName, setEditName] = useState("");
+  const [editEmail, setEditEmail] = useState("");
   const { user: currentUser } = useAuth();
   const isAdmin = (currentUser as any)?.role === "admin";
 
@@ -28,6 +31,7 @@ export default function HubUsers() {
   const approveUser = trpc.portal.approveUser.useMutation({ onSuccess: () => refetch() });
   const rejectUser = trpc.portal.rejectUser.useMutation({ onSuccess: () => refetch() });
   const updateRole = trpc.portal.updateUserRole.useMutation({ onSuccess: () => refetch() });
+  const updateUser = trpc.portal.updateUser.useMutation({ onSuccess: () => { refetch(); setEditingUser(null); } });
 
   // Split users into Team (@truxins.com) and Customers (everyone else)
   const teamUsers = useMemo(() => {
@@ -55,8 +59,23 @@ export default function HubUsers() {
     }
   };
 
-  const handleRoleChange = (userId: number, newRole: "user" | "staff" | "admin") => {
+  const handleRoleChange = (userId: number, newRole: "user" | "staff" | "admin" | "customer") => {
     updateRole.mutate({ userId, role: newRole });
+  };
+
+  const handleEditUser = (u: UserRecord) => {
+    setEditingUser(u);
+    setEditName(u.name || "");
+    setEditEmail(u.email || "");
+  };
+
+  const handleSaveEdit = () => {
+    if (!editingUser) return;
+    updateUser.mutate({
+      userId: editingUser.id,
+      name: editName || undefined,
+      email: editEmail || undefined,
+    });
   };
 
   const formatDate = (d: any) => {
@@ -147,6 +166,7 @@ export default function HubUsers() {
                           <option value="user">User</option>
                           <option value="staff">Staff</option>
                           <option value="admin">Admin</option>
+                          <option value="customer">Customer</option>
                         </select>
                       ) : (
                         <span className="hub-role-label">{u.role}</span>
@@ -156,6 +176,12 @@ export default function HubUsers() {
                     <td>{formatDate(u.lastSignedIn)}</td>
                     {isAdmin && (
                       <td className="hub-users-actions">
+                        <button className="hub-btn-edit" onClick={() => handleEditUser(u)} title="Edit user">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                          </svg>
+                        </button>
                         {u.accountStatus === "pending" && (
                           <>
                             <button className="hub-btn-approve" onClick={() => handleApprove(u.id)}>Approve</button>
@@ -184,16 +210,113 @@ export default function HubUsers() {
                 <p className="hub-team-card-dept">{u.loginMethod || "OAuth"}</p>
                 <div className="hub-team-card-meta">
                   <span className={getStatusBadge(u.accountStatus)}>{u.accountStatus}</span>
-                  <span>{u.role}</span>
+                  {isAdmin ? (
+                    <select
+                      value={u.role}
+                      onChange={(e) => handleRoleChange(u.id, e.target.value as any)}
+                      className="hub-role-select"
+                    >
+                      <option value="user">User</option>
+                      <option value="staff">Staff</option>
+                      <option value="admin">Admin</option>
+                      <option value="customer">Customer</option>
+                    </select>
+                  ) : (
+                    <span>{u.role}</span>
+                  )}
                 </div>
-                {isAdmin && u.accountStatus === "pending" && (
+                {isAdmin && (
                   <div className="hub-users-card-actions">
-                    <button className="hub-btn-approve" onClick={() => handleApprove(u.id)}>Approve</button>
-                    <button className="hub-btn-reject" onClick={() => handleReject(u.id)}>Reject</button>
+                    <button className="hub-btn-edit" onClick={() => handleEditUser(u)}>Edit</button>
+                    {u.accountStatus === "pending" && (
+                      <>
+                        <button className="hub-btn-approve" onClick={() => handleApprove(u.id)}>Approve</button>
+                        <button className="hub-btn-reject" onClick={() => handleReject(u.id)}>Reject</button>
+                      </>
+                    )}
+                    {u.accountStatus === "rejected" && (
+                      <button className="hub-btn-approve" onClick={() => handleApprove(u.id)}>Re-approve</button>
+                    )}
                   </div>
                 )}
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Edit User Modal */}
+        {editingUser && (
+          <div className="hub-modal-overlay" onClick={() => setEditingUser(null)}>
+            <div className="hub-modal" onClick={(e) => e.stopPropagation()}>
+              <div className="hub-modal-header">
+                <h3>Edit User</h3>
+                <button className="hub-modal-close" onClick={() => setEditingUser(null)}>×</button>
+              </div>
+              <div className="hub-modal-body">
+                <div className="hub-modal-field">
+                  <label>Name</label>
+                  <input
+                    type="text"
+                    value={editName}
+                    onChange={(e) => setEditName(e.target.value)}
+                    placeholder="Full name"
+                    className="hub-modal-input"
+                  />
+                </div>
+                <div className="hub-modal-field">
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    value={editEmail}
+                    onChange={(e) => setEditEmail(e.target.value)}
+                    placeholder="Email address"
+                    className="hub-modal-input"
+                  />
+                </div>
+                <div className="hub-modal-field">
+                  <label>Role</label>
+                  <select
+                    value={editingUser.role}
+                    onChange={(e) => {
+                      handleRoleChange(editingUser.id, e.target.value as any);
+                      setEditingUser({ ...editingUser, role: e.target.value as any });
+                    }}
+                    className="hub-modal-input"
+                  >
+                    <option value="user">User</option>
+                    <option value="staff">Staff</option>
+                    <option value="admin">Admin</option>
+                    <option value="customer">Customer</option>
+                  </select>
+                </div>
+                <div className="hub-modal-field">
+                  <label>Status</label>
+                  <div className="hub-modal-status-row">
+                    <span className={getStatusBadge(editingUser.accountStatus)}>
+                      {editingUser.accountStatus}
+                    </span>
+                    {editingUser.accountStatus !== "approved" && (
+                      <button className="hub-btn-approve" onClick={() => {
+                        handleApprove(editingUser.id);
+                        setEditingUser({ ...editingUser, accountStatus: "approved" });
+                      }}>Approve</button>
+                    )}
+                    {editingUser.accountStatus === "approved" && (
+                      <button className="hub-btn-reject" onClick={() => {
+                        handleReject(editingUser.id);
+                        setEditingUser({ ...editingUser, accountStatus: "rejected" });
+                      }}>Revoke</button>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="hub-modal-footer">
+                <button className="hub-btn-cancel" onClick={() => setEditingUser(null)}>Cancel</button>
+                <button className="hub-btn-save" onClick={handleSaveEdit} disabled={updateUser.isPending}>
+                  {updateUser.isPending ? "Saving..." : "Save Changes"}
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>

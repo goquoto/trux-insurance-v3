@@ -262,12 +262,30 @@ export const appRouter = router({
     updateUserRole: adminProcedure
       .input(z.object({
         userId: z.number(),
-        role: z.enum(["user", "staff", "admin"]),
+        role: z.enum(["user", "staff", "admin", "customer"]),
       }))
       .mutation(async ({ input }) => {
         const db = await getDb();
         if (!db) throw new Error("Database not available");
         await db.update(users).set({ role: input.role }).where(eq(users.id, input.userId));
+        return { success: true };
+      }),
+
+    updateUser: adminProcedure
+      .input(z.object({
+        userId: z.number(),
+        name: z.string().optional(),
+        email: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database not available");
+        const updates: Record<string, any> = {};
+        if (input.name !== undefined) updates.name = input.name;
+        if (input.email !== undefined) updates.email = input.email;
+        if (Object.keys(updates).length > 0) {
+          await db.update(users).set(updates).where(eq(users.id, input.userId));
+        }
         return { success: true };
       }),
 

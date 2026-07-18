@@ -413,3 +413,9 @@
 - [x] Build Carriers page with searchable 58-carrier table
 - [x] Wire routes: /service-center, /service-center/carriers, /service-center/policy-change, /service-center/certificate, /service-center/claim, /service-center/appointment
 - [x] Role-based routing: customers -> Service Center, staff/admin -> Agency Hub
+
+## User Management Improvements
+- [x] Add "customer" role option to the role dropdown in Users page
+- [x] Make user names editable by admin (inline edit or modal)
+- [x] Add ability to edit user email/details
+- [x] Ensure role changes work end-to-end (updateUserRole accepts "customer" role)
