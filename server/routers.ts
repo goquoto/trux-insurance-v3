@@ -1,10 +1,11 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, router, protectedProcedure } from "./_core/trpc";
-import { createQuote, getQuoteById, getAllQuotes, updateQuoteStatus, subscribeNewsletter } from "./db";
-import { InsertQuote } from "../drizzle/schema";
+import { publicProcedure, router, protectedProcedure, staffProcedure, adminProcedure } from "./_core/trpc";
+import { createQuote, getQuoteById, getAllQuotes, updateQuoteStatus, subscribeNewsletter, getDb } from "./db";
+import { InsertQuote, users } from "../drizzle/schema";
 import { z } from "zod";
+import { eq } from "drizzle-orm";
 import { notifyOwner } from "./_core/notification";
 import { makeRequest, PlaceDetailsResult } from "./_core/map";
 import { sendQuoteNotification, sendContactNotification, sendNewsletterWelcome } from "./email";
@@ -190,6 +191,31 @@ export const appRouter = router({
 
         return result;
       }),
+  }),
+
+  portal: router({
+    listUsers: adminProcedure.query(async () => {
+      const db = await getDb();
+      if (!db) return [];
+      return await db.select().from(users).orderBy(users.createdAt);
+    }),
+
+    updateUserRole: adminProcedure
+      .input(z.object({
+        userId: z.number(),
+        role: z.enum(["user", "staff", "admin"]),
+      }))
+      .mutation(async ({ input }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database not available");
+        await db.update(users).set({ role: input.role }).where(eq(users.id, input.userId));
+        return { success: true };
+      }),
+
+    // Staff+ can view all quotes (same as existing but with staffProcedure)
+    getAllQuotes: staffProcedure.query(async () => {
+      return await getAllQuotes();
+    }),
   }),
 });
 

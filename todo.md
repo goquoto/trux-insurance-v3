@@ -294,3 +294,18 @@
 
 ## Bulk VIN Check
 - [x] Add a "Check Multiple VINs" button/mode to VIN Check page with textarea for pasting multiple VINs
+
+## Agency Portal (agency.truxins.net)
+- [x] Update user schema: add 'staff' role to role enum (admin | staff | user)
+- [x] Create PortalLayout component with role-based sidebar navigation
+- [x] Build portal pages: Dashboard, Quotes, Policies, Claims, Certificates, Billing, Customers, Analytics, Users, Settings
+- [x] Add portal routes in App.tsx (/portal/*)
+- [x] Add tRPC procedures: portal.listUsers, portal.updateUserRole, portal.getAllQuotes
+- [x] Add staffProcedure and adminProcedure middleware to trpc.ts
+- [x] Wire User Management page to live data (list users, change roles)
+- [x] Wire Quotes page to live data (quotes.getAll with staff access)
+- [ ] (Future) Add policies/claims/certificates database tables and full CRUD procedures
+- [ ] (Future) Add real analytics data aggregation for admin dashboard
+- [ ] (Future) Add route-level auth guards for /portal routes
+- [ ] (Future) Connect billing page to ePayPolicy API
+- [ ] (Future) Add certificate request/download workflow

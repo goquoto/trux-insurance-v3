@@ -43,6 +43,18 @@ const OwnerOperatorInsurance = lazy(() => import("./pages/OwnerOperatorInsurance
 const TowingInsurance = lazy(() => import("./pages/TowingInsurance"));
 const FleetInsurance = lazy(() => import("./pages/FleetInsurance"));
 
+// Portal (Agency Dashboard)
+const PortalDashboard = lazy(() => import("./pages/portal/PortalDashboard"));
+const PortalQuotes = lazy(() => import("./pages/portal/PortalQuotes"));
+const PortalPolicies = lazy(() => import("./pages/portal/PortalPolicies"));
+const PortalClaims = lazy(() => import("./pages/portal/PortalClaims"));
+const PortalCertificates = lazy(() => import("./pages/portal/PortalCertificates"));
+const PortalBilling = lazy(() => import("./pages/portal/PortalBilling"));
+const PortalCustomers = lazy(() => import("./pages/portal/PortalCustomers"));
+const PortalAnalytics = lazy(() => import("./pages/portal/PortalAnalytics"));
+const PortalUsers = lazy(() => import("./pages/portal/PortalUsers"));
+const PortalSettings = lazy(() => import("./pages/portal/PortalSettings"));
+
 // Minimal loading fallback that matches the site's style
 function PageLoader() {
   return (
@@ -88,6 +100,17 @@ function Router() {
         <Route path={"/resources/towing-insurance"} component={TowingInsurance} />
         <Route path={"/resources/fleet-insurance"} component={FleetInsurance} />
         <Route path={"/contact"} component={Contact} />
+        {/* Portal routes */}
+        <Route path={"/portal"} component={PortalDashboard} />
+        <Route path={"/portal/quotes"} component={PortalQuotes} />
+        <Route path={"/portal/policies"} component={PortalPolicies} />
+        <Route path={"/portal/claims"} component={PortalClaims} />
+        <Route path={"/portal/certificates"} component={PortalCertificates} />
+        <Route path={"/portal/billing"} component={PortalBilling} />
+        <Route path={"/portal/customers"} component={PortalCustomers} />
+        <Route path={"/portal/analytics"} component={PortalAnalytics} />
+        <Route path={"/portal/users"} component={PortalUsers} />
+        <Route path={"/portal/settings"} component={PortalSettings} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>
