@@ -403,3 +403,13 @@
 - [x] Show in-app notification when new user signs up (pending approval)
 - [x] Both Team and Customers initially enrolled as "user" role
 - [x] Wire sidebar navigation to include Users tab
+
+## Fix Admin Login & Service Center Portal
+- [x] Fix: admin/staff accounts stuck on "pending approval" screen despite being approved (auth guard issue)
+- [x] Add "customer" role to user schema (user/staff/admin/customer)
+- [x] Customers get access to a separate Service Center portal (not Agency Hub)
+- [x] Build Service Center layout (separate from Agency Hub)
+- [x] Build Service Center main page with 5 service cards (Policy Change, Request Certificate, Submit Claim, Account Review, Billing & Payments)
+- [x] Build Carriers page with searchable 58-carrier table
+- [x] Wire routes: /service-center, /service-center/carriers, /service-center/policy-change, /service-center/certificate, /service-center/claim, /service-center/appointment
+- [x] Role-based routing: customers -> Service Center, staff/admin -> Agency Hub

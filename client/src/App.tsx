@@ -57,6 +57,14 @@ const HubStandards = lazy(() => import("./pages/portal/HubStandards"));
 const HubPayments = lazy(() => import("./pages/portal/HubPayments"));
 const HubUsers = lazy(() => import("./pages/portal/HubUsers"));
 
+// Service Center (Customer Portal)
+const ServiceCenterHome = lazy(() => import("./pages/service-center/ServiceCenterHome"));
+const ServiceCenterCarriers = lazy(() => import("./pages/service-center/ServiceCenterCarriers"));
+const ServiceCenterPolicyChange = lazy(() => import("./pages/service-center/ServiceCenterPolicyChange"));
+const ServiceCenterCertificate = lazy(() => import("./pages/service-center/ServiceCenterCertificate"));
+const ServiceCenterClaim = lazy(() => import("./pages/service-center/ServiceCenterClaim"));
+const ServiceCenterAppointment = lazy(() => import("./pages/service-center/ServiceCenterAppointment"));
+
 // Minimal loading fallback that matches the site's style
 function PageLoader() {
   return (
@@ -115,6 +123,13 @@ function Router() {
         <Route path={"/portal/standards"} component={HubStandards} />
         <Route path={"/portal/payments"} component={HubPayments} />
         <Route path={"/portal/users"} component={HubUsers} />
+        {/* Service Center (Customer Portal) routes */}
+        <Route path={"/service-center"} component={ServiceCenterHome} />
+        <Route path={"/service-center/carriers"} component={ServiceCenterCarriers} />
+        <Route path={"/service-center/policy-change"} component={ServiceCenterPolicyChange} />
+        <Route path={"/service-center/certificate"} component={ServiceCenterCertificate} />
+        <Route path={"/service-center/claim"} component={ServiceCenterClaim} />
+        <Route path={"/service-center/appointment"} component={ServiceCenterAppointment} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>

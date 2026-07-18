@@ -7,7 +7,7 @@ const LOGO_DARK = "/manus-storage/trux-logo-dark_ea3120b2.png";
 const LOGO_WHITE = "/manus-storage/trux-logo-white_f250e47b.png";
 
 export default function PortalLogin() {
-  const { user, logout } = useAuth();
+  const { user, loading, logout } = useAuth();
   const [darkMode, setDarkMode] = useState(() => {
     try { return localStorage.getItem('hub-login-dark') === 'true'; } catch { return false; }
   });
@@ -22,6 +22,19 @@ export default function PortalLogin() {
     await logout();
     window.location.href = '/portal/login';
   };
+
+  // If user is approved, redirect based on role
+  if (user && (user as any).accountStatus === 'approved') {
+    const role = (user as any).role;
+    if (role === 'admin' || role === 'staff') {
+      window.location.href = '/portal';
+      return null;
+    } else if (role === 'customer') {
+      window.location.href = '/service-center';
+      return null;
+    }
+    // role === 'user' — show pending-like screen asking them to wait for role assignment
+  }
 
   // If user is logged in but pending approval
   if (user && (user as any).accountStatus === "pending") {

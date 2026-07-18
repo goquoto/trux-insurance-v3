@@ -149,6 +149,12 @@ export default function AgencyHubLayout({ children }: { children: React.ReactNod
     return null;
   }
   // Only staff and admin can access the hub
+  if ((user as any).role === 'customer') {
+    if (typeof window !== 'undefined') {
+      window.location.href = '/service-center';
+    }
+    return null;
+  }
   if ((user as any).role === 'user') {
     if (typeof window !== 'undefined') {
       window.location.href = '/portal/login';

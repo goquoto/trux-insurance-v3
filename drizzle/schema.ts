@@ -16,7 +16,7 @@ export const users = mysqlTable("users", {
   name: text("name"),
   email: varchar("email", { length: 320 }),
   loginMethod: varchar("loginMethod", { length: 64 }),
-  role: mysqlEnum("role", ["user", "staff", "admin"]).default("user").notNull(),
+  role: mysqlEnum("role", ["user", "staff", "admin", "customer"]).default("user").notNull(),
   accountStatus: mysqlEnum("accountStatus", ["pending", "approved", "rejected"]).default("pending").notNull(),
   authProvider: varchar("authProvider", { length: 64 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
