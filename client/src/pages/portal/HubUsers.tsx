@@ -25,7 +25,9 @@ export default function HubUsers() {
   const [editName, setEditName] = useState("");
   const [editEmail, setEditEmail] = useState("");
   const { user: currentUser } = useAuth();
-  const isAdmin = (currentUser as any)?.role === "admin";
+  const userRole = (currentUser as any)?.role;
+  const isAdmin = userRole === "admin";
+  const canManageUsers = userRole === "admin" || userRole === "staff";
 
   const { data: allUsers = [], refetch } = trpc.portal.listUsers.useQuery();
   const approveUser = trpc.portal.approveUser.useMutation({ onSuccess: () => refetch() });
@@ -142,7 +144,7 @@ export default function HubUsers() {
                   <th>Role</th>
                   <th>Joined</th>
                   <th>Last Active</th>
-                  {isAdmin && <th>Actions</th>}
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -169,13 +171,12 @@ export default function HubUsers() {
                           <option value="customer">Customer</option>
                         </select>
                       ) : (
-                        <span className="hub-role-label">{u.role}</span>
+                        <span className="hub-role-label" style={{textTransform:'capitalize'}}>{u.role}</span>
                       )}
                     </td>
                     <td>{formatDate(u.createdAt)}</td>
                     <td>{formatDate(u.lastSignedIn)}</td>
-                    {isAdmin && (
-                      <td className="hub-users-actions">
+                    <td className="hub-users-actions">
                         <button className="hub-btn-edit" onClick={() => handleEditUser(u)} title="Edit user">
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
@@ -192,7 +193,6 @@ export default function HubUsers() {
                           <button className="hub-btn-approve" onClick={() => handleApprove(u.id)}>Re-approve</button>
                         )}
                       </td>
-                    )}
                   </tr>
                 ))}
               </tbody>
@@ -225,8 +225,7 @@ export default function HubUsers() {
                     <span>{u.role}</span>
                   )}
                 </div>
-                {isAdmin && (
-                  <div className="hub-users-card-actions">
+                <div className="hub-users-card-actions">
                     <button className="hub-btn-edit" onClick={() => handleEditUser(u)}>Edit</button>
                     {u.accountStatus === "pending" && (
                       <>
@@ -238,7 +237,6 @@ export default function HubUsers() {
                       <button className="hub-btn-approve" onClick={() => handleApprove(u.id)}>Re-approve</button>
                     )}
                   </div>
-                )}
               </div>
             ))}
           </div>
