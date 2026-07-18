@@ -3,6 +3,8 @@ import type { Express, Request, Response } from "express";
 import * as db from "../db";
 import { getSessionCookieOptions } from "./cookies";
 import { sdk } from "./sdk";
+import { sendNewAccountNotification } from "../email";
+import { notifyOwner } from "./notification";
 
 function getQueryParam(req: Request, key: string): string | undefined {
   const value = req.query[key];
@@ -28,6 +30,10 @@ export function registerOAuthRoutes(app: Express) {
         return;
       }
 
+      // Check if this is a new user (first time login)
+      const existingUser = await db.getUserByOpenId(userInfo.openId);
+      const isNewUser = !existingUser;
+
       await db.upsertUser({
         openId: userInfo.openId,
         name: userInfo.name || null,
@@ -35,6 +41,22 @@ export function registerOAuthRoutes(app: Express) {
         loginMethod: userInfo.loginMethod ?? userInfo.platform ?? null,
         lastSignedIn: new Date(),
       });
+
+      // Notify managers/admins about new signups (non-blocking)
+      if (isNewUser) {
+        const now = new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' });
+        sendNewAccountNotification({
+          userName: userInfo.name || null,
+          userEmail: userInfo.email ?? null,
+          authProvider: userInfo.loginMethod ?? userInfo.platform ?? null,
+          createdAt: now,
+        }).catch(err => console.error('[OAuth] New account email notification failed:', err));
+
+        notifyOwner({
+          title: `New Account: ${userInfo.name || userInfo.email || 'Unknown'}`,
+          content: `A new user has signed up and is pending approval.\n\nName: ${userInfo.name || '—'}\nEmail: ${userInfo.email || '—'}\nProvider: ${userInfo.loginMethod || userInfo.platform || 'Manus OAuth'}\nTime: ${now}`,
+        }).catch(err => console.error('[OAuth] New account owner notification failed:', err));
+      }
 
       const sessionToken = await sdk.createSessionToken(userInfo.openId, {
         name: userInfo.name || "",

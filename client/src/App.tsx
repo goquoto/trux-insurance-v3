@@ -44,14 +44,9 @@ const TowingInsurance = lazy(() => import("./pages/TowingInsurance"));
 const FleetInsurance = lazy(() => import("./pages/FleetInsurance"));
 
 // Agency Hub (Internal Staff Portal)
+const PortalLogin = lazy(() => import("./pages/portal/PortalLogin"));
 const HubDashboard = lazy(() => import("./pages/portal/HubDashboard"));
-const HubCarriers = lazy(() => import("./pages/portal/HubCarriers"));
-const HubKnowledgeBase = lazy(() => import("./pages/portal/HubKnowledgeBase"));
-const HubArticle = lazy(() => import("./pages/portal/HubArticle"));
-const HubTraining = lazy(() => import("./pages/portal/HubTraining"));
 const HubTeam = lazy(() => import("./pages/portal/HubTeam"));
-const HubForms = lazy(() => import("./pages/portal/HubForms"));
-const HubStandards = lazy(() => import("./pages/portal/HubStandards"));
 
 // Minimal loading fallback that matches the site's style
 function PageLoader() {
@@ -99,14 +94,9 @@ function Router() {
         <Route path={"/resources/fleet-insurance"} component={FleetInsurance} />
         <Route path={"/contact"} component={Contact} />
         {/* Agency Hub routes */}
+        <Route path={"/portal/login"} component={PortalLogin} />
         <Route path={"/portal"} component={HubDashboard} />
-        <Route path={"/portal/carriers"} component={HubCarriers} />
-        <Route path={"/portal/kb/:slug"} component={HubArticle} />
-        <Route path={"/portal/kb"} component={HubKnowledgeBase} />
-        <Route path={"/portal/training"} component={HubTraining} />
         <Route path={"/portal/team"} component={HubTeam} />
-        <Route path={"/portal/forms"} component={HubForms} />
-        <Route path={"/portal/standards"} component={HubStandards} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>

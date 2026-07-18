@@ -206,3 +206,56 @@ export async function validateResendKey(): Promise<boolean> {
     return false;
   }
 }
+
+
+// Send notification to managers/admins when a new account is created
+export async function sendNewAccountNotification(data: {
+  userName: string | null;
+  userEmail: string | null;
+  authProvider: string | null;
+  createdAt: string;
+}): Promise<boolean> {
+  try {
+    const { data: result, error } = await resend.emails.send({
+      from: FROM_ADDRESS,
+      to: TO_ADDRESSES,
+      subject: `New Account Signup: ${data.userName || data.userEmail || 'Unknown User'}`,
+      html: `
+        <div style="font-family: 'Poppins', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 32px; background: #FBFAF8; border: 1px solid #CEC9BF;">
+          <h2 style="font-family: 'Lora', Georgia, serif; color: #2E2E2E; font-size: 22px; margin-bottom: 8px;">New Account Pending Approval</h2>
+          <p style="color: #6E6B66; font-size: 14px; margin-bottom: 24px;">A new user has signed up and is waiting for account approval.</p>
+          
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+            <tr style="border-bottom: 1px solid #CEC9BF;">
+              <td style="padding: 10px 0; color: #8A8783; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; width: 120px;">Name</td>
+              <td style="padding: 10px 0; color: #1A1A1A; font-size: 14px;">${data.userName || '—'}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #CEC9BF;">
+              <td style="padding: 10px 0; color: #8A8783; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;">Email</td>
+              <td style="padding: 10px 0; color: #1A1A1A; font-size: 14px;">${data.userEmail || '—'}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #CEC9BF;">
+              <td style="padding: 10px 0; color: #8A8783; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;">Provider</td>
+              <td style="padding: 10px 0; color: #1A1A1A; font-size: 14px;">${data.authProvider || 'Manus OAuth'}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 0; color: #8A8783; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;">Signed Up</td>
+              <td style="padding: 10px 0; color: #1A1A1A; font-size: 14px;">${data.createdAt}</td>
+            </tr>
+          </table>
+          
+          <p style="color: #6E6B66; font-size: 13px;">Log in to the Agency Hub to approve or reject this account.</p>
+        </div>
+      `,
+    });
+
+    if (error) {
+      console.error('[Email] New account notification failed:', error);
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error('[Email] New account notification error:', err);
+    return false;
+  }
+}

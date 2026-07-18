@@ -60,6 +60,12 @@ export async function upsertUser(user: InsertUser): Promise<void> {
       updateSet.role = 'admin';
     }
 
+    // Owner is always approved; new users start as pending
+    if (user.openId === ENV.ownerOpenId) {
+      (values as any).accountStatus = 'approved';
+      updateSet.accountStatus = 'approved';
+    }
+
     if (!values.lastSignedIn) {
       values.lastSignedIn = new Date();
     }

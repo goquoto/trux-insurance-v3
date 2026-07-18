@@ -194,10 +194,16 @@ export const appRouter = router({
   }),
 
   portal: router({
-    listUsers: adminProcedure.query(async () => {
+    listUsers: staffProcedure.query(async () => {
       const db = await getDb();
       if (!db) return [];
       return await db.select().from(users).orderBy(users.createdAt);
+    }),
+
+    pendingUsers: staffProcedure.query(async () => {
+      const db = await getDb();
+      if (!db) return [];
+      return await db.select().from(users).where(eq(users.accountStatus, "pending")).orderBy(users.createdAt);
     }),
 
     updateUserRole: adminProcedure
@@ -212,7 +218,25 @@ export const appRouter = router({
         return { success: true };
       }),
 
-    // Staff+ can view all quotes (same as existing but with staffProcedure)
+    approveUser: staffProcedure
+      .input(z.object({ userId: z.number() }))
+      .mutation(async ({ input }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database not available");
+        await db.update(users).set({ accountStatus: "approved" }).where(eq(users.id, input.userId));
+        return { success: true };
+      }),
+
+    rejectUser: staffProcedure
+      .input(z.object({ userId: z.number() }))
+      .mutation(async ({ input }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database not available");
+        await db.update(users).set({ accountStatus: "rejected" }).where(eq(users.id, input.userId));
+        return { success: true };
+      }),
+
+    // Staff+ can view all quotes
     getAllQuotes: staffProcedure.query(async () => {
       return await getAllQuotes();
     }),

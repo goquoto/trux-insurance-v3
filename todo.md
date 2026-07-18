@@ -333,3 +333,14 @@
 - [x] Add Meta Pixel hook point (ready for future tracking ID)
 - [ ] Store Jotform API key server-side via secrets (when forms are created)
 - [x] Write integration documentation
+
+## Agency Hub Rebuild v2
+- [x] Upload white and black logo variants for dark/light mode
+- [x] Clear all hub data files except team directory
+- [x] Redesign AgencyHubLayout with truxins.net pencil style (Lora/Poppins, sand/ink palette)
+- [x] Add dark/light mode toggle to hub layout
+- [x] Add logo variants (white logo for dark, black logo for light)
+- [x] Rebuild hub pages with empty/placeholder state (no fake data)
+- [x] Update auth: staff login via Microsoft → pending approval state
+- [x] Update auth: customers signup via Gmail/Microsoft/Apple/email → "account will be approved" message
+- [x] Send new account notifications to all managers and admins

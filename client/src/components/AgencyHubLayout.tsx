@@ -1,5 +1,10 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
+import { useAuth } from "@/_core/hooks/useAuth";
+
+// Logo URLs (white for dark sidebar, dark for light mode header)
+const LOGO_WHITE = "/manus-storage/trux-logo-white_f250e47b.png";
+const LOGO_DARK = "/manus-storage/trux-logo-dark_ea3120b2.png";
 
 interface NavItem {
   label: string;
@@ -8,115 +13,91 @@ interface NavItem {
 }
 
 const mainNav: NavItem[] = [
-  { label: "Dashboard", path: "/portal", icon: <DashboardIcon /> },
-  { label: "Carrier Directory", path: "/portal/carriers", icon: <CarrierIcon /> },
-  { label: "Knowledge Base", path: "/portal/kb", icon: <KBIcon /> },
-  { label: "Workflows", path: "/portal/kb?cat=Workflow", icon: <WorkflowIcon /> },
-];
-
-const peopleNav: NavItem[] = [
-  { label: "Onboarding / Training", path: "/portal/training", icon: <TrainingIcon /> },
+  { label: "Dashboard", path: "/portal", icon: <DashIcon /> },
   { label: "Team Directory", path: "/portal/team", icon: <TeamIcon /> },
 ];
 
-const opsNav: NavItem[] = [
-  { label: "Intake Forms", path: "/portal/forms", icon: <FormsIcon /> },
-  { label: "Standards", path: "/portal/standards", icon: <StandardsIcon /> },
-  { label: "Payment Options", path: "/portal/kb/payment-options", icon: <PaymentIcon /> },
-];
-
-function DashboardIcon() {
-  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>;
-}
-function CarrierIcon() {
-  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16"/><path d="M3 21h18"/><path d="M9 7h1"/><path d="M9 11h1"/><path d="M9 15h1"/><path d="M14 7h1"/><path d="M14 11h1"/><path d="M14 15h1"/></svg>;
-}
-function KBIcon() {
-  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>;
-}
-function WorkflowIcon() {
-  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>;
-}
-function TrainingIcon() {
-  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>;
+// SVG Icons — thin line style matching truxins.net
+function DashIcon() {
+  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>;
 }
 function TeamIcon() {
-  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>;
+  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>;
 }
-function FormsIcon() {
-  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>;
+function BellIcon() {
+  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>;
 }
-function StandardsIcon() {
-  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>;
+function SunIcon() {
+  return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>;
 }
-function PaymentIcon() {
-  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>;
+function MoonIcon() {
+  return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>;
 }
 
 function getPageTitle(path: string): string {
   if (path === "/portal") return "Dashboard";
-  if (path.startsWith("/portal/carriers")) return "Carrier Directory";
-  if (path.startsWith("/portal/kb")) return "Knowledge Base / SOPs";
-  if (path.startsWith("/portal/training")) return "Onboarding / Training";
   if (path.startsWith("/portal/team")) return "Team Directory";
-  if (path.startsWith("/portal/forms")) return "Intake Forms";
-  if (path.startsWith("/portal/standards")) return "Standards & Best Practices";
   return "Agency Hub";
 }
 
 export default function AgencyHubLayout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+  const { user, loading } = useAuth();
   const pageTitle = getPageTitle(location);
+
+  // Auth guard: redirect unauthenticated or unapproved users
+  if (loading) {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="w-8 h-8 border-2 border-[var(--hair)] border-t-[var(--ink)] rounded-full animate-spin" />
+      </div>
+    );
+  }
+  if (!user || (user as any).accountStatus !== 'approved') {
+    // Redirect to login page
+    if (typeof window !== 'undefined') {
+      window.location.href = '/portal/login';
+    }
+    return null;
+  }
+  // Only staff and admin can access the hub
+  if ((user as any).role === 'user') {
+    if (typeof window !== 'undefined') {
+      window.location.href = '/portal/login';
+    }
+    return null;
+  }
 
   const isActive = (path: string) => {
     if (path === "/portal") return location === "/portal";
-    if (path.includes("?")) return location.startsWith(path.split("?")[0]) && location.includes(path.split("?")[1]?.split("=")[1] || "");
     return location.startsWith(path);
   };
 
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    document.documentElement.classList.toggle("hub-dark", !darkMode);
+  };
+
   return (
-    <div className="hub-layout">
+    <div className={`hub-layout ${darkMode ? "hub-dark" : "hub-light"}`}>
       {/* Mobile overlay */}
       {sidebarOpen && <div className="hub-overlay" onClick={() => setSidebarOpen(false)} />}
 
       {/* Sidebar */}
       <aside className={`hub-sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="hub-sidebar-logo">
-          <div className="hub-logo-text">
-            <span className="hub-logo-trux">TRUX</span>
-            <svg className="hub-logo-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2f6bff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <div className="hub-logo-tagline">INSURANCE SERVICES</div>
+          <Link href="/portal">
+            <img src={LOGO_WHITE} alt="Trux Insurance Services" className="hub-logo-img" />
+          </Link>
           <div className="hub-logo-pill">AGENCY HUB</div>
         </div>
 
         <nav className="hub-nav">
           <div className="hub-nav-section">
-            <span className="hub-nav-label">MAIN</span>
+            <span className="hub-nav-label">NAVIGATION</span>
             {mainNav.map(item => (
-              <Link key={item.path} href={item.path} onClick={() => setSidebarOpen(false)}>
-                <div className={`hub-nav-item ${isActive(item.path) ? "active" : ""}`}>
-                  {item.icon}
-                  <span>{item.label}</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-          <div className="hub-nav-section">
-            <span className="hub-nav-label">PEOPLE & TRAINING</span>
-            {peopleNav.map(item => (
-              <Link key={item.path} href={item.path} onClick={() => setSidebarOpen(false)}>
-                <div className={`hub-nav-item ${isActive(item.path) ? "active" : ""}`}>
-                  {item.icon}
-                  <span>{item.label}</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-          <div className="hub-nav-section">
-            <span className="hub-nav-label">OPERATIONS</span>
-            {opsNav.map(item => (
               <Link key={item.path} href={item.path} onClick={() => setSidebarOpen(false)}>
                 <div className={`hub-nav-item ${isActive(item.path) ? "active" : ""}`}>
                   {item.icon}
@@ -128,9 +109,9 @@ export default function AgencyHubLayout({ children }: { children: React.ReactNod
         </nav>
 
         <div className="hub-sidebar-footer">
-          <p>1 Tiffany Pointe #7-G2</p>
-          <p>Bloomingdale, IL 60108</p>
-          <p>331-240-1101</p>
+          <p className="hub-sidebar-footer-addr">1 Tiffany Pointe #7-G2</p>
+          <p className="hub-sidebar-footer-addr">Bloomingdale, IL 60108</p>
+          <p className="hub-sidebar-footer-phone">331-240-1101</p>
         </div>
       </aside>
 
@@ -138,12 +119,26 @@ export default function AgencyHubLayout({ children }: { children: React.ReactNod
       <div className="hub-main">
         {/* Header */}
         <header className="hub-header">
-          <button className="hub-hamburger" onClick={() => setSidebarOpen(!sidebarOpen)} aria-label="Toggle menu">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-          </button>
-          <h1 className="hub-header-title">{pageTitle}</h1>
+          <div className="hub-header-left">
+            <button className="hub-hamburger" onClick={() => setSidebarOpen(!sidebarOpen)} aria-label="Toggle menu">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+            <img src={darkMode ? LOGO_WHITE : LOGO_DARK} alt="Trux" className="hub-header-logo" />
+          </div>
           <div className="hub-header-right">
-            <Link href="/" className="hub-back-link">← Back to Website</Link>
+            <button className="hub-icon-btn" onClick={toggleDarkMode} aria-label="Toggle dark mode" title={darkMode ? "Switch to light mode" : "Switch to dark mode"}>
+              {darkMode ? <SunIcon /> : <MoonIcon />}
+            </button>
+            <button className="hub-icon-btn" aria-label="Notifications">
+              <BellIcon />
+            </button>
+            <Link href="/" className="hub-back-link">← Website</Link>
+            {user && (
+              <div className="hub-user-badge">
+                <span className="hub-user-avatar">{user.name?.charAt(0) || "U"}</span>
+                <span className="hub-user-name">{user.name || "User"}</span>
+              </div>
+            )}
           </div>
         </header>
 
@@ -152,7 +147,7 @@ export default function AgencyHubLayout({ children }: { children: React.ReactNod
           <Link href="/portal">Home</Link>
           {location !== "/portal" && (
             <>
-              <span className="hub-breadcrumb-sep">/</span>
+              <span className="hub-breadcrumb-sep">·</span>
               <span>{pageTitle}</span>
             </>
           )}
@@ -165,12 +160,7 @@ export default function AgencyHubLayout({ children }: { children: React.ReactNod
 
         {/* Footer */}
         <footer className="hub-footer">
-          <span>TRUX Insurance Services — internal agency hub · For employee use only</span>
-          <div className="hub-footer-links">
-            <Link href="/portal/kb/payment-options">Payment Options</Link>
-            <Link href="/portal/standards">Standards</Link>
-            <Link href="/portal/training">Training</Link>
-          </div>
+          <span>TRUX Insurance Services — Internal Agency Hub · For authorized personnel only</span>
         </footer>
       </div>
     </div>
