@@ -9,6 +9,7 @@ import { eq } from "drizzle-orm";
 import { notifyOwner } from "./_core/notification";
 import { makeRequest, PlaceDetailsResult } from "./_core/map";
 import { sendQuoteNotification, sendContactNotification, sendNewsletterWelcome } from "./email";
+import { submitContactToJotform, submitFastQuoteToJotform, submitFullQuoteToJotform } from "./jotform-submit";
 
 // Google Place ID for Trux Insurance Services
 const TRUX_PLACE_ID = "ChIJq6pq55utD4gR7mAyuFzJt34";
@@ -110,6 +111,49 @@ export const appRouter = router({
           } catch (error) {
             console.error('Email notification failed:', error);
           }
+
+          // Push to JotForm (non-blocking)
+          // Determine if this is a fast quote or full quote based on fields present
+          const isFastQuote = !quote.ein && !quote.yearEstablished && !(quote.selectedCoverages as any[])?.length;
+          if (isFastQuote) {
+            submitFastQuoteToJotform({
+              firstName: quote.contactFirstName || "",
+              lastName: quote.contactLastName || "",
+              email: quote.contactEmail || "",
+              phone: quote.contactPhone || "",
+              companyName: quote.businessName || "",
+              dotNumber: quote.dotNumber || "",
+              state: quote.policyState || "",
+              notes: quote.notes || "",
+            }).catch(err => console.error('[JotForm] Fast quote submission failed:', err));
+          } else {
+            submitFullQuoteToJotform({
+              firstName: quote.contactFirstName || "",
+              lastName: quote.contactLastName || "",
+              companyName: quote.businessName || "",
+              email: quote.contactEmail || "",
+              phone: quote.contactPhone || "",
+              dotMcNumber: quote.dotNumber || quote.mcNumber || "",
+              primaryState: quote.policyState || "",
+              powerUnits: String((quote.trucks as any[])?.length || 1),
+              vehicleType: (quote.trucks as any[])?.[0]?.vehicleType || "",
+              authorityType: "",
+              ein: quote.ein || "",
+              yearsInBusiness: quote.yearEstablished ? String(new Date().getFullYear() - quote.yearEstablished) : "",
+              effectiveDate: quote.effectiveDate ? new Date(quote.effectiveDate).toISOString() : "",
+              annualMileage: "",
+              radiusOfOperation: "",
+              annualRevenue: "",
+              commodities: (quote.commodities as string[])?.join(", ") || "",
+              avgLoadValue: "",
+              maxLoadValue: "",
+              coveragesNeeded: (quote.selectedCoverages as string[])?.join("\n") || "",
+              desiredLimits: "",
+              deductible: "",
+              equipmentDetails: (quote.trucks as any[])?.map((t: any) => `${t.year} ${t.make} ${t.model} VIN:${t.vin || 'N/A'}`).join("\n") || "",
+              driverDetails: (quote.drivers as any[])?.map((d: any) => `${d.firstName} ${d.lastName} DOB:${d.dob || 'N/A'} Lic:${d.licenseNumber || 'N/A'}`).join("\n") || "",
+            }).catch(err => console.error('[JotForm] Full quote submission failed:', err));
+          }
         }
         
         return { id: created?.id, success: !!created };
@@ -170,6 +214,15 @@ export const appRouter = router({
         } catch (error) {
           console.error('Contact form email failed:', error);
         }
+
+        // Push to JotForm (non-blocking)
+        submitContactToJotform({
+          name: input.name,
+          email: input.email,
+          phone: input.phone,
+          message: input.message,
+        }).catch(err => console.error('[JotForm] Contact submission failed:', err));
+
         return { success: true };
       }),
   }),

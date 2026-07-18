@@ -383,3 +383,23 @@
 - [x] Fix: owner admin account (milen@truxins.com / byXdFqsuXMtEtMyf6LQiiE) stuck on pending - fixed in DB + code auto-approves owner
 - [x] Fix: second account (truxins1@gmail.com) stuck on pending - approved and set to staff role
 - [x] Send email notification to milen@truxins.com on every new signup (already implemented in oauth.ts)
+
+## JotForm Native Form Integration (API Backend)
+- [x] Store JOTFORM_API_KEY as server-side secret
+- [x] Fetch question IDs (qids) for all 3 forms and build field mapping
+- [x] Create server-side JotForm submission service (server/jotform-submit.ts)
+- [x] Wire Contact form submission to push to JotForm (form ID: 261981423817059)
+- [x] Wire Fast Quote form submission to push to JotForm (form ID: 261982089328065)
+- [x] Wire Quote form submission to push to JotForm (form ID: 261982064993066)
+- [x] Ensure USE_JOTFORM=false keeps native forms rendering (no embeds)
+- [x] Test end-to-end: submissions appear in JotForm dashboard (all 3 forms confirmed 200)
+
+## Agency Hub: Users Tab & Notifications
+- [x] Create Users page with Team and Customers sub-tabs
+- [x] Team sub-tab: shows users with @truxins.com Microsoft accounts (auto-approve on signup)
+- [x] Customers sub-tab: shows all other users (require admin approval)
+- [x] Allow admin to change user roles (user/staff/admin)
+- [x] Add notification bell to hub header with pending approval count
+- [x] Show in-app notification when new user signs up (pending approval)
+- [x] Both Team and Customers initially enrolled as "user" role
+- [x] Wire sidebar navigation to include Users tab

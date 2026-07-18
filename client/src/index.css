@@ -592,6 +592,130 @@
   border-color: var(--tick);
   color: var(--hub-text, var(--ink));
 }
+.hub-bell-btn {
+  position: relative;
+}
+.hub-bell-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  background: var(--warn, #9C5A4F);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  line-height: 1;
+}
+/* Users page */
+.hub-users-page {
+  padding: 0;
+}
+.hub-users-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border-bottom: 1px solid var(--hub-border, var(--hair));
+  margin-bottom: 20px;
+}
+.hub-users-tab {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  color: var(--hub-muted, var(--muted));
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hub-users-tab:hover {
+  color: var(--hub-text, var(--ink));
+}
+.hub-users-tab.active {
+  color: var(--hub-text, var(--ink));
+  border-bottom-color: var(--tick);
+}
+.hub-users-badge {
+  min-width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background: var(--warn, #9C5A4F);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+}
+.hub-users-desc {
+  font-size: 13px;
+  color: var(--hub-muted, var(--muted));
+  margin-bottom: 20px;
+}
+.hub-users-actions {
+  display: flex;
+  gap: 6px;
+}
+.hub-btn-approve {
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.hub-btn-approve:hover {
+  opacity: 0.85;
+}
+.hub-btn-reject {
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  background: transparent;
+  color: var(--warn, #9C5A4F);
+  border: 1px solid var(--warn, #9C5A4F);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.hub-btn-reject:hover {
+  background: var(--warn, #9C5A4F);
+  color: #fff;
+}
+.hub-role-select {
+  padding: 3px 8px;
+  font-size: 12px;
+  border: 1px solid var(--hub-border, var(--hair));
+  background: var(--hub-bg, var(--paper));
+  color: var(--hub-text, var(--ink));
+  cursor: pointer;
+}
+.hub-role-label {
+  font-size: 12px;
+  text-transform: capitalize;
+  color: var(--hub-muted, var(--muted));
+}
+.hub-users-card-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+}
+.hub-status-badge.rejected {
+  background: rgba(156, 90, 79, 0.1);
+  color: var(--warn, #9C5A4F);
+}
 .hub-back-link {
   font-size: 12px;
   color: var(--hub-muted, var(--muted));

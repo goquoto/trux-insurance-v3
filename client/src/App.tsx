@@ -55,6 +55,7 @@ const HubTraining = lazy(() => import("./pages/portal/HubTraining"));
 const HubForms = lazy(() => import("./pages/portal/HubForms"));
 const HubStandards = lazy(() => import("./pages/portal/HubStandards"));
 const HubPayments = lazy(() => import("./pages/portal/HubPayments"));
+const HubUsers = lazy(() => import("./pages/portal/HubUsers"));
 
 // Minimal loading fallback that matches the site's style
 function PageLoader() {
@@ -113,6 +114,7 @@ function Router() {
         <Route path={"/portal/forms"} component={HubForms} />
         <Route path={"/portal/standards"} component={HubStandards} />
         <Route path={"/portal/payments"} component={HubPayments} />
+        <Route path={"/portal/users"} component={HubUsers} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>

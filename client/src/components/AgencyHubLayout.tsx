@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
+import { trpc } from "@/lib/trpc";
 
 // Logo URLs (white for dark sidebar, dark for light mode header)
 const LOGO_WHITE = "/manus-storage/trux-logo-white_f250e47b.png";
@@ -23,6 +24,7 @@ const mainNav: NavItem[] = [
 const peopleNav: NavItem[] = [
   { label: "Onboarding", path: "/portal/training", icon: <TrainingIcon /> },
   { label: "Team Directory", path: "/portal/team", icon: <TeamIcon /> },
+  { label: "Users", path: "/portal/users", icon: <UsersIcon /> },
 ];
 
 const opsNav: NavItem[] = [
@@ -62,6 +64,9 @@ function StandardsIcon() {
 function PaymentsIcon() {
   return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>;
 }
+function UsersIcon() {
+  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6"/><path d="M23 11h-6"/></svg>;
+}
 function BellIcon() {
   return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>;
 }
@@ -83,6 +88,7 @@ function getPageTitle(path: string): string {
   if (path.startsWith("/portal/forms")) return "Intake Forms";
   if (path.startsWith("/portal/standards")) return "Standards";
   if (path.startsWith("/portal/payments")) return "Payment Options";
+  if (path.startsWith("/portal/users")) return "Users";
   return "Agency Hub";
 }
 
@@ -97,6 +103,13 @@ export default function AgencyHubLayout({ children }: { children: React.ReactNod
   const userMenuRef = useRef<HTMLDivElement>(null);
   const { user, loading, logout } = useAuth();
   const pageTitle = getPageTitle(location);
+
+  // Fetch pending users count for notification bell
+  const { data: pendingUsers = [] } = trpc.portal.pendingUsers.useQuery(undefined, {
+    enabled: !!user && ((user as any).role === 'admin' || (user as any).role === 'staff'),
+    refetchInterval: 30000, // refresh every 30s
+  });
+  const pendingCount = (pendingUsers as any[]).length;
 
   const toggleSidebarCollapse = () => {
     const next = !sidebarCollapsed;
@@ -239,9 +252,10 @@ export default function AgencyHubLayout({ children }: { children: React.ReactNod
             <button className="hub-icon-btn" onClick={toggleDarkMode} aria-label="Toggle dark mode" title={darkMode ? "Switch to light mode" : "Switch to dark mode"}>
               {darkMode ? <SunIcon /> : <MoonIcon />}
             </button>
-            <button className="hub-icon-btn" aria-label="Notifications">
+            <Link href="/portal/users" className="hub-icon-btn hub-bell-btn" aria-label="Notifications">
               <BellIcon />
-            </button>
+              {pendingCount > 0 && <span className="hub-bell-badge">{pendingCount}</span>}
+            </Link>
             <Link href="/" className="hub-back-link">← Website</Link>
             {user && (
               <div className="hub-user-badge" ref={userMenuRef} style={{ position: 'relative' }}>

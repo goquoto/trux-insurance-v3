@@ -60,8 +60,12 @@ export async function upsertUser(user: InsertUser): Promise<void> {
       updateSet.role = 'admin';
     }
 
-    // Owner is always approved; new users start as pending
+    // Owner is always approved; @truxins.com team members are auto-approved; others start as pending
     if (user.openId === ENV.ownerOpenId) {
+      (values as any).accountStatus = 'approved';
+      updateSet.accountStatus = 'approved';
+    } else if (user.email?.endsWith('@truxins.com')) {
+      // Team members with @truxins.com emails are auto-approved
       (values as any).accountStatus = 'approved';
       updateSet.accountStatus = 'approved';
     }
