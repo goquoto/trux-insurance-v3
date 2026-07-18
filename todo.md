@@ -346,15 +346,25 @@
 - [x] Send new account notifications to all managers and admins
 
 ## Restore Hub Sidebar Tabs (Empty Shells)
-- [ ] Restore Carrier Directory page (empty shell)
-- [ ] Restore Knowledge Base page (empty shell)
-- [ ] Restore Training/Onboarding page (empty shell)
-- [ ] Restore Standards page (empty shell)
-- [ ] Restore Forms page (empty shell)
-- [ ] Restore Workflows page (empty shell)
-- [ ] Update sidebar navigation with all tabs
-- [ ] Update App.tsx routes for all hub pages
+- [x] Restore Carrier Directory page (empty shell)
+- [x] Restore Knowledge Base page (empty shell)
+- [x] Restore Training/Onboarding page (empty shell)
+- [x] Restore Standards page (empty shell)
+- [x] Restore Forms page (empty shell)
+- [x] Restore Workflows page (empty shell)
+- [x] Restore Payment Options page (empty shell)
+- [x] Update sidebar navigation with all tabs
+- [x] Update App.tsx routes for all hub pages
 
 ## Bug Fixes
 - [x] Fix logout not working in the portal (added user dropdown with Sign Out button)
 - [x] Add sidebar collapse/expand toggle
+
+## Jotform Finalization
+- [x] Replace PLACEHOLDER_CONTACT_FORM with 261981423817059
+- [x] Replace PLACEHOLDER_FAST_QUOTE_FORM with 261982089328065
+- [x] Replace PLACEHOLDER_QUOTE_FORM with 261982064993066
+- [x] Verify webhook field mapping for Contact (Name, Email, Phone, Message)
+- [x] Verify webhook field mapping for Fast Quote (First Name, Last Name, Email, Phone, Company, DOT, State, Notes, File)
+- [x] Verify webhook field mapping for Quote (3 pages of fields + file uploads)
+- [x] Set USE_JOTFORM = true on Contact, Fast Quote, and Quote pages

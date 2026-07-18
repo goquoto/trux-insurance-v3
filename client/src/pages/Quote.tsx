@@ -8,7 +8,7 @@ import { Link, useSearch } from "wouter";
 
 // Jotform form ID for the full quote form
 // Replace with your actual Jotform form ID once created
-const JOTFORM_QUOTE_FORM_ID = "PLACEHOLDER_QUOTE_FORM";
+const JOTFORM_QUOTE_FORM_ID = "261982064993066";
 
 // Toggle: set to true to use Jotform embed, false to use native form
 const USE_JOTFORM = true;

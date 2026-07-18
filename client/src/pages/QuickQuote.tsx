@@ -9,7 +9,7 @@ import { LICENSED_STATES } from '@shared/states';
 
 // Jotform form ID for the fast quote form
 // Replace with your actual Jotform form ID once created
-const JOTFORM_FAST_QUOTE_FORM_ID = "PLACEHOLDER_FAST_QUOTE_FORM";
+const JOTFORM_FAST_QUOTE_FORM_ID = "261982089328065";
 
 // Toggle: set to true to use Jotform embed, false to use native form
 const USE_JOTFORM = true;

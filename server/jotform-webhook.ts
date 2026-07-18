@@ -31,13 +31,11 @@ interface JotformSubmission {
   [key: string]: any;
 }
 
-// Field mapping configuration
-// Update these when you create your actual Jotform forms
+// Field mapping configuration — live Jotform form IDs
 const FORM_TYPE_MAP: Record<string, "quote" | "fast-quote" | "contact"> = {
-  // Replace these placeholder IDs with your actual Jotform form IDs
-  "QUOTE_FORM_ID": "quote",
-  "FAST_QUOTE_FORM_ID": "fast-quote",
-  "CONTACT_FORM_ID": "contact",
+  "261982064993066": "quote",
+  "261982089328065": "fast-quote",
+  "261981423817059": "contact",
 };
 
 export function registerJotformWebhook(app: Express) {
@@ -113,25 +111,85 @@ async function handleQuoteSubmission(
   submissionId: string
 ) {
   // Map Jotform fields to our schema
-  // These field names should match your Jotform form field names
+  // Field names match the Jotform form field labels
+  // Fast Quote fields: First Name, Last Name, Email, Phone, Company Name, DOT Number, State, Notes, File
+  // Full Quote Page 1: Full Name, Company Name, Email, Phone, DOT/MC Number, Primary State, # Power Units, Vehicle Type
+  // Full Quote Page 2: FMCSA Authority Type, EIN, Years in Business, Target Effective Date, Est. Annual Mileage,
+  //   Radius of Operation, Est. Annual Revenue, Primary Commodities, Avg/Max Load Value, Coverages Needed, Desired Limits, Deductible
+  // Full Quote Page 3: Equipment Details, Driver Details, document upload
+  const firstName = extractField(fields, ["firstName", "first_name", "First Name"]);
+  const lastName = extractField(fields, ["lastName", "last_name", "Last Name"]);
+  const fullName = extractField(fields, ["fullName", "full_name", "Full Name", "name", "Name"]);
+  const contactName = fullName || (firstName && lastName ? `${firstName} ${lastName}` : firstName || lastName || "");
+
+  // Extract all fields from the submission
+  const email = extractField(fields, ["email", "Email", "email_address"]) || "";
+  const phone = extractField(fields, ["phone", "Phone", "phone_number", "telephone"]) || "";
+  const dotNumber = extractField(fields, ["dotNumber", "dot_number", "DOT Number", "DOT/MC Number", "usdot", "dot"]) || "";
+  const mcNumber = extractField(fields, ["mcNumber", "mc_number", "MC Number"]) || "";
+  const state = extractField(fields, ["state", "State", "Primary State", "primaryState", "operating_state"]) || "";
+  const ein = extractField(fields, ["ein", "EIN"]) || "";
+  const effectiveDateStr = extractField(fields, ["effectiveDate", "Target Effective Date", "effective_date"]) || "";
+  const yearsInBusiness = extractField(fields, ["yearsInBusiness", "Years in Business", "years_in_business"]) || "";
+  const coveragesNeeded = extractField(fields, ["coveragesNeeded", "Coverages Needed", "coverages_needed", "coverage_types"]) || "";
+  const vehicleType = extractField(fields, ["vehicleType", "Vehicle Type", "vehicleTypes", "vehicle_types"]) || "";
+  const operationRadius = extractField(fields, ["operationRadius", "Radius of Operation", "operation_radius"]) || "";
+  const commoditiesStr = extractField(fields, ["commodities", "Primary Commodities", "cargo_types"]) || "";
+  const numTrucks = extractField(fields, ["powerUnits", "# Power Units", "numTrucks", "num_trucks", "fleet_size"]) || "1";
+  const authorityType = extractField(fields, ["authorityType", "FMCSA Authority Type", "authority_type"]) || "";
+  const annualMileage = extractField(fields, ["annualMileage", "Est. Annual Mileage", "annual_mileage"]) || "";
+  const annualRevenue = extractField(fields, ["annualRevenue", "Est. Annual Revenue", "annual_revenue"]) || "";
+  const avgLoadValue = extractField(fields, ["avgLoadValue", "Avg/Max Load Value", "avg_load_value"]) || "";
+  const desiredLimits = extractField(fields, ["desiredLimits", "Desired Limits", "desired_limits"]) || "";
+  const deductible = extractField(fields, ["deductible", "Deductible"]) || "";
+  const equipmentDetails = extractField(fields, ["equipmentDetails", "Equipment Details", "equipment"]) || "";
+  const driverDetails = extractField(fields, ["driverDetails", "Driver Details", "drivers"]) || "";
+  const userNotes = extractField(fields, ["notes", "Notes", "message", "comments", "additional_info"]) || "";
+
+  // Build a comprehensive notes field with all extra info
+  const notesParts = [`Jotform ${formType} submission #${submissionId}`];
+  if (userNotes) notesParts.push(`Notes: ${userNotes}`);
+  if (authorityType) notesParts.push(`Authority Type: ${authorityType}`);
+  if (annualMileage) notesParts.push(`Annual Mileage: ${annualMileage}`);
+  if (annualRevenue) notesParts.push(`Annual Revenue: ${annualRevenue}`);
+  if (avgLoadValue) notesParts.push(`Avg/Max Load Value: ${avgLoadValue}`);
+  if (desiredLimits) notesParts.push(`Desired Limits: ${desiredLimits}`);
+  if (deductible) notesParts.push(`Deductible: ${deductible}`);
+  if (operationRadius) notesParts.push(`Radius of Operation: ${operationRadius}`);
+  if (vehicleType) notesParts.push(`Vehicle Type: ${vehicleType}`);
+  if (numTrucks) notesParts.push(`Power Units: ${numTrucks}`);
+  if (equipmentDetails) notesParts.push(`Equipment: ${equipmentDetails}`);
+  if (driverDetails) notesParts.push(`Drivers: ${driverDetails}`);
+
+  // Map to the actual database schema columns
   const quoteData = {
-    businessName: extractField(fields, ["businessName", "company_name", "business_name", "company"]) || "Via Jotform",
-    contactName: extractField(fields, ["contactName", "full_name", "name", "contact_name"]) || "",
-    email: extractField(fields, ["email", "email_address"]) || "",
-    phone: extractField(fields, ["phone", "phone_number", "telephone"]) || "",
-    dotNumber: extractField(fields, ["dotNumber", "dot_number", "usdot", "dot"]) || "",
-    state: extractField(fields, ["state", "operating_state"]) || "",
-    notes: extractField(fields, ["notes", "message", "comments", "additional_info"]) || `Jotform submission #${submissionId} (${formType})`,
-    // Default values for required fields
-    numTrucks: extractField(fields, ["numTrucks", "num_trucks", "fleet_size"]) || "1",
-    numDrivers: extractField(fields, ["numDrivers", "num_drivers"]) || "1",
-    yearsInBusiness: extractField(fields, ["yearsInBusiness", "years_in_business"]) || "",
-    currentCarrier: extractField(fields, ["currentCarrier", "current_carrier"]) || "",
-    coveragesNeeded: extractField(fields, ["coveragesNeeded", "coverages_needed", "coverage_types"]) || "",
-    vehicleTypes: extractField(fields, ["vehicleTypes", "vehicle_types"]) || "",
-    operationRadius: extractField(fields, ["operationRadius", "operation_radius"]) || "",
-    commodities: extractField(fields, ["commodities", "cargo_types"]) || "",
-    status: "new" as const,
+    businessName: extractField(fields, ["companyName", "company_name", "Company Name", "businessName", "business_name", "company"]) || "Via Jotform",
+    contactFirstName: firstName || contactName.split(" ")[0] || "Jotform",
+    contactLastName: lastName || contactName.split(" ").slice(1).join(" ") || "Submission",
+    contactEmail: email,
+    contactPhone: phone,
+    dotNumber: dotNumber || undefined,
+    mcNumber: mcNumber || undefined,
+    ein: ein || undefined,
+    policyState: state || "IL",
+    effectiveDate: effectiveDateStr ? new Date(effectiveDateStr) : new Date(),
+    currentlyInsured: 0,
+    hasDba: 0,
+    businessStructure: "Other",
+    yearEstablished: yearsInBusiness ? new Date().getFullYear() - parseInt(yearsInBusiness) : new Date().getFullYear(),
+    mailingAddress: "",
+    mailingCity: "",
+    mailingState: state || "",
+    mailingZip: "",
+    sameAsMailingAddress: 1,
+    allVehiclesSameLocation: 1,
+    selectedCoverages: coveragesNeeded ? coveragesNeeded.split(",").map((c: string) => c.trim()) : [],
+    trucks: [],
+    trailers: [],
+    drivers: [],
+    commodities: commoditiesStr ? commoditiesStr.split(",").map((c: string) => c.trim()) : [],
+    status: "pending" as const,
+    notes: notesParts.join("\n"),
   };
 
   try {
@@ -140,11 +198,11 @@ async function handleQuoteSubmission(
     // Send email notification
     await sendQuoteNotification({
       businessName: quoteData.businessName,
-      contactName: quoteData.contactName,
-      email: quoteData.email,
-      phone: quoteData.phone,
-      dotNumber: quoteData.dotNumber,
-      state: quoteData.state,
+      contactName: contactName || `${quoteData.contactFirstName} ${quoteData.contactLastName}`,
+      email: quoteData.contactEmail,
+      phone: quoteData.contactPhone,
+      dotNumber: quoteData.dotNumber || "",
+      state: quoteData.policyState,
       notes: quoteData.notes,
       submittedAt: new Date().toISOString(),
     });
@@ -162,12 +220,13 @@ async function handleContactSubmission(
   fields: Record<string, any>,
   submissionId: string
 ) {
+  // Contact form fields: Name, Email, Phone, Message
   const contactData = {
-    name: extractField(fields, ["name", "full_name", "contact_name"]) || "",
-    email: extractField(fields, ["email", "email_address"]) || "",
-    phone: extractField(fields, ["phone", "phone_number"]) || "",
-    subject: extractField(fields, ["subject", "topic", "reason"]) || "Jotform Contact Submission",
-    message: extractField(fields, ["message", "comments", "body", "details"]) || "",
+    name: extractField(fields, ["name", "Name", "full_name", "contact_name", "Full Name"]) || "",
+    email: extractField(fields, ["email", "Email", "email_address"]) || "",
+    phone: extractField(fields, ["phone", "Phone", "phone_number", "telephone"]) || "",
+    subject: extractField(fields, ["subject", "Subject", "topic", "reason"]) || "Jotform Contact Submission",
+    message: extractField(fields, ["message", "Message", "comments", "body", "details"]) || "",
   };
 
   try {

@@ -9,7 +9,7 @@ import { trpc } from "@/lib/trpc";
 
 // Jotform form ID for the contact form
 // Replace with your actual Jotform form ID once created
-const JOTFORM_CONTACT_FORM_ID = "PLACEHOLDER_CONTACT_FORM";
+const JOTFORM_CONTACT_FORM_ID = "261981423817059";
 
 // Toggle: set to true to use Jotform embed, false to use native form
 const USE_JOTFORM = true;

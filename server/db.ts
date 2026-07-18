@@ -110,7 +110,7 @@ export async function createQuote(quote: InsertQuote): Promise<Quote | null> {
     // Also ensure all required fields have proper values (not undefined/default)
     const values = {
       ...quote,
-      effectiveDate: quote.effectiveDate instanceof Date ? quote.effectiveDate : new Date(quote.effectiveDate as any),
+      effectiveDate: quote.effectiveDate instanceof Date ? quote.effectiveDate : (quote.effectiveDate ? new Date(quote.effectiveDate as any) : new Date()),
       hasDba: quote.hasDba ?? 0,
       sameAsMailingAddress: quote.sameAsMailingAddress ?? 0,
       allVehiclesSameLocation: quote.allVehiclesSameLocation ?? 0,
