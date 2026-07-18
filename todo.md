@@ -378,3 +378,8 @@
 - [x] Add "Sign in with a different account" / "Try again" button on pending approval screen
 - [x] Add dark mode support to the portal login page (respect hub dark/light toggle)
 - [x] Ensure dark mode works properly on all hub pages
+
+## Admin Account & Signup Notification Fix
+- [x] Fix: owner admin account (milen@truxins.com / byXdFqsuXMtEtMyf6LQiiE) stuck on pending - fixed in DB + code auto-approves owner
+- [x] Fix: second account (truxins1@gmail.com) stuck on pending - approved and set to staff role
+- [x] Send email notification to milen@truxins.com on every new signup (already implemented in oauth.ts)
