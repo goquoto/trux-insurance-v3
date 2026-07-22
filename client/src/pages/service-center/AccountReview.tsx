@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { trpc } from '../../lib/trpc';
 import { useAuth } from '../../_core/hooks/useAuth';
+import AgentIntakeBar from '../../components/AgentIntakeBar';
 
 export default function AccountReview() {
   const { user } = useAuth();
@@ -24,6 +25,7 @@ export default function AccountReview() {
     agreeDisclaimer: false,
   });
 
+  const [intakeCustomer, setIntakeCustomer] = useState<{ id: number; name: string; email: string; title: string | null } | null>(null);
   const createSubmission = trpc.submissions.create.useMutation();
 
   const TOPICS = [
@@ -82,8 +84,9 @@ export default function AccountReview() {
 
       const result = await createSubmission.mutateAsync({
         type: 'account_review',
-        customerEmail: form.email,
-        userId: user?.id,
+        customerEmail: intakeCustomer?.email || form.email,
+        userId: intakeCustomer?.id || user?.id,
+        takenByUserId: intakeCustomer ? user?.id : undefined,
         data,
       });
       setSubmittedRef(result.ref);
@@ -119,6 +122,9 @@ export default function AccountReview() {
         <div className="sc-tick" />
         <h1 className="sc-form-title">Schedule an <em>Account Review</em></h1>
       </div>
+
+      {/* Agent Intake Mode */}
+      <AgentIntakeBar onCustomerSelect={setIntakeCustomer} selectedCustomer={intakeCustomer} />
 
       {/* Contact Info */}
       <div className="wizard-section">

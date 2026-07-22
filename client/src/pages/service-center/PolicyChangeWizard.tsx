@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { trpc } from '../../lib/trpc';
 import { useAuth } from '../../_core/hooks/useAuth';
 import { VinVerifier, type VinDecodeResult } from '../../components/VinVerifier';
+import AgentIntakeBar from '../../components/AgentIntakeBar';
 
 // Service types available for selection
 const SERVICE_TYPES = [
@@ -164,6 +165,7 @@ export default function PolicyChangeWizard() {
   const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [submittedRef, setSubmittedRef] = useState<string | null>(null);
+  const [intakeCustomer, setIntakeCustomer] = useState<{ id: number; name: string; email: string; title: string | null } | null>(null);
 
   const today = new Date().toISOString().split('T')[0];
 
@@ -394,8 +396,9 @@ export default function PolicyChangeWizard() {
 
       const result = await createSubmission.mutateAsync({
         type: 'policy_change',
-        customerEmail: form.email,
-        userId: user?.id,
+        customerEmail: intakeCustomer?.email || form.email,
+        userId: intakeCustomer?.id || user?.id,
+        takenByUserId: intakeCustomer ? user?.id : undefined,
         data,
       });
 
@@ -438,6 +441,9 @@ export default function PolicyChangeWizard() {
         <div className="sc-tick" />
         <h1 className="sc-form-title">Request <em>Policy</em> Change</h1>
       </div>
+
+      {/* Agent Intake Mode */}
+      <AgentIntakeBar onCustomerSelect={setIntakeCustomer} selectedCustomer={intakeCustomer} />
 
       {/* Progress bar */}
       <div className="wizard-progress">

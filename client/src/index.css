@@ -478,6 +478,31 @@
   display: block;
   margin-bottom: 10px;
 }
+.hub-logo-text {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: 0.08em;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.hub-logo-sub {
+  display: block;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.55);
+  margin-top: 2px;
+}
+.hub-logo-icon {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
 .hub-logo-pill {
   display: inline-block;
   font-size: 10px;
@@ -1490,6 +1515,28 @@
   text-decoration: none;
   font-weight: 500;
 }
+.portal-login-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+.portal-client-center-link {
+  display: inline-block;
+  font-size: 13px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  border: 1px solid var(--hair);
+  padding: 8px 20px;
+  transition: background 0.15s, color 0.15s;
+}
+.portal-client-center-link:hover {
+  background: var(--ink);
+  color: #fff;
+}
 .portal-back-link {
   display: inline-block;
   font-size: 12px;
@@ -1600,6 +1647,14 @@
 }
 .portal-dark .portal-login-note a {
   color: #f0ede8;
+}
+.portal-dark .portal-client-center-link {
+  color: #f0ede8;
+  border-color: rgba(255,255,255,0.2);
+}
+.portal-dark .portal-client-center-link:hover {
+  background: #f0ede8;
+  color: #1a1a1a;
 }
 .portal-dark .portal-back-link {
   color: #7a7a80;
@@ -1910,6 +1965,10 @@
 }
 .hub-sidebar.collapsed .hub-logo-img {
   height: 24px;
+}
+.hub-sidebar.collapsed .hub-logo-icon {
+  width: 32px;
+  height: 32px;
 }
 .hub-sidebar.collapsed .hub-nav-item {
   justify-content: center;

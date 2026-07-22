@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { trpc } from '../../lib/trpc';
 import { useAuth } from '../../_core/hooks/useAuth';
+import AgentIntakeBar from '../../components/AgentIntakeBar';
 
 const US_STATES = [
   'AL','AK','AZ','AR','CA','CO','CT','DE','DC','FL','GA','HI','ID','IL','IN',
@@ -67,6 +68,7 @@ export default function ClaimSubmission() {
     agreeDisclaimer: false,
   });
 
+  const [intakeCustomer, setIntakeCustomer] = useState<{ id: number; name: string; email: string; title: string | null } | null>(null);
   const createSubmission = trpc.submissions.create.useMutation();
 
   const handleSubmit = async () => {
@@ -144,8 +146,9 @@ export default function ClaimSubmission() {
 
       const result = await createSubmission.mutateAsync({
         type: 'claim',
-        customerEmail: form.email,
-        userId: user?.id,
+        customerEmail: intakeCustomer?.email || form.email,
+        userId: intakeCustomer?.id || user?.id,
+        takenByUserId: intakeCustomer ? user?.id : undefined,
         data,
       });
       setSubmittedRef(result.ref);
@@ -185,6 +188,9 @@ export default function ClaimSubmission() {
         <div className="sc-tick" />
         <h1 className="sc-form-title">Submit a <em>Claim</em></h1>
       </div>
+
+      {/* Agent Intake Mode */}
+      <AgentIntakeBar onCustomerSelect={setIntakeCustomer} selectedCustomer={intakeCustomer} />
 
       <div className="sc-disclaimer-box" style={{ marginBottom: '2rem', borderLeftColor: '#9C5A4F' }}>
         <strong>Emergency?</strong> If anyone is injured or in danger, call 911 immediately. This form is for

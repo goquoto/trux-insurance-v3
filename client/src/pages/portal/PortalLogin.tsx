@@ -162,7 +162,10 @@ export default function PortalLogin() {
           For immediate assistance, call <a href="tel:3312401101">(331) 240-1101</a>.
         </p>
 
-        <Link href="/" className="portal-back-link">← Back to Website</Link>
+        <div className="portal-login-links">
+          <Link href="/service-center" className="portal-client-center-link">Client Center →</Link>
+          <Link href="/" className="portal-back-link">← Back to Website</Link>
+        </div>
       </div>
     </div>
   );

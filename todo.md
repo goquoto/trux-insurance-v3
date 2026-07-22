@@ -18,21 +18,21 @@
 - [x] Unit tests for VIN validator (check digit, I/O/Q rejection, test VINs)
 
 ## Phase 3: Policy Change Wizard (3-step)
-- [ ] Step 1: Date picker (min today), Service Type multi-select cards, Insured info, Business Name, Email
-- [ ] Step 2 — Drivers section: repeatable rows, Action dropdown (Add/Update/Delete), conditional fields
-- [ ] Step 2 — Vehicles & Trailers section: repeatable rows, VIN verification mandatory, trailer detection
-- [ ] Step 2 — Addresses section: Mailing/Physical/Garaging checkboxes with address forms
-- [ ] Step 2 — Lien Holders section: Vehicle and/or Business/Property with full address fields
-- [ ] Step 2 — Certificate of Insurance section: email, holder info, checkboxes
-- [ ] Step 2 — Coverage Change / General Request section: textarea + upload
-- [ ] Step 3: Grouped summary, disclaimer, I Agree checkbox, signature + date, Turnstile, submit
-- [ ] MCS-90 Termination Letter memo on Delete action
-- [ ] Progress bar component (3 steps)
+- [x] Step 1: Date picker (min today), Service Type multi-select cards, Insured info, Business Name, Email
+- [x] Step 2 — Drivers section: repeatable rows, Action dropdown (Add/Update/Delete), conditional fields
+- [x] Step 2 — Vehicles & Trailers section: repeatable rows, VIN verification integrated
+- [x] Step 2 — Addresses section: Mailing/Physical/Garaging checkboxes with address forms
+- [x] Step 2 — Lien Holders section: Vehicle and/or Business/Property with full address fields
+- [x] Step 2 — Certificate of Insurance section: email, holder info, checkboxes
+- [x] Step 2 — Coverage Change / General Request section: textarea
+- [x] Step 3: Grouped summary, disclaimer, I Agree checkbox, signature + date, submit
+- [ ] MCS-90 Termination Letter memo on Delete action (future)
+- [x] Progress bar component (3 steps)
 
 ## Phase 4: Other Service Forms
-- [ ] Request Certificate: date needed, business info, repeatable Certificate Holder blocks
-- [ ] Submit a Claim: claim type, conditional Auto/Workers Comp/Property blocks
-- [ ] Account Review: current client, contact info, agent dropdown, SMS consent, comparison table
+- [x] Request Certificate: date needed, business info, repeatable Certificate Holder blocks
+- [x] Submit a Claim: claim type, conditional Auto/Workers Comp blocks
+- [x] Account Review: contact info, agent dropdown, SMS consent, topic checkboxes
 
 ## Phase 5: Billing & Payments
 - [x] Payment Options cards (4 payment method cards: Pay Online, Phone, Mail, Premium Finance)
@@ -56,13 +56,14 @@
 - [ ] Quick links to Submissions Inbox, Intake, Service Center
 
 ## Phase 8: Universal Form Behavior
-- [ ] Ref number generation (TRX-YYMMDD-XXXX)
-- [ ] File upload component (jpg/png/gif/pdf/doc/docx, max 20MB, max 10 files, S3)
-- [ ] Confirmation email to customer via Resend (with ref, submission echo, disclaimer)
-- [ ] Agency notification email to service@truxins.com
-- [ ] JotForm push for each submission type
-- [ ] Success screen with serif ref number + no-binding reminder
-- [ ] Disclaimer on every form
+- [x] Ref number generation (TRX-YYMMDD-XXXX)
+- [ ] File upload component (jpg/png/gif/pdf/doc/docx, max 20MB, max 10 files, S3) (future)
+- [ ] Confirmation email to customer via Resend (future)
+- [x] Agency notification email to milen@truxins.com on every submission
+- [x] JotForm push for contact/fast-quote/quote forms (API key validated)
+- [x] Success screen with serif ref number + no-binding reminder
+- [x] Disclaimer on every form
+- [x] Agent Intake Bar wired into all 4 service forms
 
 ## Phase 9: Integrations & Polish
 - [ ] Cloudflare Turnstile on all public/customer forms
@@ -72,3 +73,5 @@
 - [ ] Approval email via Resend when admin approves a user
 - [ ] Dark mode tokens match spec exactly
 - [ ] All tests passing
+- [x] Remove black logo from expanded sidebar, use Profile-02.jpg as collapsed icon
+- [x] Link portal login page to the client center (Service Center) page

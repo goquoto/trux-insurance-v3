@@ -6,6 +6,7 @@ import { trpc } from "@/lib/trpc";
 // Logo URLs (white for dark sidebar, dark for light mode header)
 const LOGO_WHITE = "/manus-storage/trux-logo-white_f250e47b.png";
 const LOGO_DARK = "/manus-storage/trux-logo-dark_ea3120b2.png";
+const LOGO_ICON = "/manus-storage/Profile-02_797a7735.jpg";
 
 interface NavItem {
   label: string;
@@ -186,7 +187,10 @@ export default function AgencyHubLayout({ children }: { children: React.ReactNod
       <aside className={`hub-sidebar ${sidebarOpen ? "open" : ""} ${sidebarCollapsed ? "collapsed" : ""}`}>
         <div className="hub-sidebar-logo">
           <Link href="/portal">
-            <img src={LOGO_WHITE} alt="Trux Insurance Services" className="hub-logo-img" />
+            {sidebarCollapsed
+              ? <img src={LOGO_ICON} alt="Trux" className="hub-logo-icon" />
+              : <span className="hub-logo-text">TRUX <span className="hub-logo-sub">INSURANCE SERVICES</span></span>
+            }
           </Link>
           {!sidebarCollapsed && <div className="hub-logo-pill">AGENCY HUB</div>}
         </div>

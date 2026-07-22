@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { trpc } from '../../lib/trpc';
 import { useAuth } from '../../_core/hooks/useAuth';
+import AgentIntakeBar from '../../components/AgentIntakeBar';
 
 interface CertificateHolder {
   id: string;
@@ -55,6 +56,7 @@ export default function CertificateRequest() {
     agreeDisclaimer: false,
   });
 
+  const [intakeCustomer, setIntakeCustomer] = useState<{ id: number; name: string; email: string; title: string | null } | null>(null);
   const createSubmission = trpc.submissions.create.useMutation();
 
   const addHolder = () => {
@@ -109,8 +111,9 @@ export default function CertificateRequest() {
 
       const result = await createSubmission.mutateAsync({
         type: 'certificate',
-        customerEmail: form.email,
-        userId: user?.id,
+        customerEmail: intakeCustomer?.email || form.email,
+        userId: intakeCustomer?.id || user?.id,
+        takenByUserId: intakeCustomer ? user?.id : undefined,
         data,
       });
       setSubmittedRef(result.ref);
@@ -146,6 +149,9 @@ export default function CertificateRequest() {
         <div className="sc-tick" />
         <h1 className="sc-form-title">Request a <em>Certificate</em></h1>
       </div>
+
+      {/* Agent Intake Mode */}
+      <AgentIntakeBar onCustomerSelect={setIntakeCustomer} selectedCustomer={intakeCustomer} />
 
       {/* Insured Info */}
       <div className="wizard-section">
