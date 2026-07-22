@@ -259,3 +259,63 @@ export async function sendNewAccountNotification(data: {
     return false;
   }
 }
+
+
+// Send notification when a service center form is submitted
+export async function sendSubmissionNotification(data: {
+  ref: string;
+  type: string;
+  customerEmail: string | null;
+  customerName?: string;
+  agentName?: string;
+  fields: { label: string; value: string }[];
+}): Promise<boolean> {
+  const TYPE_LABELS: Record<string, string> = {
+    policy_change: 'Policy Change Request',
+    certificate: 'Certificate Request',
+    claim: 'Claim Submission',
+    account_review: 'Account Review Request',
+    contact: 'Contact Form',
+    fast_quote: 'Fast Quote',
+    full_quote: 'Full Quote',
+  };
+
+  const typeLabel = TYPE_LABELS[data.type] || data.type;
+  const submittedAt = new Date().toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' });
+
+  try {
+    const { error } = await resend.emails.send({
+      from: FROM_ADDRESS,
+      to: TO_ADDRESSES,
+      subject: `${typeLabel} — ${data.customerName || data.customerEmail || data.ref}`,
+      html: `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px;">
+          <h1 style="font-size: 22px; color: #1A1A1A; margin-bottom: 4px;">${typeLabel}</h1>
+          <p style="font-size: 13px; color: #8A8783; margin-bottom: 4px;">Ref: ${data.ref} &middot; ${submittedAt}</p>
+          ${data.agentName ? `<p style="font-size: 13px; color: #8A8783; margin-bottom: 24px;">Filed by agent: ${data.agentName}</p>` : '<div style="margin-bottom: 24px;"></div>'}
+          
+          <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+            ${data.fields.slice(0, 20).map(f => `
+            <tr style="border-bottom: 1px solid #CEC9BF;">
+              <td style="padding: 10px 0; color: #8A8783; width: 160px; vertical-align: top;">${f.label}</td>
+              <td style="padding: 10px 0; color: #1A1A1A; font-weight: 400;">${f.value || '—'}</td>
+            </tr>`).join('')}
+          </table>
+
+          <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #CEC9BF;">
+            <p style="font-size: 12px; color: #8A8783; margin: 0;">This notification was sent by the Trux Insurance Service Center.</p>
+          </div>
+        </div>
+      `,
+    });
+
+    if (error) {
+      console.error("[Email] Submission notification failed:", error);
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error("[Email] Submission notification error:", err);
+    return false;
+  }
+}

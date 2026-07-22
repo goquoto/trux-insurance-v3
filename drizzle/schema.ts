@@ -19,6 +19,7 @@ export const users = mysqlTable("users", {
   role: mysqlEnum("role", ["user", "staff", "admin", "customer"]).default("user").notNull(),
   accountStatus: mysqlEnum("accountStatus", ["pending", "approved", "rejected"]).default("pending").notNull(),
   authProvider: varchar("authProvider", { length: 64 }),
+  title: varchar("title", { length: 255 }), // company/business name for customers
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
@@ -104,3 +105,46 @@ export const newsletterSubscribers = mysqlTable('newsletter_subscribers', {
 
 export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;
 export type InsertNewsletterSubscriber = typeof newsletterSubscribers.$inferInsert;
+
+// Submissions table — universal form submissions
+export const submissions = mysqlTable('submissions', {
+  id: int('id').autoincrement().primaryKey(),
+  ref: varchar('ref', { length: 20 }).notNull().unique(), // TRX-YYMMDD-XXXX
+  type: mysqlEnum('type', [
+    'policy_change', 'certificate', 'claim', 'account_review',
+    'contact', 'fast_quote', 'full_quote'
+  ]).notNull(),
+  userId: int('userId'), // customer account if known
+  customerEmail: varchar('customerEmail', { length: 255 }), // confirmation email recipient
+  takenByUserId: int('takenByUserId'), // staff/admin who took it over the phone
+  workStatus: mysqlEnum('workStatus', ['new', 'in_progress', 'done']).default('new').notNull(),
+  data: json('data').$type<Array<{ section: string; fields: Array<{ label: string; value: any }> }>>().notNull(),
+  createdAt: timestamp('createdAt').defaultNow().notNull(),
+});
+
+export type Submission = typeof submissions.$inferSelect;
+export type InsertSubmission = typeof submissions.$inferInsert;
+
+// Submission files — S3 attachments linked to submissions
+export const submissionFiles = mysqlTable('submission_files', {
+  id: int('id').autoincrement().primaryKey(),
+  submissionId: int('submissionId').notNull(),
+  s3Key: varchar('s3Key', { length: 512 }).notNull(),
+  fileName: varchar('fileName', { length: 255 }).notNull(),
+  size: int('size').notNull(), // bytes
+  mime: varchar('mime', { length: 100 }).notNull(),
+});
+
+export type SubmissionFile = typeof submissionFiles.$inferSelect;
+export type InsertSubmissionFile = typeof submissionFiles.$inferInsert;
+
+// VIN cache — decoded VIN results from NHTSA
+export const vinCache = mysqlTable('vin_cache', {
+  vin: varchar('vin', { length: 17 }).primaryKey(),
+  decodedJson: json('decodedJson').$type<Record<string, string>>().notNull(),
+  status: varchar('status', { length: 10 }).notNull(), // verified, failed, warning
+  createdAt: timestamp('createdAt').defaultNow().notNull(),
+});
+
+export type VinCache = typeof vinCache.$inferSelect;
+export type InsertVinCache = typeof vinCache.$inferInsert;

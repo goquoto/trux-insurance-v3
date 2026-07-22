@@ -58,7 +58,7 @@ const serviceCards = [
     title: "Billing & Payments",
     description: "Find billing and payment info for your insurance company.",
     buttonLabel: "View Carriers",
-    path: "/service-center/carriers",
+    path: "/service-center/billing",
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
@@ -104,7 +104,7 @@ export default function ServiceCenterHome() {
             <Link href="/service-center/policy-change" className="sc-quick-link">Policy Service</Link>
             <Link href="/service-center/certificate" className="sc-quick-link">Request Certificate of Insurance</Link>
             <Link href="/service-center/claim" className="sc-quick-link">Report a Claim</Link>
-            <Link href="/service-center/carriers" className="sc-quick-link">Make a Payment</Link>
+            <Link href="/service-center/billing" className="sc-quick-link">Make a Payment</Link>
           </div>
         </div>
       </div>

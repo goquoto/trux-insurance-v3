@@ -49,6 +49,7 @@ const HubDashboard = lazy(() => import("./pages/portal/HubDashboard"));
 const HubTeam = lazy(() => import("./pages/portal/HubTeam"));
 const HubCarriers = lazy(() => import("./pages/portal/HubCarriers"));
 const HubMGAs = lazy(() => import("./pages/portal/HubMGAs"));
+const HubSubmissions = lazy(() => import("./pages/portal/HubSubmissions"));
 const HubKnowledgeBase = lazy(() => import("./pages/portal/HubKnowledgeBase"));
 const HubWorkflows = lazy(() => import("./pages/portal/HubWorkflows"));
 const HubTraining = lazy(() => import("./pages/portal/HubTraining"));
@@ -60,10 +61,11 @@ const HubUsers = lazy(() => import("./pages/portal/HubUsers"));
 // Service Center (Customer Portal)
 const ServiceCenterHome = lazy(() => import("./pages/service-center/ServiceCenterHome"));
 const ServiceCenterCarriers = lazy(() => import("./pages/service-center/ServiceCenterCarriers"));
-const ServiceCenterPolicyChange = lazy(() => import("./pages/service-center/ServiceCenterPolicyChange"));
-const ServiceCenterCertificate = lazy(() => import("./pages/service-center/ServiceCenterCertificate"));
-const ServiceCenterClaim = lazy(() => import("./pages/service-center/ServiceCenterClaim"));
-const ServiceCenterAppointment = lazy(() => import("./pages/service-center/ServiceCenterAppointment"));
+const ServiceCenterPolicyChange = lazy(() => import("./pages/service-center/PolicyChangeWizard"));
+const ServiceCenterCertificate = lazy(() => import("./pages/service-center/CertificateRequest"));
+const ServiceCenterClaim = lazy(() => import("./pages/service-center/ClaimSubmission"));
+const ServiceCenterAppointment = lazy(() => import("./pages/service-center/AccountReview"));
+const ServiceCenterBilling = lazy(() => import("./pages/service-center/BillingPayments"));
 
 // Minimal loading fallback that matches the site's style
 function PageLoader() {
@@ -115,6 +117,7 @@ function Router() {
         <Route path={"/portal"} component={HubDashboard} />
         <Route path={"/portal/carriers"} component={HubCarriers} />
         <Route path={"/portal/mgas"} component={HubMGAs} />
+        <Route path={"/portal/submissions"} component={HubSubmissions} />
         <Route path={"/portal/kb"} component={HubKnowledgeBase} />
         <Route path={"/portal/workflows"} component={HubWorkflows} />
         <Route path={"/portal/training"} component={HubTraining} />
@@ -130,6 +133,7 @@ function Router() {
         <Route path={"/service-center/certificate"} component={ServiceCenterCertificate} />
         <Route path={"/service-center/claim"} component={ServiceCenterClaim} />
         <Route path={"/service-center/appointment"} component={ServiceCenterAppointment} />
+        <Route path={"/service-center/billing"} component={ServiceCenterBilling} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>

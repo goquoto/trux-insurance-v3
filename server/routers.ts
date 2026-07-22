@@ -8,8 +8,13 @@ import { z } from "zod";
 import { eq } from "drizzle-orm";
 import { notifyOwner } from "./_core/notification";
 import { makeRequest, PlaceDetailsResult } from "./_core/map";
-import { sendQuoteNotification, sendContactNotification, sendNewsletterWelcome } from "./email";
+import { sendQuoteNotification, sendContactNotification, sendNewsletterWelcome, sendSubmissionNotification } from "./email";
 import { submitContactToJotform, submitFastQuoteToJotform, submitFullQuoteToJotform } from "./jotform-submit";
+import { decodeVin, batchDecodeVins } from "./vin-decoder";
+import { validateVin } from "../shared/vin-validator";
+import { submissions, submissionFiles } from "../drizzle/schema";
+import { desc, like, and, sql } from "drizzle-orm";
+import { storagePut } from "./storage";
 
 // Google Place ID for Trux Insurance Services
 const TRUX_PLACE_ID = "ChIJq6pq55utD4gR7mAyuFzJt34";
@@ -312,6 +317,129 @@ export const appRouter = router({
       return await getAllQuotes();
     }),
   }),
-});
 
+  // VIN verification procedures
+  vin: router({
+    validate: publicProcedure
+      .input(z.object({ vin: z.string() }))
+      .mutation(({ input }) => {
+        return validateVin(input.vin);
+      }),
+    decode: publicProcedure
+      .input(z.object({ vin: z.string(), modelYear: z.number().optional() }))
+      .mutation(async ({ input }) => {
+        return await decodeVin(input.vin, input.modelYear);
+      }),
+    batchDecode: publicProcedure
+      .input(z.object({ vins: z.array(z.string()) }))
+      .mutation(async ({ input }) => {
+        return await batchDecodeVins(input.vins);
+      }),
+  }),
+
+  // Submissions procedures
+  submissions: router({
+    create: publicProcedure
+      .input(z.object({
+        type: z.enum(['policy_change', 'certificate', 'claim', 'account_review', 'contact', 'fast_quote', 'full_quote']),
+        customerEmail: z.string().email().optional(),
+        userId: z.number().optional(),
+        takenByUserId: z.number().optional(),
+        data: z.array(z.object({
+          section: z.string(),
+          fields: z.array(z.object({ label: z.string(), value: z.any() })),
+        })),
+      }))
+      .mutation(async ({ input }) => {
+        const db = await getDb();
+        if (!db) throw new Error('Database unavailable');
+
+        // Generate ref: TRX-YYMMDD-XXXX
+        const now = new Date();
+        const yy = String(now.getFullYear()).slice(2);
+        const mm = String(now.getMonth() + 1).padStart(2, '0');
+        const dd = String(now.getDate()).padStart(2, '0');
+        const rand = String(Math.floor(Math.random() * 10000)).padStart(4, '0');
+        const ref = `TRX-${yy}${mm}${dd}-${rand}`;
+
+        const [result] = await db.insert(submissions).values({
+          ref,
+          type: input.type,
+          userId: input.userId || null,
+          customerEmail: input.customerEmail || null,
+          takenByUserId: input.takenByUserId || null,
+          data: input.data,
+        });
+
+        // Send email notification (fire-and-forget)
+        const flatFields = (input.data || []).flatMap((s: any) =>
+          (s.fields || []).map((f: any) => ({ label: f.label, value: String(f.value || '') }))
+        );
+        sendSubmissionNotification({
+          ref,
+          type: input.type,
+          customerEmail: input.customerEmail || null,
+          fields: flatFields,
+        }).catch(() => {});
+
+        return { id: result.insertId, ref };
+      }),
+
+    list: staffProcedure
+      .input(z.object({
+        search: z.string().optional(),
+        type: z.string().optional(),
+        workStatus: z.string().optional(),
+        limit: z.number().default(50),
+        offset: z.number().default(0),
+      }).optional())
+      .query(async ({ input }) => {
+        const db = await getDb();
+        if (!db) return [];
+        const filters = input || { search: undefined, type: undefined, workStatus: undefined, limit: 50, offset: 0 };
+
+        let query = db.select().from(submissions).orderBy(desc(submissions.createdAt));
+
+        // Apply filters
+        const conditions = [];
+        if (filters.type) {
+          conditions.push(eq(submissions.type, filters.type as any));
+        }
+        if (filters.workStatus) {
+          conditions.push(eq(submissions.workStatus, filters.workStatus as any));
+        }
+        if (filters.search) {
+          conditions.push(
+            sql`(${submissions.ref} LIKE ${`%${filters.search}%`} OR ${submissions.customerEmail} LIKE ${`%${filters.search}%`} OR JSON_EXTRACT(${submissions.data}, '$') LIKE ${`%${filters.search}%`})`
+          );
+        }
+
+        if (conditions.length > 0) {
+          query = query.where(and(...conditions)) as any;
+        }
+
+        return await (query as any).limit(filters.limit).offset(filters.offset);
+      }),
+
+    updateStatus: staffProcedure
+      .input(z.object({
+        id: z.number(),
+        workStatus: z.enum(['new', 'in_progress', 'done']),
+      }))
+      .mutation(async ({ input }) => {
+        const db = await getDb();
+        if (!db) throw new Error('Database unavailable');
+        await db.update(submissions).set({ workStatus: input.workStatus }).where(eq(submissions.id, input.id));
+        return { success: true };
+      }),
+
+    getFiles: staffProcedure
+      .input(z.object({ submissionId: z.number() }))
+      .query(async ({ input }) => {
+        const db = await getDb();
+        if (!db) return [];
+        return await db.select().from(submissionFiles).where(eq(submissionFiles.submissionId, input.submissionId));
+      }),
+  }),
+});
 export type AppRouter = typeof appRouter;

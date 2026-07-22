@@ -15,6 +15,7 @@ interface NavItem {
 
 const mainNav: NavItem[] = [
   { label: "Dashboard", path: "/portal", icon: <DashIcon /> },
+  { label: "Submissions", path: "/portal/submissions", icon: <SubmissionsIcon /> },
   { label: "Carrier Directory", path: "/portal/carriers", icon: <CarrierIcon /> },
   { label: "MGAs", path: "/portal/mgas", icon: <MGAIcon /> },
   { label: "Knowledge Base", path: "/portal/kb", icon: <KBIcon /> },
@@ -58,6 +59,9 @@ function TeamIcon() {
 function FormsIcon() {
   return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>;
 }
+function SubmissionsIcon() {
+  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>;
+}
 function StandardsIcon() {
   return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>;
 }
@@ -81,6 +85,7 @@ function getPageTitle(path: string): string {
   if (path === "/portal") return "Dashboard";
   if (path.startsWith("/portal/carriers")) return "Carrier Directory";
   if (path.startsWith("/portal/mgas")) return "MGAs";
+  if (path.startsWith("/portal/submissions")) return "Submissions";
   if (path.startsWith("/portal/kb")) return "Knowledge Base";
   if (path.startsWith("/portal/workflows")) return "Workflows";
   if (path.startsWith("/portal/training")) return "Onboarding & Training";

@@ -12,7 +12,7 @@ const navItems: NavItem[] = [
   { label: "Request Certificate", path: "/service-center/certificate", icon: <CertIcon /> },
   { label: "Submit a Claim", path: "/service-center/claim", icon: <ClaimIcon /> },
   { label: "Account Review", path: "/service-center/appointment", icon: <CalendarIcon /> },
-  { label: "Billing & Payments", path: "/service-center/carriers", icon: <BillingIcon /> },
+  { label: "Billing & Payments", path: "/service-center/billing", icon: <BillingIcon /> },
 ];
 
 function HomeIcon() {
@@ -40,7 +40,8 @@ function getPageTitle(path: string): string {
   if (path.includes("/certificate")) return "Request Certificate";
   if (path.includes("/claim")) return "Submit a Claim";
   if (path.includes("/appointment")) return "Account Review";
-  if (path.includes("/carriers")) return "Billing & Payments";
+  if (path.includes("/billing")) return "Billing & Payments";
+  if (path.includes("/carriers")) return "Carrier Directory";
   return "Service Center";
 }
 
