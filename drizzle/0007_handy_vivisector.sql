@@ -1,0 +1,1 @@
+ALTER TABLE `submissions` MODIFY COLUMN `type` enum('policy_change','certificate','claim','account_review','contact','fast_quote','full_quote','loss_runs') NOT NULL;

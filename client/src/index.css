@@ -3785,3 +3785,76 @@
 .hub-dark .pcw-policy-checks {
   border-color: #444;
 }
+
+
+/* === PCW File Upload === */
+.pcw-file-upload {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  border: 1px dashed var(--hair);
+  background: var(--paper-2);
+}
+.pcw-file-input {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  color: var(--muted);
+}
+.pcw-file-input::file-selector-button {
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  margin-right: 12px;
+}
+.pcw-file-input::file-selector-button:hover {
+  background: var(--ink);
+  color: #fff;
+}
+.pcw-file-list {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.pcw-file-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: #fff;
+  border: 1px solid var(--hair);
+  font-size: 13px;
+  color: var(--muted);
+}
+.pcw-file-remove {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: var(--warn);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 4px;
+}
+.pcw-file-remove:hover {
+  color: #7a3f36;
+}
+.hub-dark .pcw-file-upload {
+  background: #2a2725;
+  border-color: #444;
+}
+.hub-dark .pcw-file-item {
+  background: #1a1816;
+  border-color: #444;
+  color: #b5b0a9;
+}
+.hub-dark .pcw-file-input::file-selector-button {
+  border-color: #666;
+  background: #2a2725;
+  color: #e8e4dc;
+}

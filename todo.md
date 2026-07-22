@@ -114,3 +114,29 @@
 - [x] JotForm serialization: addEquipment/deleteEquipment/driverChanges arrays with exact field names
 - [x] Agent Intake panel still works on this form
 - [x] Fix AgentIntakeBar React hooks ordering (conditional return before useQuery)
+
+## Service Center Portal Layout & Styling Fix
+- [x] Wrap all /service-center/* routes in shared app shell (Header + Footer + max-width 1024px container)
+- [ ] Restyle form inputs: rounded corners (match main site), proper spacing
+- [ ] Replace Cancel/Continue buttons with site's button system (purple primary, green submit)
+- [ ] Restyle multi-step progress indicator as spaced numbered step pills
+- [ ] Wrap each form in bordered padded card with serif heading
+- [ ] Extend dark-mode support into portal forms
+- [ ] Extract shared components (Header, Footer, PageContainer) used by both marketing and portal
+
+## New Feature: Loss Runs Request
+- [x] Add "Loss Runs" nav item to Service Center sidebar/top nav
+- [x] Add Loss Runs card to Service Center landing page
+- [x] Create /service-center/loss-runs route with Request Loss Runs form
+- [x] Fields: Named Insured*, Business Name*, Email*, Policy Number, Prior Carrier/Policy, Years requested (1/3/5), Reason dropdown, Delivery emails, Additional notes
+- [x] Wire into submissions flow (DB + email notification)
+
+## COI Form Update
+- [x] Add "Loss Payee" option alongside "Additional Insured" on each certificate holder
+- [x] Implement as dropdown/radio per holder (allow selecting both)
+- [x] Keep styling consistent with rest of form
+
+## Policy Change Form v2 Updates
+- [x] Combine Add Equipment + Delete Equipment into single "Vehicle Change" section with Action dropdown (Add/Delete) per row
+- [x] Add file upload fields to Policy Change form (supporting docs per section)
+- [ ] Add file upload fields to other forms (COI, Claim, Loss Runs)

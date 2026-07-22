@@ -335,7 +335,7 @@ export const appRouter = router({
   submissions: router({
     create: publicProcedure
       .input(z.object({
-        type: z.enum(['policy_change', 'certificate', 'claim', 'account_review', 'contact', 'fast_quote', 'full_quote']),
+        type: z.enum(['policy_change', 'certificate', 'claim', 'account_review', 'contact', 'fast_quote', 'full_quote', 'loss_runs']),
         customerEmail: z.string().email().optional(),
         userId: z.number().optional(),
         takenByUserId: z.number().optional(),

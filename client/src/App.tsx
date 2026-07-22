@@ -67,6 +67,7 @@ const ServiceCenterCertificate = lazy(() => import("./pages/service-center/Certi
 const ServiceCenterClaim = lazy(() => import("./pages/service-center/ClaimSubmission"));
 const ServiceCenterAppointment = lazy(() => import("./pages/service-center/AccountReview"));
 const ServiceCenterBilling = lazy(() => import("./pages/service-center/BillingPayments"));
+const ServiceCenterLossRuns = lazy(() => import("./pages/service-center/LossRuns"));
 
 // Minimal loading fallback that matches the site's style
 function PageLoader() {
@@ -136,6 +137,7 @@ function Router() {
         <Route path={"/service-center/claim"} component={ServiceCenterClaim} />
         <Route path={"/service-center/appointment"} component={ServiceCenterAppointment} />
         <Route path={"/service-center/billing"} component={ServiceCenterBilling} />
+        <Route path={"/service-center/loss-runs"} component={ServiceCenterLossRuns} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>

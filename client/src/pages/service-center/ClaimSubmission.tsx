@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { trpc } from '../../lib/trpc';
 import { useAuth } from '../../_core/hooks/useAuth';
 import AgentIntakeBar from '../../components/AgentIntakeBar';
+import ServiceCenterLayout from '../../components/ServiceCenterLayout';
 
 const US_STATES = [
   'AL','AK','AZ','AR','CA','CO','CT','DE','DC','FL','GA','HI','ID','IL','IN',
@@ -161,6 +162,7 @@ export default function ClaimSubmission() {
 
   if (submittedRef) {
     return (
+      <ServiceCenterLayout>
       <div className="sc-form-page">
         <div className="sc-success-screen">
           <div className="sc-success-icon">✓</div>
@@ -178,10 +180,12 @@ export default function ClaimSubmission() {
           </a>
         </div>
       </div>
+      </ServiceCenterLayout>
     );
   }
 
   return (
+    <ServiceCenterLayout>
     <div className="sc-form-page">
       <div className="sc-form-header">
         <div className="sc-eyebrow">CLAIMS</div>
@@ -374,5 +378,6 @@ export default function ClaimSubmission() {
         </>
       )}
     </div>
+    </ServiceCenterLayout>
   );
 }

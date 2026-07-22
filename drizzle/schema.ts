@@ -112,7 +112,7 @@ export const submissions = mysqlTable('submissions', {
   ref: varchar('ref', { length: 20 }).notNull().unique(), // TRX-YYMMDD-XXXX
   type: mysqlEnum('type', [
     'policy_change', 'certificate', 'claim', 'account_review',
-    'contact', 'fast_quote', 'full_quote'
+    'contact', 'fast_quote', 'full_quote', 'loss_runs'
   ]).notNull(),
   userId: int('userId'), // customer account if known
   customerEmail: varchar('customerEmail', { length: 255 }), // confirmation email recipient

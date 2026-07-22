@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { trpc } from '../../lib/trpc';
 import { useAuth } from '../../_core/hooks/useAuth';
 import AgentIntakeBar from '../../components/AgentIntakeBar';
+import ServiceCenterLayout from '../../components/ServiceCenterLayout';
 
 interface CertificateHolder {
   id: string;
@@ -12,7 +13,7 @@ interface CertificateHolder {
   state: string;
   zip: string;
   email: string;
-  additionalInsured: boolean;
+  holderStatus: string[]; // 'additionalInsured' | 'lossPay'
   waiverOfSubrogation: boolean;
   primaryNonContributory: boolean;
 }
@@ -33,7 +34,7 @@ const INITIAL_HOLDER: CertificateHolder = {
   state: '',
   zip: '',
   email: '',
-  additionalInsured: false,
+  holderStatus: ['additionalInsured'],
   waiverOfSubrogation: false,
   primaryNonContributory: false,
 };
@@ -94,7 +95,7 @@ export default function CertificateRequest() {
             { label: 'Holder Name', value: h.name },
             { label: 'Address', value: `${h.address1} ${h.address2}, ${h.city}, ${h.state} ${h.zip}`.trim() },
             { label: 'Email to Send COI', value: h.email },
-            { label: 'Additional Insured', value: h.additionalInsured ? 'Yes' : 'No' },
+            { label: 'Holder Status', value: h.holderStatus.map(s => s === 'additionalInsured' ? 'Additional Insured' : 'Loss Payee').join(', ') || 'None' },
             { label: 'Waiver of Subrogation', value: h.waiverOfSubrogation ? 'Yes' : 'No' },
             { label: 'Primary & Non-Contributory', value: h.primaryNonContributory ? 'Yes' : 'No' },
           ],
@@ -126,6 +127,7 @@ export default function CertificateRequest() {
 
   if (submittedRef) {
     return (
+      <ServiceCenterLayout>
       <div className="sc-form-page">
         <div className="sc-success-screen">
           <div className="sc-success-icon">✓</div>
@@ -139,10 +141,12 @@ export default function CertificateRequest() {
           </a>
         </div>
       </div>
+      </ServiceCenterLayout>
     );
   }
 
   return (
+    <ServiceCenterLayout>
     <div className="sc-form-page">
       <div className="sc-form-header">
         <div className="sc-eyebrow">CERTIFICATE OF INSURANCE</div>
@@ -218,7 +222,21 @@ export default function CertificateRequest() {
               <div className="form-group"><label className="form-label">ZIP</label><input className="form-input" value={holder.zip} onChange={e => updateHolder(holder.id, 'zip', e.target.value)} /></div>
             </div>
             <div className="form-group">
-              <label className="form-checkbox-label"><input type="checkbox" checked={holder.additionalInsured} onChange={e => updateHolder(holder.id, 'additionalInsured', e.target.checked)} /> Additional Insured</label>
+              <label className="form-label">Holder Status / Interest</label>
+              <div style={{ display: 'flex', gap: '1.5rem', marginTop: '0.25rem' }}>
+                <label className="form-checkbox-label">
+                  <input type="checkbox" checked={holder.holderStatus.includes('additionalInsured')} onChange={e => {
+                    const checked = e.target.checked;
+                    updateHolder(holder.id, 'holderStatus', checked ? [...holder.holderStatus, 'additionalInsured'] : holder.holderStatus.filter(s => s !== 'additionalInsured'));
+                  }} /> Additional Insured
+                </label>
+                <label className="form-checkbox-label">
+                  <input type="checkbox" checked={holder.holderStatus.includes('lossPay')} onChange={e => {
+                    const checked = e.target.checked;
+                    updateHolder(holder.id, 'holderStatus', checked ? [...holder.holderStatus, 'lossPay'] : holder.holderStatus.filter(s => s !== 'lossPay'));
+                  }} /> Loss Payee
+                </label>
+              </div>
             </div>
             <div className="form-group">
               <label className="form-checkbox-label"><input type="checkbox" checked={holder.waiverOfSubrogation} onChange={e => updateHolder(holder.id, 'waiverOfSubrogation', e.target.checked)} /> Waiver of Subrogation</label>
@@ -272,5 +290,6 @@ export default function CertificateRequest() {
         </div>
       </div>
     </div>
+    </ServiceCenterLayout>
   );
 }

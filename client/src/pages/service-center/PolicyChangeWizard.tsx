@@ -3,11 +3,11 @@ import { trpc } from '../../lib/trpc';
 import { useAuth } from '../../_core/hooks/useAuth';
 import { VinVerifier, type VinDecodeResult } from '../../components/VinVerifier';
 import AgentIntakeBar from '../../components/AgentIntakeBar';
+import ServiceCenterLayout from '../../components/ServiceCenterLayout';
 
-// Section types for the picker
+// Section types for the picker — merged "Vehicle Change" replaces Add/Delete Equipment
 const SECTION_TYPES = [
-  { id: 'addEquipment', label: 'Add Equipment', desc: 'Add trucks, trailers, or units' },
-  { id: 'deleteEquipment', label: 'Delete Equipment', desc: 'Remove units from policy' },
+  { id: 'vehicleChange', label: 'Vehicle Change', desc: 'Add or remove trucks, trailers, or units' },
   { id: 'driverChanges', label: 'Driver Change', desc: 'Add or delete drivers' },
   { id: 'addresses', label: 'Addresses', desc: 'Change mailing, physical, or garaging' },
   { id: 'lienholders', label: 'Lien Holders', desc: 'Add or update lien holder info' },
@@ -27,29 +27,19 @@ const US_STATES = [
 const POLICY_OPTIONS = ['Liability', 'Cargo', 'Physical Damage'] as const;
 
 // --- Interfaces ---
-interface AddEquipmentRow {
+interface VehicleChangeRow {
   id: string;
-  addTo: string[]; // Liability, Cargo, Physical Damage
+  action: 'add' | 'delete' | '';
+  policies: string[]; // Liability, Cargo, Physical Damage
   year: string;
   make: string;
+  model: string;
   vin: string;
   ownedBy: string;
   value: string;
+  documentation: string; // for delete: Termination Letter, Bill of Sale, Police Report
   vinResult: VinDecodeResult | null;
   isTrailer: boolean;
-  model: string;
-}
-
-interface DeleteEquipmentRow {
-  id: string;
-  deleteFrom: string[];
-  year: string;
-  make: string;
-  vin: string;
-  documentation: string;
-  vinResult: VinDecodeResult | null;
-  isTrailer: boolean;
-  model: string;
 }
 
 interface DriverChangeRow {
@@ -76,39 +66,42 @@ interface FormData {
   policyNumber: string;
   requestedBy: string;
   serviceTypes: SectionType[];
-  // Step 2 — new sections
-  addEquipment: AddEquipmentRow[];
+  // Step 2 — Vehicle Change
+  vehicleChanges: VehicleChangeRow[];
   lossPayee: string;
   additionalInsured: string;
   contractProvided: string;
-  deleteEquipment: DeleteEquipmentRow[];
+  // Step 2 — Driver Change
   driverChanges: DriverChangeRow[];
-  // Step 2 — kept sections
+  // Step 2 — Addresses
   changeMailingAddress: boolean;
   mailingStreet: string; mailingCity: string; mailingState: string; mailingZip: string;
   changePhysicalAddress: boolean;
   physicalStreet: string; physicalCity: string; physicalState: string; physicalZip: string;
   changeGaragingAddress: boolean;
   garagingStreet: string; garagingCity: string; garagingState: string; garagingZip: string;
+  // Step 2 — Lien Holders
   lienVehicle: boolean; lienBusiness: boolean;
   lienHolderName: string; lienNameLine2: string; lienAddress1: string; lienAddress2: string;
   lienCity: string; lienState: string; lienZip: string; lienLoanNumber: string; lienPosition: string; lienBillTo: string;
   vehicleLienVehicle: string; vehicleLienName: string; vehicleLienLoanNumber: string;
+  // Step 2 — COI
   coiEmail: string; coiHolderName: string; coiAddress1: string; coiAddress2: string;
   coiCity: string; coiState: string; coiZip: string; coiDetails: string;
   coiIncludeVehicleSchedule: boolean; coiIncludeDriverSchedule: boolean; coiAdditionalInsured: boolean;
+  // Step 2 — Coverage
   coverageDetails: string;
+  // File uploads
+  vehicleFiles: File[];
+  driverFiles: File[];
   // Step 3
   agreeDisclaimer: boolean;
   signature: string;
   signatureDate: string;
 }
 
-const makeAddRow = (): AddEquipmentRow => ({
-  id: crypto.randomUUID(), addTo: [], year: '', make: '', vin: '', ownedBy: '', value: '', vinResult: null, isTrailer: false, model: '',
-});
-const makeDeleteRow = (): DeleteEquipmentRow => ({
-  id: crypto.randomUUID(), deleteFrom: [], year: '', make: '', vin: '', documentation: '', vinResult: null, isTrailer: false, model: '',
+const makeVehicleRow = (): VehicleChangeRow => ({
+  id: crypto.randomUUID(), action: '', policies: [], year: '', make: '', model: '', vin: '', ownedBy: '', value: '', documentation: '', vinResult: null, isTrailer: false,
 });
 const makeDriverRow = (): DriverChangeRow => ({
   id: crypto.randomUUID(), action: '', policies: [], mvrIncluded: 'No', firstName: '', lastName: '', dob: '', cdl: '', state: '', yearsExp: '',
@@ -133,11 +126,10 @@ export default function PolicyChangeWizard() {
     policyNumber: '',
     requestedBy: user?.name || '',
     serviceTypes: [],
-    addEquipment: [makeAddRow()],
+    vehicleChanges: [makeVehicleRow()],
     lossPayee: '',
     additionalInsured: '',
     contractProvided: '',
-    deleteEquipment: [makeDeleteRow()],
     driverChanges: [makeDriverRow()],
     changeMailingAddress: false, mailingStreet: '', mailingCity: '', mailingState: '', mailingZip: '',
     changePhysicalAddress: false, physicalStreet: '', physicalCity: '', physicalState: '', physicalZip: '',
@@ -150,6 +142,8 @@ export default function PolicyChangeWizard() {
     coiCity: '', coiState: '', coiZip: '', coiDetails: '',
     coiIncludeVehicleSchedule: false, coiIncludeDriverSchedule: false, coiAdditionalInsured: false,
     coverageDetails: '',
+    vehicleFiles: [],
+    driverFiles: [],
     agreeDisclaimer: false,
     signature: '',
     signatureDate: today,
@@ -158,23 +152,13 @@ export default function PolicyChangeWizard() {
   const createSubmission = trpc.submissions.create.useMutation();
 
   // Validation helpers
-  const allAddVinsVerified = useMemo(() => {
-    if (!form.serviceTypes.includes('addEquipment')) return true;
-    return form.addEquipment.every(r => {
+  const allVinsVerified = useMemo(() => {
+    if (!form.serviceTypes.includes('vehicleChange')) return true;
+    return form.vehicleChanges.every(r => {
       if (!r.vin) return true;
       return r.vinResult?.status === 'verified' || r.vinResult?.status === 'warning';
     });
-  }, [form.addEquipment, form.serviceTypes]);
-
-  const allDeleteVinsVerified = useMemo(() => {
-    if (!form.serviceTypes.includes('deleteEquipment')) return true;
-    return form.deleteEquipment.every(r => {
-      if (!r.vin) return true;
-      return r.vinResult?.status === 'verified' || r.vinResult?.status === 'warning';
-    });
-  }, [form.deleteEquipment, form.serviceTypes]);
-
-  const allVinsVerified = allAddVinsVerified && allDeleteVinsVerified;
+  }, [form.vehicleChanges, form.serviceTypes]);
 
   const toggleSection = (type: SectionType) => {
     setForm(prev => ({
@@ -185,14 +169,13 @@ export default function PolicyChangeWizard() {
     }));
   };
 
-  const togglePolicy = (rowId: string, section: 'addEquipment' | 'deleteEquipment' | 'driverChanges', policy: string) => {
+  const togglePolicy = (rowId: string, section: 'vehicleChanges' | 'driverChanges', policy: string) => {
     setForm(prev => {
       const arr = [...prev[section]] as any[];
       const idx = arr.findIndex((r: any) => r.id === rowId);
       if (idx === -1) return prev;
-      const field = section === 'addEquipment' ? 'addTo' : section === 'deleteEquipment' ? 'deleteFrom' : 'policies';
-      const current: string[] = arr[idx][field];
-      arr[idx] = { ...arr[idx], [field]: current.includes(policy) ? current.filter(p => p !== policy) : [...current, policy] };
+      const current: string[] = arr[idx].policies;
+      arr[idx] = { ...arr[idx], policies: current.includes(policy) ? current.filter(p => p !== policy) : [...current, policy] };
       return { ...prev, [section]: arr };
     });
   };
@@ -222,36 +205,29 @@ export default function PolicyChangeWizard() {
         ],
       });
 
-      // Add Equipment
-      if (form.serviceTypes.includes('addEquipment')) {
-        const rows = form.addEquipment.filter(r => r.vin || r.addTo.length > 0);
+      // Vehicle Changes
+      if (form.serviceTypes.includes('vehicleChange')) {
+        const rows = form.vehicleChanges.filter(r => r.action);
         const fields: Array<{ label: string; value: any }> = [];
         rows.forEach((r, i) => {
-          fields.push({ label: `Unit ${i + 1} Add To`, value: r.addTo.join(', ') });
+          fields.push({ label: `Unit ${i + 1} Action`, value: r.action === 'add' ? 'Add' : 'Delete' });
+          fields.push({ label: `Unit ${i + 1} Policies`, value: r.policies.join(', ') });
           fields.push({ label: `Unit ${i + 1} Year`, value: r.year });
           fields.push({ label: `Unit ${i + 1} Make`, value: r.make });
           fields.push({ label: `Unit ${i + 1} VIN`, value: r.vin });
-          fields.push({ label: `Unit ${i + 1} Owned By`, value: r.ownedBy });
-          fields.push({ label: `Unit ${i + 1} Value`, value: r.value });
+          if (r.action === 'add') {
+            fields.push({ label: `Unit ${i + 1} Owned By`, value: r.ownedBy });
+            fields.push({ label: `Unit ${i + 1} Value`, value: r.value });
+          }
+          if (r.action === 'delete') {
+            fields.push({ label: `Unit ${i + 1} Documentation`, value: r.documentation });
+          }
         });
         if (form.lossPayee) fields.push({ label: 'Loss Payee', value: form.lossPayee });
         if (form.additionalInsured) fields.push({ label: 'Additional Insured', value: form.additionalInsured });
         if (form.contractProvided) fields.push({ label: 'Contract Provided', value: form.contractProvided });
-        data.push({ section: 'Add Equipment', fields });
-      }
-
-      // Delete Equipment
-      if (form.serviceTypes.includes('deleteEquipment')) {
-        const rows = form.deleteEquipment.filter(r => r.vin || r.deleteFrom.length > 0);
-        const fields: Array<{ label: string; value: any }> = [];
-        rows.forEach((r, i) => {
-          fields.push({ label: `Unit ${i + 1} Delete From`, value: r.deleteFrom.join(', ') });
-          fields.push({ label: `Unit ${i + 1} Year`, value: r.year });
-          fields.push({ label: `Unit ${i + 1} Make`, value: r.make });
-          fields.push({ label: `Unit ${i + 1} VIN`, value: r.vin });
-          fields.push({ label: `Unit ${i + 1} Documentation`, value: r.documentation });
-        });
-        data.push({ section: 'Delete Equipment', fields });
+        if (form.vehicleFiles.length > 0) fields.push({ label: 'Files Attached', value: form.vehicleFiles.map(f => f.name).join(', ') });
+        data.push({ section: 'Vehicle Changes', fields });
       }
 
       // Driver Changes
@@ -268,6 +244,7 @@ export default function PolicyChangeWizard() {
           fields.push({ label: `Driver ${i + 1} State`, value: r.state });
           fields.push({ label: `Driver ${i + 1} Years Exp`, value: r.yearsExp });
         });
+        if (form.driverFiles.length > 0) fields.push({ label: 'Files Attached', value: form.driverFiles.map(f => f.name).join(', ') });
         data.push({ section: 'Driver Changes', fields });
       }
 
@@ -348,6 +325,7 @@ export default function PolicyChangeWizard() {
   // --- Success Screen ---
   if (submittedRef) {
     return (
+      <ServiceCenterLayout>
       <div className="pcw">
         <div className="pcw-success">
           <div className="pcw-success-icon">✓</div>
@@ -364,10 +342,12 @@ export default function PolicyChangeWizard() {
           </a>
         </div>
       </div>
+      </ServiceCenterLayout>
     );
   }
 
   return (
+    <ServiceCenterLayout>
     <div className="pcw">
       {/* Header */}
       <div className="pcw-header">
@@ -467,167 +447,159 @@ export default function PolicyChangeWizard() {
       {step === 2 && (
         <div className="pcw-step">
 
-          {/* ADD EQUIPMENT */}
-          {form.serviceTypes.includes('addEquipment') && (
+          {/* VEHICLE CHANGE (merged Add + Delete) */}
+          {form.serviceTypes.includes('vehicleChange') && (
             <div className="pcw-section">
-              <h3 className="pcw-section-title">Add Equipment</h3>
-              {form.addEquipment.map((row, idx) => (
+              <h3 className="pcw-section-title">Vehicle Change</h3>
+              <p className="pcw-hint" style={{ marginBottom: '1rem' }}>Select "Add" or "Delete" for each unit. You can mix actions in one submission.</p>
+
+              {form.vehicleChanges.map((row, idx) => (
                 <div key={row.id} className="pcw-row">
                   <div className="pcw-row-head">
                     <span className="pcw-row-num">Unit {idx + 1}{row.isTrailer ? ' · Trailer' : ''}</span>
-                    {form.addEquipment.length > 1 && (
-                      <button type="button" className="pcw-row-remove" onClick={() => setForm(p => ({ ...p, addEquipment: p.addEquipment.filter(r => r.id !== row.id) }))}>Remove</button>
+                    {form.vehicleChanges.length > 1 && (
+                      <button type="button" className="pcw-row-remove" onClick={() => setForm(p => ({ ...p, vehicleChanges: p.vehicleChanges.filter(r => r.id !== row.id) }))}>Remove</button>
                     )}
                   </div>
-                  <div className="pcw-policy-checks">
-                    <span className="pcw-label">Add to: *</span>
-                    {POLICY_OPTIONS.map(p => (
-                      <label key={p} className="pcw-check-label">
-                        <input type="checkbox" checked={row.addTo.includes(p)} onChange={() => togglePolicy(row.id, 'addEquipment', p)} />
-                        {p}
-                      </label>
-                    ))}
-                  </div>
                   <div className="pcw-field-grid">
-                    <div className="pcw-field pcw-field-full">
-                      <label className="pcw-label">Complete VIN *</label>
-                      <VinVerifier
-                        value={row.vin}
-                        onChange={(vin) => {
-                          setForm(p => ({ ...p, addEquipment: p.addEquipment.map(r => r.id === row.id ? { ...r, vin } : r) }));
-                        }}
-                        onVerified={(result) => {
-                          setForm(p => ({
-                            ...p,
-                            addEquipment: p.addEquipment.map(r => r.id === row.id ? {
-                              ...r,
-                              vinResult: result,
-                              isTrailer: result?.isTrailer || false,
-                              year: result?.data?.ModelYear || r.year,
-                              make: result?.data?.Make || r.make,
-                              model: result?.data?.Model || r.model,
-                            } : r),
-                          }));
-                        }}
-                        required
-                      />
-                    </div>
                     <div className="pcw-field">
-                      <label className="pcw-label">Year</label>
-                      <input className="pcw-input" value={row.year} onChange={e => setForm(p => ({ ...p, addEquipment: p.addEquipment.map(r => r.id === row.id ? { ...r, year: e.target.value } : r) }))} />
-                    </div>
-                    <div className="pcw-field">
-                      <label className="pcw-label">Make</label>
-                      <input className="pcw-input" value={row.make} onChange={e => setForm(p => ({ ...p, addEquipment: p.addEquipment.map(r => r.id === row.id ? { ...r, make: e.target.value } : r) }))} />
-                    </div>
-                    <div className="pcw-field">
-                      <label className="pcw-label">Owned By</label>
-                      <input className="pcw-input" value={row.ownedBy} onChange={e => setForm(p => ({ ...p, addEquipment: p.addEquipment.map(r => r.id === row.id ? { ...r, ownedBy: e.target.value } : r) }))} />
-                    </div>
-                    <div className="pcw-field">
-                      <label className="pcw-label">Value</label>
-                      <input className="pcw-input" value={row.value} onChange={e => setForm(p => ({ ...p, addEquipment: p.addEquipment.map(r => r.id === row.id ? { ...r, value: e.target.value } : r) }))} placeholder="$" />
-                    </div>
-                  </div>
-                </div>
-              ))}
-              <button type="button" className="pcw-add-btn" onClick={() => setForm(p => ({ ...p, addEquipment: [...p.addEquipment, makeAddRow()] }))}>+ Add another unit</button>
-
-              {/* Section-level fields */}
-              <div className="pcw-subsection">
-                <p className="pcw-subsection-title">If applicable: Loss Payee and Additional Insured Information</p>
-                <div className="pcw-field">
-                  <label className="pcw-label">Loss Payee Name and Address</label>
-                  <textarea className="pcw-textarea" value={form.lossPayee} onChange={e => setForm(p => ({ ...p, lossPayee: e.target.value }))} rows={3} />
-                </div>
-                <div className="pcw-field">
-                  <label className="pcw-label">Additional Insured Name and Address</label>
-                  <textarea className="pcw-textarea" value={form.additionalInsured} onChange={e => setForm(p => ({ ...p, additionalInsured: e.target.value }))} rows={3} />
-                </div>
-                <div className="pcw-field">
-                  <label className="pcw-label">Contract provided? *</label>
-                  <div className="pcw-radio-group">
-                    <label className="pcw-radio-label"><input type="radio" name="contractProvided" value="Yes" checked={form.contractProvided === 'Yes'} onChange={e => setForm(p => ({ ...p, contractProvided: e.target.value }))} /> Yes</label>
-                    <label className="pcw-radio-label"><input type="radio" name="contractProvided" value="No" checked={form.contractProvided === 'No'} onChange={e => setForm(p => ({ ...p, contractProvided: e.target.value }))} /> No</label>
-                  </div>
-                  {form.contractProvided === 'No' && (
-                    <div className="pcw-warning">If not, coverage might be denied in the event of a claim.</div>
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* DELETE EQUIPMENT */}
-          {form.serviceTypes.includes('deleteEquipment') && (
-            <div className="pcw-section">
-              <h3 className="pcw-section-title">Delete Equipment</h3>
-              <div className="pcw-notice pcw-notice-warn">
-                <strong>MUST accompany request:</strong> Termination Letter OR Bill of Sale OR Police Report indicating stolen vehicle.<br /><br />
-                <em>*Termination Letter — signed by Company and Owner Operator. For many policies the insurance carrier will not allow for you to remove liability and maintain only physical damage or cargo. This is due to the 1980 MCS-90 provision passed by Congress.</em>
-              </div>
-              {form.deleteEquipment.map((row, idx) => (
-                <div key={row.id} className="pcw-row">
-                  <div className="pcw-row-head">
-                    <span className="pcw-row-num">Unit {idx + 1}{row.isTrailer ? ' · Trailer' : ''}</span>
-                    {form.deleteEquipment.length > 1 && (
-                      <button type="button" className="pcw-row-remove" onClick={() => setForm(p => ({ ...p, deleteEquipment: p.deleteEquipment.filter(r => r.id !== row.id) }))}>Remove</button>
-                    )}
-                  </div>
-                  <div className="pcw-policy-checks">
-                    <span className="pcw-label">Delete from: *</span>
-                    {POLICY_OPTIONS.map(p => (
-                      <label key={p} className="pcw-check-label">
-                        <input type="checkbox" checked={row.deleteFrom.includes(p)} onChange={() => togglePolicy(row.id, 'deleteEquipment', p)} />
-                        {p}
-                      </label>
-                    ))}
-                  </div>
-                  <div className="pcw-field-grid">
-                    <div className="pcw-field pcw-field-full">
-                      <label className="pcw-label">Complete VIN *</label>
-                      <VinVerifier
-                        value={row.vin}
-                        onChange={(vin) => {
-                          setForm(p => ({ ...p, deleteEquipment: p.deleteEquipment.map(r => r.id === row.id ? { ...r, vin } : r) }));
-                        }}
-                        onVerified={(result) => {
-                          setForm(p => ({
-                            ...p,
-                            deleteEquipment: p.deleteEquipment.map(r => r.id === row.id ? {
-                              ...r,
-                              vinResult: result,
-                              isTrailer: result?.isTrailer || false,
-                              year: result?.data?.ModelYear || r.year,
-                              make: result?.data?.Make || r.make,
-                              model: result?.data?.Model || r.model,
-                            } : r),
-                          }));
-                        }}
-                        required
-                      />
-                    </div>
-                    <div className="pcw-field">
-                      <label className="pcw-label">Year</label>
-                      <input className="pcw-input" value={row.year} onChange={e => setForm(p => ({ ...p, deleteEquipment: p.deleteEquipment.map(r => r.id === row.id ? { ...r, year: e.target.value } : r) }))} />
-                    </div>
-                    <div className="pcw-field">
-                      <label className="pcw-label">Make</label>
-                      <input className="pcw-input" value={row.make} onChange={e => setForm(p => ({ ...p, deleteEquipment: p.deleteEquipment.map(r => r.id === row.id ? { ...r, make: e.target.value } : r) }))} />
-                    </div>
-                    <div className="pcw-field pcw-field-full">
-                      <label className="pcw-label">Documentation provided *</label>
-                      <select className="pcw-input" value={row.documentation} onChange={e => setForm(p => ({ ...p, deleteEquipment: p.deleteEquipment.map(r => r.id === row.id ? { ...r, documentation: e.target.value } : r) }))}>
-                        <option value="">Select documentation type...</option>
-                        <option value="Termination Letter">Termination Letter</option>
-                        <option value="Bill of Sale">Bill of Sale</option>
-                        <option value="Police Report (stolen vehicle)">Police Report (stolen vehicle)</option>
+                      <label className="pcw-label">Action *</label>
+                      <select className="pcw-input" value={row.action} onChange={e => setForm(p => ({ ...p, vehicleChanges: p.vehicleChanges.map(r => r.id === row.id ? { ...r, action: e.target.value as any } : r) }))}>
+                        <option value="">Select...</option>
+                        <option value="add">Add to Policy</option>
+                        <option value="delete">Delete from Policy</option>
                       </select>
                     </div>
                   </div>
+                  <div className="pcw-policy-checks">
+                    <span className="pcw-label">{row.action === 'delete' ? 'Delete from:' : 'Add to:'} *</span>
+                    {POLICY_OPTIONS.map(p => (
+                      <label key={p} className="pcw-check-label">
+                        <input type="checkbox" checked={row.policies.includes(p)} onChange={() => togglePolicy(row.id, 'vehicleChanges', p)} />
+                        {p}
+                      </label>
+                    ))}
+                  </div>
+                  <div className="pcw-field-grid">
+                    <div className="pcw-field pcw-field-full">
+                      <label className="pcw-label">Complete VIN *</label>
+                      <VinVerifier
+                        value={row.vin}
+                        onChange={(vin) => {
+                          setForm(p => ({ ...p, vehicleChanges: p.vehicleChanges.map(r => r.id === row.id ? { ...r, vin } : r) }));
+                        }}
+                        onVerified={(result) => {
+                          setForm(p => ({
+                            ...p,
+                            vehicleChanges: p.vehicleChanges.map(r => r.id === row.id ? {
+                              ...r,
+                              vinResult: result,
+                              isTrailer: result?.isTrailer || false,
+                              year: result?.data?.ModelYear || r.year,
+                              make: result?.data?.Make || r.make,
+                              model: result?.data?.Model || r.model,
+                            } : r),
+                          }));
+                        }}
+                        required
+                      />
+                    </div>
+                    <div className="pcw-field">
+                      <label className="pcw-label">Year</label>
+                      <input className="pcw-input" value={row.year} onChange={e => setForm(p => ({ ...p, vehicleChanges: p.vehicleChanges.map(r => r.id === row.id ? { ...r, year: e.target.value } : r) }))} />
+                    </div>
+                    <div className="pcw-field">
+                      <label className="pcw-label">Make</label>
+                      <input className="pcw-input" value={row.make} onChange={e => setForm(p => ({ ...p, vehicleChanges: p.vehicleChanges.map(r => r.id === row.id ? { ...r, make: e.target.value } : r) }))} />
+                    </div>
+                    {/* Add-only fields */}
+                    {row.action === 'add' && (
+                      <>
+                        <div className="pcw-field">
+                          <label className="pcw-label">Owned By</label>
+                          <input className="pcw-input" value={row.ownedBy} onChange={e => setForm(p => ({ ...p, vehicleChanges: p.vehicleChanges.map(r => r.id === row.id ? { ...r, ownedBy: e.target.value } : r) }))} />
+                        </div>
+                        <div className="pcw-field">
+                          <label className="pcw-label">Value</label>
+                          <input className="pcw-input" value={row.value} onChange={e => setForm(p => ({ ...p, vehicleChanges: p.vehicleChanges.map(r => r.id === row.id ? { ...r, value: e.target.value } : r) }))} placeholder="$" />
+                        </div>
+                      </>
+                    )}
+                    {/* Delete-only fields */}
+                    {row.action === 'delete' && (
+                      <div className="pcw-field pcw-field-full">
+                        <label className="pcw-label">Documentation provided *</label>
+                        <select className="pcw-input" value={row.documentation} onChange={e => setForm(p => ({ ...p, vehicleChanges: p.vehicleChanges.map(r => r.id === row.id ? { ...r, documentation: e.target.value } : r) }))}>
+                          <option value="">Select documentation type...</option>
+                          <option value="Termination Letter">Termination Letter</option>
+                          <option value="Bill of Sale">Bill of Sale</option>
+                          <option value="Police Report (stolen vehicle)">Police Report (stolen vehicle)</option>
+                        </select>
+                      </div>
+                    )}
+                  </div>
                 </div>
               ))}
-              <button type="button" className="pcw-add-btn" onClick={() => setForm(p => ({ ...p, deleteEquipment: [...p.deleteEquipment, makeDeleteRow()] }))}>+ Add another unit</button>
+              <button type="button" className="pcw-add-btn" onClick={() => setForm(p => ({ ...p, vehicleChanges: [...p.vehicleChanges, makeVehicleRow()] }))}>+ Add another unit</button>
+
+              {/* Delete warning */}
+              {form.vehicleChanges.some(r => r.action === 'delete') && (
+                <div className="pcw-notice pcw-notice-warn" style={{ marginTop: '1rem' }}>
+                  <strong>MUST accompany delete request:</strong> Termination Letter OR Bill of Sale OR Police Report indicating stolen vehicle.<br /><br />
+                  <em>*Termination Letter — signed by Company and Owner Operator. For many policies the insurance carrier will not allow for you to remove liability and maintain only physical damage or cargo. This is due to the 1980 MCS-90 provision passed by Congress.</em>
+                </div>
+              )}
+
+              {/* Section-level fields (for adds) */}
+              {form.vehicleChanges.some(r => r.action === 'add') && (
+                <div className="pcw-subsection">
+                  <p className="pcw-subsection-title">If applicable: Loss Payee and Additional Insured Information</p>
+                  <div className="pcw-field">
+                    <label className="pcw-label">Loss Payee Name and Address</label>
+                    <textarea className="pcw-textarea" value={form.lossPayee} onChange={e => setForm(p => ({ ...p, lossPayee: e.target.value }))} rows={3} />
+                  </div>
+                  <div className="pcw-field">
+                    <label className="pcw-label">Additional Insured Name and Address</label>
+                    <textarea className="pcw-textarea" value={form.additionalInsured} onChange={e => setForm(p => ({ ...p, additionalInsured: e.target.value }))} rows={3} />
+                  </div>
+                  <div className="pcw-field">
+                    <label className="pcw-label">Contract provided? *</label>
+                    <div className="pcw-radio-group">
+                      <label className="pcw-radio-label"><input type="radio" name="contractProvided" value="Yes" checked={form.contractProvided === 'Yes'} onChange={e => setForm(p => ({ ...p, contractProvided: e.target.value }))} /> Yes</label>
+                      <label className="pcw-radio-label"><input type="radio" name="contractProvided" value="No" checked={form.contractProvided === 'No'} onChange={e => setForm(p => ({ ...p, contractProvided: e.target.value }))} /> No</label>
+                    </div>
+                    {form.contractProvided === 'No' && (
+                      <div className="pcw-warning">If not, coverage might be denied in the event of a claim.</div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* File upload for vehicle docs */}
+              <div className="pcw-file-upload">
+                <label className="pcw-label">Supporting Documents</label>
+                <p className="pcw-hint">Upload titles, bills of sale, termination letters, or other supporting docs (PDF, JPG, PNG — max 20MB each)</p>
+                <input
+                  type="file"
+                  multiple
+                  accept=".pdf,.jpg,.jpeg,.png,.gif,.doc,.docx"
+                  className="pcw-file-input"
+                  onChange={e => {
+                    const files = Array.from(e.target.files || []);
+                    setForm(p => ({ ...p, vehicleFiles: [...p.vehicleFiles, ...files] }));
+                  }}
+                />
+                {form.vehicleFiles.length > 0 && (
+                  <div className="pcw-file-list">
+                    {form.vehicleFiles.map((f, i) => (
+                      <div key={i} className="pcw-file-item">
+                        <span>{f.name}</span>
+                        <button type="button" className="pcw-file-remove" onClick={() => setForm(p => ({ ...p, vehicleFiles: p.vehicleFiles.filter((_, j) => j !== i) }))}>×</button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           )}
 
@@ -702,10 +674,36 @@ export default function PolicyChangeWizard() {
                 </div>
               ))}
               <button type="button" className="pcw-add-btn" onClick={() => setForm(p => ({ ...p, driverChanges: [...p.driverChanges, makeDriverRow()] }))}>+ Add another driver</button>
+
+              {/* File upload for driver docs */}
+              <div className="pcw-file-upload">
+                <label className="pcw-label">Supporting Documents (MVRs, CDLs)</label>
+                <p className="pcw-hint">Upload MVR reports, CDL copies, or other driver documentation (PDF, JPG, PNG — max 20MB each)</p>
+                <input
+                  type="file"
+                  multiple
+                  accept=".pdf,.jpg,.jpeg,.png,.gif,.doc,.docx"
+                  className="pcw-file-input"
+                  onChange={e => {
+                    const files = Array.from(e.target.files || []);
+                    setForm(p => ({ ...p, driverFiles: [...p.driverFiles, ...files] }));
+                  }}
+                />
+                {form.driverFiles.length > 0 && (
+                  <div className="pcw-file-list">
+                    {form.driverFiles.map((f, i) => (
+                      <div key={i} className="pcw-file-item">
+                        <span>{f.name}</span>
+                        <button type="button" className="pcw-file-remove" onClick={() => setForm(p => ({ ...p, driverFiles: p.driverFiles.filter((_, j) => j !== i) }))}>×</button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           )}
 
-          {/* ADDRESSES (kept) */}
+          {/* ADDRESSES */}
           {form.serviceTypes.includes('addresses') && (
             <div className="pcw-section">
               <h3 className="pcw-section-title">Addresses</h3>
@@ -739,7 +737,7 @@ export default function PolicyChangeWizard() {
             </div>
           )}
 
-          {/* LIEN HOLDERS (kept) */}
+          {/* LIEN HOLDERS */}
           {form.serviceTypes.includes('lienholders') && (
             <div className="pcw-section">
               <h3 className="pcw-section-title">Lien Holders</h3>
@@ -769,7 +767,7 @@ export default function PolicyChangeWizard() {
             </div>
           )}
 
-          {/* CERTIFICATE (kept) */}
+          {/* CERTIFICATE */}
           {form.serviceTypes.includes('certificate') && (
             <div className="pcw-section">
               <h3 className="pcw-section-title">Certificate of Insurance</h3>
@@ -791,7 +789,7 @@ export default function PolicyChangeWizard() {
             </div>
           )}
 
-          {/* COVERAGE / GENERAL (kept) */}
+          {/* COVERAGE / GENERAL */}
           {form.serviceTypes.includes('coverage') && (
             <div className="pcw-section">
               <h3 className="pcw-section-title">Coverage Change / General Request</h3>
@@ -833,42 +831,38 @@ export default function PolicyChangeWizard() {
               <div className="pcw-review-row"><span>Sections:</span> {form.serviceTypes.map(t => SECTION_TYPES.find(s => s.id === t)?.label).join(', ')}</div>
             </div>
 
-            {form.serviceTypes.includes('addEquipment') && form.addEquipment.some(r => r.vin || r.addTo.length > 0) && (
+            {/* Vehicle Changes review */}
+            {form.serviceTypes.includes('vehicleChange') && form.vehicleChanges.some(r => r.action) && (
               <div className="pcw-review-block">
-                <h4>Add Equipment</h4>
-                {form.addEquipment.filter(r => r.vin || r.addTo.length > 0).map((r, i) => (
+                <h4>Vehicle Changes</h4>
+                {form.vehicleChanges.filter(r => r.action).map((r, i) => (
                   <div key={r.id} className="pcw-review-row">
-                    <span>Unit {i + 1}:</span> Add to: {r.addTo.join(', ')} · VIN: {r.vin} ({r.year} {r.make}{r.model ? ` ${r.model}` : ''}) · Value: {r.value || '—'}
+                    <span>Unit {i + 1} ({r.action === 'add' ? 'ADD' : 'DELETE'}):</span> {r.policies.join(', ')} · VIN: {r.vin} ({r.year} {r.make}{r.model ? ` ${r.model}` : ''})
+                    {r.action === 'add' && r.value && ` · Value: ${r.value}`}
+                    {r.action === 'delete' && r.documentation && ` · Doc: ${r.documentation}`}
                   </div>
                 ))}
                 {form.lossPayee && <div className="pcw-review-row"><span>Loss Payee:</span> {form.lossPayee}</div>}
                 {form.additionalInsured && <div className="pcw-review-row"><span>Additional Insured:</span> {form.additionalInsured}</div>}
                 {form.contractProvided && <div className="pcw-review-row"><span>Contract Provided:</span> {form.contractProvided}</div>}
+                {form.vehicleFiles.length > 0 && <div className="pcw-review-row"><span>Files:</span> {form.vehicleFiles.map(f => f.name).join(', ')}</div>}
               </div>
             )}
 
-            {form.serviceTypes.includes('deleteEquipment') && form.deleteEquipment.some(r => r.vin || r.deleteFrom.length > 0) && (
-              <div className="pcw-review-block">
-                <h4>Delete Equipment</h4>
-                {form.deleteEquipment.filter(r => r.vin || r.deleteFrom.length > 0).map((r, i) => (
-                  <div key={r.id} className="pcw-review-row">
-                    <span>Unit {i + 1}:</span> Delete from: {r.deleteFrom.join(', ')} · VIN: {r.vin} ({r.year} {r.make}) · Doc: {r.documentation || '—'}
-                  </div>
-                ))}
-              </div>
-            )}
-
+            {/* Driver Changes review */}
             {form.serviceTypes.includes('driverChanges') && form.driverChanges.some(r => r.action) && (
               <div className="pcw-review-block">
                 <h4>Driver Changes</h4>
                 {form.driverChanges.filter(r => r.action).map((r, i) => (
                   <div key={r.id} className="pcw-review-row">
-                    <span>Driver {i + 1}:</span> {r.action.toUpperCase()} — {r.firstName} {r.lastName} · Policies: {r.policies.join(', ')} · CDL: {r.cdl} ({r.state})
+                    <span>Driver {i + 1} ({r.action}):</span> {r.firstName} {r.lastName} · CDL: {r.cdl} · {r.state} · Policies: {r.policies.join(', ')} · MVR: {r.mvrIncluded}
                   </div>
                 ))}
+                {form.driverFiles.length > 0 && <div className="pcw-review-row"><span>Files:</span> {form.driverFiles.map(f => f.name).join(', ')}</div>}
               </div>
             )}
 
+            {/* Addresses review */}
             {form.serviceTypes.includes('addresses') && (
               <div className="pcw-review-block">
                 <h4>Addresses</h4>
@@ -878,56 +872,55 @@ export default function PolicyChangeWizard() {
               </div>
             )}
 
+            {/* Lien Holders review */}
             {form.serviceTypes.includes('lienholders') && (
               <div className="pcw-review-block">
                 <h4>Lien Holders</h4>
-                {form.lienBusiness && <div className="pcw-review-row"><span>Business:</span> {form.lienHolderName} — Loan #{form.lienLoanNumber}</div>}
-                {form.lienVehicle && <div className="pcw-review-row"><span>Vehicle:</span> {form.vehicleLienVehicle} — {form.vehicleLienName}</div>}
+                {form.lienBusiness && <div className="pcw-review-row"><span>Business/Property:</span> {form.lienHolderName} · Loan #{form.lienLoanNumber}</div>}
+                {form.lienVehicle && <div className="pcw-review-row"><span>Vehicle:</span> {form.vehicleLienVehicle} · {form.vehicleLienName}</div>}
               </div>
             )}
 
+            {/* COI review */}
             {form.serviceTypes.includes('certificate') && (
               <div className="pcw-review-block">
                 <h4>Certificate of Insurance</h4>
                 <div className="pcw-review-row"><span>Holder:</span> {form.coiHolderName}</div>
-                <div className="pcw-review-row"><span>Email:</span> {form.coiEmail}</div>
+                <div className="pcw-review-row"><span>Send to:</span> {form.coiEmail}</div>
+                {form.coiAdditionalInsured && <div className="pcw-review-row"><span>Additional Insured:</span> Yes</div>}
               </div>
             )}
 
+            {/* Coverage review */}
             {form.serviceTypes.includes('coverage') && (
               <div className="pcw-review-block">
                 <h4>Coverage Change / General Request</h4>
-                <div className="pcw-review-row">{form.coverageDetails}</div>
+                <div className="pcw-review-row"><span>Details:</span> {form.coverageDetails}</div>
               </div>
             )}
           </div>
 
-          {/* Warning + Disclaimer */}
-          <div className="pcw-notice pcw-notice-warn" style={{ marginTop: '1.5rem' }}>
-            <strong>Completing this form does not indicate the change request was processed.</strong> Incomplete forms or failure to provide necessary documentation will delay changes being processed.
-          </div>
+          {/* Disclaimer & Signature */}
           <div className="pcw-disclaimer">
-            Any change requested through this form is only a request for service and does not alter your policy
+            <strong>IMPORTANT:</strong> Any change requested through this form is only a request for service and does not alter your policy
             until formal confirmation and endorsement is received from the carrier. Coverage cannot be bound by
-            email, voicemail, or fax.
+            email, voicemail, or fax. The policy, not this form, governs all terms and conditions.
           </div>
 
-          {/* Agreement + Signature */}
-          <div className="pcw-field" style={{ marginTop: '1.5rem' }}>
-            <label className="pcw-check-label">
-              <input type="checkbox" checked={form.agreeDisclaimer} onChange={e => setForm(p => ({ ...p, agreeDisclaimer: e.target.checked }))} />
-              I have read and agree to the above disclaimer *
-            </label>
-          </div>
-          <div className="pcw-field-grid" style={{ marginTop: '1rem' }}>
-            <div className="pcw-field">
-              <label className="pcw-label">Signature *</label>
-              <input className="pcw-input" value={form.signature} onChange={e => setForm(p => ({ ...p, signature: e.target.value }))} placeholder="Type your full name" />
-              <span className="pcw-hint">Typing your name acts as your electronic signature</span>
+          <div className="pcw-field-grid" style={{ marginTop: '1.5rem' }}>
+            <div className="pcw-field pcw-field-full">
+              <label className="pcw-check-label">
+                <input type="checkbox" checked={form.agreeDisclaimer} onChange={e => setForm(p => ({ ...p, agreeDisclaimer: e.target.checked }))} />
+                I understand and agree to the above disclaimer *
+              </label>
             </div>
             <div className="pcw-field">
-              <label className="pcw-label">Date *</label>
-              <input type="date" className="pcw-input" value={form.signatureDate} min={today} onChange={e => setForm(p => ({ ...p, signatureDate: e.target.value }))} />
+              <label className="pcw-label">Electronic Signature *</label>
+              <input className="pcw-input" value={form.signature} onChange={e => setForm(p => ({ ...p, signature: e.target.value }))} placeholder="Type your full name" />
+            </div>
+            <div className="pcw-field">
+              <label className="pcw-label">Date</label>
+              <input type="date" className="pcw-input" value={form.signatureDate} onChange={e => setForm(p => ({ ...p, signatureDate: e.target.value }))} />
             </div>
           </div>
 
@@ -935,7 +928,7 @@ export default function PolicyChangeWizard() {
             <button type="button" className="pcw-btn-ghost" onClick={() => setStep(2)}>Back</button>
             <button
               type="button"
-              className="pcw-btn-solid"
+              className="pcw-btn-solid pcw-btn-submit"
               disabled={!form.agreeDisclaimer || !form.signature || submitting}
               onClick={handleSubmit}
             >
@@ -945,5 +938,6 @@ export default function PolicyChangeWizard() {
         </div>
       )}
     </div>
+    </ServiceCenterLayout>
   );
 }

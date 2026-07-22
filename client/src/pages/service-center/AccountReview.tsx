@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { trpc } from '../../lib/trpc';
 import { useAuth } from '../../_core/hooks/useAuth';
 import AgentIntakeBar from '../../components/AgentIntakeBar';
+import ServiceCenterLayout from '../../components/ServiceCenterLayout';
 
 export default function AccountReview() {
   const { user } = useAuth();
@@ -99,6 +100,7 @@ export default function AccountReview() {
 
   if (submittedRef) {
     return (
+      <ServiceCenterLayout>
       <div className="sc-form-page">
         <div className="sc-success-screen">
           <div className="sc-success-icon">✓</div>
@@ -110,12 +112,13 @@ export default function AccountReview() {
           <a href="/service-center" className="sc-btn-primary" style={{ display: 'inline-block', marginTop: '1.5rem', textDecoration: 'none' }}>
             Back to Service Center
           </a>
-        </div>
+                </div>
       </div>
+      </ServiceCenterLayout>
     );
   }
-
   return (
+    <ServiceCenterLayout>
     <div className="sc-form-page">
       <div className="sc-form-header">
         <div className="sc-eyebrow">ACCOUNT REVIEW</div>
@@ -220,5 +223,6 @@ export default function AccountReview() {
         </div>
       </div>
     </div>
+    </ServiceCenterLayout>
   );
 }

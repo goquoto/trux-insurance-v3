@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import ServiceCenterLayout from '../../components/ServiceCenterLayout';
 
 const CARRIERS = [
   { name: "Acuity Insurance", phone: "(800) 242-7666", portal: "https://www.acuity.com/my-account", payOnline: true },
@@ -72,6 +73,7 @@ export default function BillingPayments() {
   }, [search]);
 
   return (
+    <ServiceCenterLayout>
     <div className="sc-form-page">
       <div className="sc-form-header">
         <div className="sc-eyebrow">BILLING</div>
@@ -193,5 +195,6 @@ export default function BillingPayments() {
         </div>
       )}
     </div>
+    </ServiceCenterLayout>
   );
 }
