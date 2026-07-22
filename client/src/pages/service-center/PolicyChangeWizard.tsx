@@ -4,123 +4,99 @@ import { useAuth } from '../../_core/hooks/useAuth';
 import { VinVerifier, type VinDecodeResult } from '../../components/VinVerifier';
 import AgentIntakeBar from '../../components/AgentIntakeBar';
 
-// Service types available for selection
-const SERVICE_TYPES = [
-  { id: 'drivers', label: 'Drivers', desc: 'Add, update, or remove drivers' },
-  { id: 'vehicles', label: 'Vehicles & Trailers', desc: 'Add, replace, or remove units' },
+// Section types for the picker
+const SECTION_TYPES = [
+  { id: 'addEquipment', label: 'Add Equipment', desc: 'Add trucks, trailers, or units' },
+  { id: 'deleteEquipment', label: 'Delete Equipment', desc: 'Remove units from policy' },
+  { id: 'driverChanges', label: 'Driver Change', desc: 'Add or delete drivers' },
   { id: 'addresses', label: 'Addresses', desc: 'Change mailing, physical, or garaging' },
   { id: 'lienholders', label: 'Lien Holders', desc: 'Add or update lien holder info' },
   { id: 'certificate', label: 'Certificate of Insurance', desc: 'Request a COI' },
-  { id: 'coverage', label: 'Coverage Change', desc: 'Modify coverage limits or types' },
-  { id: 'general', label: 'General Request', desc: 'Other policy service needs' },
+  { id: 'coverage', label: 'Coverage Change / General Request', desc: 'Modify coverage or other needs' },
 ] as const;
 
-type ServiceType = typeof SERVICE_TYPES[number]['id'];
+type SectionType = typeof SECTION_TYPES[number]['id'];
 
-// US States
 const US_STATES = [
   'AL','AK','AZ','AR','CA','CO','CT','DE','DC','FL','GA','HI','ID','IL','IN',
   'IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH',
   'NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT',
-  'VT','VA','WA','WV','WI','WY','AA','AE','AP','AS','GU','MP','PR','VI'
+  'VT','VA','WA','WV','WI','WY'
 ];
 
-// Driver row interface
-interface DriverRow {
-  id: string;
-  action: 'add' | 'update' | 'delete' | '';
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  gender: string;
-  dob: string;
-  dlNumber: string;
-  dlState: string;
-  sr22Required: string;
-  yearLicensed: string;
-  explanation: string;
-  reason: string;
-}
+const POLICY_OPTIONS = ['Liability', 'Cargo', 'Physical Damage'] as const;
 
-// Vehicle row interface
-interface VehicleRow {
+// --- Interfaces ---
+interface AddEquipmentRow {
   id: string;
-  action: 'add' | 'replace' | 'delete' | '';
-  vin: string;
+  addTo: string[]; // Liability, Cargo, Physical Damage
   year: string;
   make: string;
-  model: string;
+  vin: string;
+  ownedBy: string;
   value: string;
-  primaryUse: string;
-  annualMiles: string;
-  replacingUnit: string;
-  reason: string;
   vinResult: VinDecodeResult | null;
   isTrailer: boolean;
+  model: string;
 }
 
-// Form data interface
-interface PolicyChangeData {
+interface DeleteEquipmentRow {
+  id: string;
+  deleteFrom: string[];
+  year: string;
+  make: string;
+  vin: string;
+  documentation: string;
+  vinResult: VinDecodeResult | null;
+  isTrailer: boolean;
+  model: string;
+}
+
+interface DriverChangeRow {
+  id: string;
+  action: 'add' | 'delete' | '';
+  policies: string[];
+  mvrIncluded: string;
+  firstName: string;
+  lastName: string;
+  dob: string;
+  cdl: string;
+  state: string;
+  yearsExp: string;
+}
+
+interface FormData {
   // Step 1
+  businessName: string;
   changeDate: string;
-  serviceTypes: ServiceType[];
   insuredFirst: string;
   insuredLast: string;
-  businessName: string;
-  email: string;
+  insuredEmail: string;
+  phone: string;
   policyNumber: string;
   requestedBy: string;
-  // Step 2 sections
-  drivers: DriverRow[];
-  driverMessage: string;
-  vehicles: VehicleRow[];
-  vehicleMessage: string;
-  // Addresses
+  serviceTypes: SectionType[];
+  // Step 2 — new sections
+  addEquipment: AddEquipmentRow[];
+  lossPayee: string;
+  additionalInsured: string;
+  contractProvided: string;
+  deleteEquipment: DeleteEquipmentRow[];
+  driverChanges: DriverChangeRow[];
+  // Step 2 — kept sections
   changeMailingAddress: boolean;
-  mailingStreet: string;
-  mailingCity: string;
-  mailingState: string;
-  mailingZip: string;
-  mailingCountry: string;
+  mailingStreet: string; mailingCity: string; mailingState: string; mailingZip: string;
   changePhysicalAddress: boolean;
-  physicalStreet: string;
-  physicalCity: string;
-  physicalState: string;
-  physicalZip: string;
+  physicalStreet: string; physicalCity: string; physicalState: string; physicalZip: string;
   changeGaragingAddress: boolean;
-  garagingStreet: string;
-  garagingCity: string;
-  garagingState: string;
-  garagingZip: string;
-  // Lien Holders
-  lienVehicle: boolean;
-  lienBusiness: boolean;
-  lienHolderName: string;
-  lienNameLine2: string;
-  lienAddress1: string;
-  lienAddress2: string;
-  lienCity: string;
-  lienState: string;
-  lienZip: string;
-  lienLoanNumber: string;
-  lienPosition: string;
-  lienBillTo: string;
-  vehicleLienVehicle: string;
-  vehicleLienName: string;
-  vehicleLienLoanNumber: string;
-  // Certificate
-  coiEmail: string;
-  coiHolderName: string;
-  coiAddress1: string;
-  coiAddress2: string;
-  coiCity: string;
-  coiState: string;
-  coiZip: string;
-  coiDetails: string;
-  coiIncludeVehicleSchedule: boolean;
-  coiIncludeDriverSchedule: boolean;
-  coiAdditionalInsured: boolean;
-  // Coverage / General
+  garagingStreet: string; garagingCity: string; garagingState: string; garagingZip: string;
+  lienVehicle: boolean; lienBusiness: boolean;
+  lienHolderName: string; lienNameLine2: string; lienAddress1: string; lienAddress2: string;
+  lienCity: string; lienState: string; lienZip: string; lienLoanNumber: string; lienPosition: string; lienBillTo: string;
+  vehicleLienVehicle: string; vehicleLienName: string; vehicleLienLoanNumber: string;
+  coiEmail: string; coiHolderName: string; coiAddress1: string; coiAddress2: string;
+  coiCity: string; coiState: string; coiZip: string; coiDetails: string;
+  coiIncludeVehicleSchedule: boolean; coiIncludeDriverSchedule: boolean; coiAdditionalInsured: boolean;
   coverageDetails: string;
   // Step 3
   agreeDisclaimer: boolean;
@@ -128,37 +104,15 @@ interface PolicyChangeData {
   signatureDate: string;
 }
 
-const INITIAL_DRIVER: DriverRow = {
-  id: crypto.randomUUID(),
-  action: '',
-  firstName: '',
-  middleName: '',
-  lastName: '',
-  gender: '',
-  dob: '',
-  dlNumber: '',
-  dlState: '',
-  sr22Required: 'No',
-  yearLicensed: '',
-  explanation: '',
-  reason: '',
-};
-
-const INITIAL_VEHICLE: VehicleRow = {
-  id: crypto.randomUUID(),
-  action: '',
-  vin: '',
-  year: '',
-  make: '',
-  model: '',
-  value: '',
-  primaryUse: '',
-  annualMiles: '',
-  replacingUnit: '',
-  reason: '',
-  vinResult: null,
-  isTrailer: false,
-};
+const makeAddRow = (): AddEquipmentRow => ({
+  id: crypto.randomUUID(), addTo: [], year: '', make: '', vin: '', ownedBy: '', value: '', vinResult: null, isTrailer: false, model: '',
+});
+const makeDeleteRow = (): DeleteEquipmentRow => ({
+  id: crypto.randomUUID(), deleteFrom: [], year: '', make: '', vin: '', documentation: '', vinResult: null, isTrailer: false, model: '',
+});
+const makeDriverRow = (): DriverChangeRow => ({
+  id: crypto.randomUUID(), action: '', policies: [], mvrIncluded: 'No', firstName: '', lastName: '', dob: '', cdl: '', state: '', yearsExp: '',
+});
 
 export default function PolicyChangeWizard() {
   const { user } = useAuth();
@@ -169,25 +123,25 @@ export default function PolicyChangeWizard() {
 
   const today = new Date().toISOString().split('T')[0];
 
-  const [form, setForm] = useState<PolicyChangeData>({
+  const [form, setForm] = useState<FormData>({
+    businessName: (user as any)?.title || '',
     changeDate: today,
-    serviceTypes: [],
     insuredFirst: user?.name?.split(' ')[0] || '',
     insuredLast: user?.name?.split(' ').slice(1).join(' ') || '',
-    businessName: (user as any)?.title || '',
-    email: user?.email || '',
+    insuredEmail: user?.email || '',
+    phone: '',
     policyNumber: '',
     requestedBy: user?.name || '',
-    drivers: [{ ...INITIAL_DRIVER, id: crypto.randomUUID() }],
-    driverMessage: '',
-    vehicles: [{ ...INITIAL_VEHICLE, id: crypto.randomUUID() }],
-    vehicleMessage: '',
-    changeMailingAddress: false,
-    mailingStreet: '', mailingCity: '', mailingState: '', mailingZip: '', mailingCountry: 'United States',
-    changePhysicalAddress: false,
-    physicalStreet: '', physicalCity: '', physicalState: '', physicalZip: '',
-    changeGaragingAddress: false,
-    garagingStreet: '', garagingCity: '', garagingState: '', garagingZip: '',
+    serviceTypes: [],
+    addEquipment: [makeAddRow()],
+    lossPayee: '',
+    additionalInsured: '',
+    contractProvided: '',
+    deleteEquipment: [makeDeleteRow()],
+    driverChanges: [makeDriverRow()],
+    changeMailingAddress: false, mailingStreet: '', mailingCity: '', mailingState: '', mailingZip: '',
+    changePhysicalAddress: false, physicalStreet: '', physicalCity: '', physicalState: '', physicalZip: '',
+    changeGaragingAddress: false, garagingStreet: '', garagingCity: '', garagingState: '', garagingZip: '',
     lienVehicle: false, lienBusiness: false,
     lienHolderName: '', lienNameLine2: '', lienAddress1: '', lienAddress2: '',
     lienCity: '', lienState: '', lienZip: '', lienLoanNumber: '', lienPosition: 'First Mortgagee', lienBillTo: 'Mortgagee',
@@ -203,19 +157,26 @@ export default function PolicyChangeWizard() {
 
   const createSubmission = trpc.submissions.create.useMutation();
 
-  // Check if any vehicle has delete action (for MCS-90 memo)
-  const hasVehicleDelete = form.vehicles.some(v => v.action === 'delete');
-
-  // Check if all VINs are verified
-  const allVinsVerified = useMemo(() => {
-    return form.vehicles.every(v => {
-      if (!v.vin) return true; // empty VIN is ok if not required
-      if (v.action === '') return true;
-      return v.vinResult?.status === 'verified' || v.vinResult?.status === 'warning';
+  // Validation helpers
+  const allAddVinsVerified = useMemo(() => {
+    if (!form.serviceTypes.includes('addEquipment')) return true;
+    return form.addEquipment.every(r => {
+      if (!r.vin) return true;
+      return r.vinResult?.status === 'verified' || r.vinResult?.status === 'warning';
     });
-  }, [form.vehicles]);
+  }, [form.addEquipment, form.serviceTypes]);
 
-  const toggleServiceType = (type: ServiceType) => {
+  const allDeleteVinsVerified = useMemo(() => {
+    if (!form.serviceTypes.includes('deleteEquipment')) return true;
+    return form.deleteEquipment.every(r => {
+      if (!r.vin) return true;
+      return r.vinResult?.status === 'verified' || r.vinResult?.status === 'warning';
+    });
+  }, [form.deleteEquipment, form.serviceTypes]);
+
+  const allVinsVerified = allAddVinsVerified && allDeleteVinsVerified;
+
+  const toggleSection = (type: SectionType) => {
     setForm(prev => ({
       ...prev,
       serviceTypes: prev.serviceTypes.includes(type)
@@ -224,35 +185,19 @@ export default function PolicyChangeWizard() {
     }));
   };
 
-  // Driver row management
-  const addDriver = () => {
-    setForm(prev => ({ ...prev, drivers: [...prev.drivers, { ...INITIAL_DRIVER, id: crypto.randomUUID() }] }));
-  };
-  const removeDriver = (id: string) => {
-    setForm(prev => ({ ...prev, drivers: prev.drivers.filter(d => d.id !== id) }));
-  };
-  const updateDriver = (id: string, field: keyof DriverRow, value: string) => {
-    setForm(prev => ({
-      ...prev,
-      drivers: prev.drivers.map(d => d.id === id ? { ...d, [field]: value } : d),
-    }));
+  const togglePolicy = (rowId: string, section: 'addEquipment' | 'deleteEquipment' | 'driverChanges', policy: string) => {
+    setForm(prev => {
+      const arr = [...prev[section]] as any[];
+      const idx = arr.findIndex((r: any) => r.id === rowId);
+      if (idx === -1) return prev;
+      const field = section === 'addEquipment' ? 'addTo' : section === 'deleteEquipment' ? 'deleteFrom' : 'policies';
+      const current: string[] = arr[idx][field];
+      arr[idx] = { ...arr[idx], [field]: current.includes(policy) ? current.filter(p => p !== policy) : [...current, policy] };
+      return { ...prev, [section]: arr };
+    });
   };
 
-  // Vehicle row management
-  const addVehicle = () => {
-    setForm(prev => ({ ...prev, vehicles: [...prev.vehicles, { ...INITIAL_VEHICLE, id: crypto.randomUUID() }] }));
-  };
-  const removeVehicle = (id: string) => {
-    setForm(prev => ({ ...prev, vehicles: prev.vehicles.filter(v => v.id !== id) }));
-  };
-  const updateVehicle = (id: string, field: keyof VehicleRow, value: any) => {
-    setForm(prev => ({
-      ...prev,
-      vehicles: prev.vehicles.map(v => v.id === id ? { ...v, [field]: value } : v),
-    }));
-  };
-
-  const canAdvanceToStep2 = form.serviceTypes.length > 0 && form.businessName && form.email && form.changeDate;
+  const canAdvanceToStep2 = form.serviceTypes.length > 0 && form.businessName && form.insuredEmail && form.changeDate;
   const canAdvanceToStep3 = allVinsVerified;
 
   const handleSubmit = async () => {
@@ -260,115 +205,108 @@ export default function PolicyChangeWizard() {
     setSubmitting(true);
 
     try {
-      // Build submission data
       const data: Array<{ section: string; fields: Array<{ label: string; value: any }> }> = [];
 
-      // Request Info section
+      // Request Info
       data.push({
         section: 'Request Information',
         fields: [
-          { label: 'Date to Make Change', value: form.changeDate },
-          { label: 'Service Types', value: form.serviceTypes.join(', ') },
-          { label: 'Primary Insured', value: `${form.insuredFirst} ${form.insuredLast}` },
           { label: 'Business Name', value: form.businessName },
-          { label: 'Email', value: form.email },
-          { label: 'Policy Number', value: form.policyNumber },
+          { label: 'Effective Date', value: form.changeDate },
+          { label: 'Primary Insured', value: `${form.insuredFirst} ${form.insuredLast}` },
+          { label: 'Email', value: form.insuredEmail },
+          { label: 'Phone', value: form.phone },
+          { label: 'Policy Number(s)', value: form.policyNumber },
           { label: 'Requested By', value: form.requestedBy },
+          { label: 'Sections', value: form.serviceTypes.join(', ') },
         ],
       });
 
-      // Drivers section
-      if (form.serviceTypes.includes('drivers')) {
-        const driverFields: Array<{ label: string; value: any }> = [];
-        form.drivers.forEach((d, i) => {
-          if (!d.action) return;
-          driverFields.push({ label: `Driver ${i + 1} Action`, value: d.action });
-          driverFields.push({ label: `Driver ${i + 1} Name`, value: `${d.firstName} ${d.middleName} ${d.lastName}`.trim() });
-          if (d.action === 'add') {
-            driverFields.push({ label: `Driver ${i + 1} Gender`, value: d.gender });
-            driverFields.push({ label: `Driver ${i + 1} DOB`, value: d.dob });
-            driverFields.push({ label: `Driver ${i + 1} DL Number`, value: d.dlNumber });
-            driverFields.push({ label: `Driver ${i + 1} DL State`, value: d.dlState });
-            driverFields.push({ label: `Driver ${i + 1} SR-22 Required`, value: d.sr22Required });
-            driverFields.push({ label: `Driver ${i + 1} Year Licensed`, value: d.yearLicensed });
-          } else if (d.action === 'update') {
-            driverFields.push({ label: `Driver ${i + 1} Update Details`, value: d.explanation });
-          } else if (d.action === 'delete') {
-            driverFields.push({ label: `Driver ${i + 1} Reason for Deletion`, value: d.reason });
-          }
+      // Add Equipment
+      if (form.serviceTypes.includes('addEquipment')) {
+        const rows = form.addEquipment.filter(r => r.vin || r.addTo.length > 0);
+        const fields: Array<{ label: string; value: any }> = [];
+        rows.forEach((r, i) => {
+          fields.push({ label: `Unit ${i + 1} Add To`, value: r.addTo.join(', ') });
+          fields.push({ label: `Unit ${i + 1} Year`, value: r.year });
+          fields.push({ label: `Unit ${i + 1} Make`, value: r.make });
+          fields.push({ label: `Unit ${i + 1} VIN`, value: r.vin });
+          fields.push({ label: `Unit ${i + 1} Owned By`, value: r.ownedBy });
+          fields.push({ label: `Unit ${i + 1} Value`, value: r.value });
         });
-        if (form.driverMessage) driverFields.push({ label: 'Message to Agent', value: form.driverMessage });
-        data.push({ section: 'Drivers', fields: driverFields });
+        if (form.lossPayee) fields.push({ label: 'Loss Payee', value: form.lossPayee });
+        if (form.additionalInsured) fields.push({ label: 'Additional Insured', value: form.additionalInsured });
+        if (form.contractProvided) fields.push({ label: 'Contract Provided', value: form.contractProvided });
+        data.push({ section: 'Add Equipment', fields });
       }
 
-      // Vehicles section
-      if (form.serviceTypes.includes('vehicles')) {
-        const vehicleFields: Array<{ label: string; value: any }> = [];
-        form.vehicles.forEach((v, i) => {
-          if (!v.action) return;
-          vehicleFields.push({ label: `Unit ${i + 1} Action`, value: v.action });
-          vehicleFields.push({ label: `Unit ${i + 1} VIN`, value: `${v.vin}${v.vinResult ? ` (Verified — ${v.year} ${v.make} ${v.model} · ${v.isTrailer ? 'TRAILER' : v.vinResult.data?.VehicleType || 'VEHICLE'})` : ''}` });
-          vehicleFields.push({ label: `Unit ${i + 1} Year/Make/Model`, value: `${v.year} ${v.make} ${v.model}` });
-          if (v.action === 'add' || v.action === 'replace') {
-            vehicleFields.push({ label: `Unit ${i + 1} Value`, value: v.value });
-            if (!v.isTrailer) {
-              vehicleFields.push({ label: `Unit ${i + 1} Primary Use`, value: v.primaryUse });
-              vehicleFields.push({ label: `Unit ${i + 1} Annual Miles`, value: v.annualMiles });
-            }
-          }
-          if (v.action === 'replace') {
-            vehicleFields.push({ label: `Unit ${i + 1} Replacing`, value: v.replacingUnit });
-          }
-          if (v.action === 'delete') {
-            vehicleFields.push({ label: `Unit ${i + 1} Reason for Deletion`, value: v.reason });
-          }
+      // Delete Equipment
+      if (form.serviceTypes.includes('deleteEquipment')) {
+        const rows = form.deleteEquipment.filter(r => r.vin || r.deleteFrom.length > 0);
+        const fields: Array<{ label: string; value: any }> = [];
+        rows.forEach((r, i) => {
+          fields.push({ label: `Unit ${i + 1} Delete From`, value: r.deleteFrom.join(', ') });
+          fields.push({ label: `Unit ${i + 1} Year`, value: r.year });
+          fields.push({ label: `Unit ${i + 1} Make`, value: r.make });
+          fields.push({ label: `Unit ${i + 1} VIN`, value: r.vin });
+          fields.push({ label: `Unit ${i + 1} Documentation`, value: r.documentation });
         });
-        if (form.vehicleMessage) vehicleFields.push({ label: 'Message to Agent', value: form.vehicleMessage });
-        data.push({ section: 'Vehicles & Trailers', fields: vehicleFields });
+        data.push({ section: 'Delete Equipment', fields });
       }
 
-      // Addresses section
+      // Driver Changes
+      if (form.serviceTypes.includes('driverChanges')) {
+        const rows = form.driverChanges.filter(r => r.action);
+        const fields: Array<{ label: string; value: any }> = [];
+        rows.forEach((r, i) => {
+          fields.push({ label: `Driver ${i + 1} Action`, value: r.action });
+          fields.push({ label: `Driver ${i + 1} Policies`, value: r.policies.join(', ') });
+          fields.push({ label: `Driver ${i + 1} MVR Included`, value: r.mvrIncluded });
+          fields.push({ label: `Driver ${i + 1} Name`, value: `${r.firstName} ${r.lastName}` });
+          fields.push({ label: `Driver ${i + 1} DOB`, value: r.dob });
+          fields.push({ label: `Driver ${i + 1} CDL`, value: r.cdl });
+          fields.push({ label: `Driver ${i + 1} State`, value: r.state });
+          fields.push({ label: `Driver ${i + 1} Years Exp`, value: r.yearsExp });
+        });
+        data.push({ section: 'Driver Changes', fields });
+      }
+
+      // Addresses
       if (form.serviceTypes.includes('addresses')) {
-        const addrFields: Array<{ label: string; value: any }> = [];
-        if (form.changeMailingAddress) {
-          addrFields.push({ label: 'Mailing Address', value: `${form.mailingStreet}, ${form.mailingCity}, ${form.mailingState} ${form.mailingZip}, ${form.mailingCountry}` });
-        }
-        if (form.changePhysicalAddress) {
-          addrFields.push({ label: 'Physical Address', value: `${form.physicalStreet}, ${form.physicalCity}, ${form.physicalState} ${form.physicalZip}` });
-        }
-        if (form.changeGaragingAddress) {
-          addrFields.push({ label: 'Garaging Address', value: `${form.garagingStreet}, ${form.garagingCity}, ${form.garagingState} ${form.garagingZip}` });
-        }
-        data.push({ section: 'Addresses', fields: addrFields });
+        const fields: Array<{ label: string; value: any }> = [];
+        if (form.changeMailingAddress) fields.push({ label: 'Mailing Address', value: `${form.mailingStreet}, ${form.mailingCity}, ${form.mailingState} ${form.mailingZip}` });
+        if (form.changePhysicalAddress) fields.push({ label: 'Physical Address', value: `${form.physicalStreet}, ${form.physicalCity}, ${form.physicalState} ${form.physicalZip}` });
+        if (form.changeGaragingAddress) fields.push({ label: 'Garaging Address', value: `${form.garagingStreet}, ${form.garagingCity}, ${form.garagingState} ${form.garagingZip}` });
+        data.push({ section: 'Addresses', fields });
       }
 
-      // Lien Holders section
+      // Lien Holders
       if (form.serviceTypes.includes('lienholders')) {
-        const lienFields: Array<{ label: string; value: any }> = [];
+        const fields: Array<{ label: string; value: any }> = [];
         if (form.lienBusiness) {
-          lienFields.push({ label: 'Lien Holder Name', value: form.lienHolderName });
-          lienFields.push({ label: 'Address', value: `${form.lienAddress1} ${form.lienAddress2}, ${form.lienCity}, ${form.lienState} ${form.lienZip}` });
-          lienFields.push({ label: 'Loan Number', value: form.lienLoanNumber });
-          lienFields.push({ label: 'Position', value: form.lienPosition });
-          lienFields.push({ label: 'Bill To', value: form.lienBillTo });
+          fields.push({ label: 'Lien Holder Name', value: form.lienHolderName });
+          fields.push({ label: 'Address', value: `${form.lienAddress1} ${form.lienAddress2}, ${form.lienCity}, ${form.lienState} ${form.lienZip}` });
+          fields.push({ label: 'Loan Number', value: form.lienLoanNumber });
+          fields.push({ label: 'Position', value: form.lienPosition });
+          fields.push({ label: 'Bill To', value: form.lienBillTo });
         }
         if (form.lienVehicle) {
-          lienFields.push({ label: 'Vehicle Lien - Vehicle', value: form.vehicleLienVehicle });
-          lienFields.push({ label: 'Vehicle Lien - Holder Name', value: form.vehicleLienName });
-          lienFields.push({ label: 'Vehicle Lien - Loan Number', value: form.vehicleLienLoanNumber });
+          fields.push({ label: 'Vehicle Lien - Vehicle', value: form.vehicleLienVehicle });
+          fields.push({ label: 'Vehicle Lien - Holder', value: form.vehicleLienName });
+          fields.push({ label: 'Vehicle Lien - Loan #', value: form.vehicleLienLoanNumber });
         }
-        data.push({ section: 'Lien Holders', fields: lienFields });
+        data.push({ section: 'Lien Holders', fields });
       }
 
-      // Certificate section
+      // Certificate
       if (form.serviceTypes.includes('certificate')) {
         data.push({
           section: 'Certificate of Insurance',
           fields: [
             { label: 'Email to Send COI', value: form.coiEmail },
-            { label: 'Certificate Holder Name', value: form.coiHolderName },
+            { label: 'Certificate Holder', value: form.coiHolderName },
             { label: 'Address', value: `${form.coiAddress1} ${form.coiAddress2}, ${form.coiCity}, ${form.coiState} ${form.coiZip}` },
-            { label: 'Request Details', value: form.coiDetails },
+            { label: 'Details', value: form.coiDetails },
             { label: 'Include Vehicle Schedule', value: form.coiIncludeVehicleSchedule ? 'Yes' : 'No' },
             { label: 'Include Driver Schedule', value: form.coiIncludeDriverSchedule ? 'Yes' : 'No' },
             { label: 'Additional Insured', value: form.coiAdditionalInsured ? 'Yes' : 'No' },
@@ -376,15 +314,12 @@ export default function PolicyChangeWizard() {
         });
       }
 
-      // Coverage / General section
-      if (form.serviceTypes.includes('coverage') || form.serviceTypes.includes('general')) {
-        data.push({
-          section: 'Coverage Change / General Request',
-          fields: [{ label: 'Request Details', value: form.coverageDetails }],
-        });
+      // Coverage / General
+      if (form.serviceTypes.includes('coverage')) {
+        data.push({ section: 'Coverage Change / General Request', fields: [{ label: 'Details', value: form.coverageDetails }] });
       }
 
-      // Signature section
+      // Authorization
       data.push({
         section: 'Authorization',
         fields: [
@@ -396,7 +331,7 @@ export default function PolicyChangeWizard() {
 
       const result = await createSubmission.mutateAsync({
         type: 'policy_change',
-        customerEmail: intakeCustomer?.email || form.email,
+        customerEmail: intakeCustomer?.email || form.insuredEmail,
         userId: intakeCustomer?.id || user?.id,
         takenByUserId: intakeCustomer ? user?.id : undefined,
         data,
@@ -410,23 +345,21 @@ export default function PolicyChangeWizard() {
     }
   };
 
-  // Success screen
+  // --- Success Screen ---
   if (submittedRef) {
     return (
-      <div className="sc-form-page">
-        <div className="sc-success-screen">
-          <div className="sc-success-icon">✓</div>
-          <h2 className="sc-success-title" style={{ fontFamily: 'Lora, serif' }}>Request Submitted</h2>
-          <p className="sc-success-ref">Reference: <strong>{submittedRef}</strong></p>
-          <p className="sc-success-message">
-            Your policy change request has been received. A confirmation has been sent to {form.email}.
-          </p>
-          <div className="sc-disclaimer-box">
+      <div className="pcw">
+        <div className="pcw-success">
+          <div className="pcw-success-icon">✓</div>
+          <h2 className="pcw-success-title">Request Submitted</h2>
+          <p className="pcw-success-ref">Reference: <strong>{submittedRef}</strong></p>
+          <p className="pcw-success-msg">Your policy change request has been received. A confirmation has been sent to {form.insuredEmail}.</p>
+          <div className="pcw-disclaimer">
             Any change requested through this form is only a request for service and does not alter your policy
             until formal confirmation and endorsement is received from the carrier. Coverage cannot be bound by
             email, voicemail, or fax.
           </div>
-          <a href="/service-center" className="sc-btn-primary" style={{ display: 'inline-block', marginTop: '1.5rem', textDecoration: 'none' }}>
+          <a href="/service-center" className="pcw-btn-solid" style={{ display: 'inline-block', marginTop: '1.5rem', textDecoration: 'none' }}>
             Back to Service Center
           </a>
         </div>
@@ -435,577 +368,574 @@ export default function PolicyChangeWizard() {
   }
 
   return (
-    <div className="sc-form-page">
-      <div className="sc-form-header">
-        <div className="sc-eyebrow">POLICY CHANGE</div>
-        <div className="sc-tick" />
-        <h1 className="sc-form-title">Request <em>Policy</em> Change</h1>
+    <div className="pcw">
+      {/* Header */}
+      <div className="pcw-header">
+        <span className="pcw-eyebrow">POLICY CHANGE</span>
+        <div className="pcw-tick" />
+        <h1 className="pcw-title">Request <em>Policy</em> Change</h1>
       </div>
 
-      {/* Agent Intake Mode */}
+      {/* Agent Intake */}
       <AgentIntakeBar onCustomerSelect={setIntakeCustomer} selectedCustomer={intakeCustomer} />
 
-      {/* Progress bar */}
-      <div className="wizard-progress">
-        <div className={`wizard-step ${step >= 1 ? 'active' : ''} ${step > 1 ? 'completed' : ''}`}>
-          <span className="wizard-step-num">1</span>
-          <span className="wizard-step-label">Request Info</span>
+      {/* Progress Bar */}
+      <div className="pcw-progress">
+        <div className={`pcw-progress-step ${step >= 1 ? 'active' : ''} ${step > 1 ? 'done' : ''}`}>
+          <span className="pcw-progress-num">1</span>
+          <span className="pcw-progress-label">Request Info</span>
         </div>
-        <div className="wizard-step-line" />
-        <div className={`wizard-step ${step >= 2 ? 'active' : ''} ${step > 2 ? 'completed' : ''}`}>
-          <span className="wizard-step-num">2</span>
-          <span className="wizard-step-label">Change Details</span>
+        <div className="pcw-progress-line" />
+        <div className={`pcw-progress-step ${step >= 2 ? 'active' : ''} ${step > 2 ? 'done' : ''}`}>
+          <span className="pcw-progress-num">2</span>
+          <span className="pcw-progress-label">Change Details</span>
         </div>
-        <div className="wizard-step-line" />
-        <div className={`wizard-step ${step >= 3 ? 'active' : ''}`}>
-          <span className="wizard-step-num">3</span>
-          <span className="wizard-step-label">Review & Submit</span>
+        <div className="pcw-progress-line" />
+        <div className={`pcw-progress-step ${step >= 3 ? 'active' : ''}`}>
+          <span className="pcw-progress-num">3</span>
+          <span className="pcw-progress-label">Review & Submit</span>
         </div>
       </div>
 
-      {/* Step 1: Request Info */}
+      {/* ═══════════════ STEP 1 ═══════════════ */}
       {step === 1 && (
-        <div className="wizard-step-content">
-          <div className="form-group">
-            <label className="form-label">Date to make this change *</label>
-            <input
-              type="date"
-              className="form-input"
-              value={form.changeDate}
-              min={today}
-              onChange={e => setForm(p => ({ ...p, changeDate: e.target.value }))}
-              required
-            />
-            <span className="form-hint">Backdating is not permitted</span>
+        <div className="pcw-step">
+          <div className="pcw-field-grid">
+            <div className="pcw-field pcw-field-full">
+              <label className="pcw-label">Company Name (Named Insured) *</label>
+              <input className="pcw-input" value={form.businessName} onChange={e => setForm(p => ({ ...p, businessName: e.target.value }))} required />
+            </div>
+            <div className="pcw-field">
+              <label className="pcw-label">Effective Date *</label>
+              <input type="date" className="pcw-input" value={form.changeDate} min={today} onChange={e => setForm(p => ({ ...p, changeDate: e.target.value }))} />
+              <span className="pcw-hint">Backdating is not permitted</span>
+            </div>
+            <div className="pcw-field">
+              <label className="pcw-label">Policy Number(s)</label>
+              <input className="pcw-input" value={form.policyNumber} onChange={e => setForm(p => ({ ...p, policyNumber: e.target.value }))} placeholder="May list several" />
+            </div>
+            <div className="pcw-field">
+              <label className="pcw-label">Primary Insured First Name</label>
+              <input className="pcw-input" value={form.insuredFirst} onChange={e => setForm(p => ({ ...p, insuredFirst: e.target.value }))} />
+            </div>
+            <div className="pcw-field">
+              <label className="pcw-label">Primary Insured Last Name</label>
+              <input className="pcw-input" value={form.insuredLast} onChange={e => setForm(p => ({ ...p, insuredLast: e.target.value }))} />
+            </div>
+            <div className="pcw-field">
+              <label className="pcw-label">Email *</label>
+              <input type="email" className="pcw-input" value={form.insuredEmail} onChange={e => setForm(p => ({ ...p, insuredEmail: e.target.value }))} required />
+            </div>
+            <div className="pcw-field">
+              <label className="pcw-label">Phone</label>
+              <input type="tel" className="pcw-input" value={form.phone} onChange={e => setForm(p => ({ ...p, phone: e.target.value }))} />
+            </div>
+            <div className="pcw-field pcw-field-full">
+              <label className="pcw-label">Requested By</label>
+              <input className="pcw-input" value={form.requestedBy} onChange={e => setForm(p => ({ ...p, requestedBy: e.target.value }))} />
+            </div>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Service Type *</label>
-            <p className="form-hint">Select all that apply — one submission can combine multiple service types</p>
-            <div className="service-type-grid">
-              {SERVICE_TYPES.map(st => (
+          {/* Section Picker */}
+          <div className="pcw-section-picker">
+            <label className="pcw-label">What do you need changed? *</label>
+            <p className="pcw-hint">Select all that apply — one submission can combine multiple sections</p>
+            <div className="pcw-card-grid">
+              {SECTION_TYPES.map(st => (
                 <button
                   key={st.id}
                   type="button"
-                  className={`service-type-card ${form.serviceTypes.includes(st.id) ? 'selected' : ''}`}
-                  onClick={() => toggleServiceType(st.id)}
+                  className={`pcw-card ${form.serviceTypes.includes(st.id) ? 'selected' : ''}`}
+                  onClick={() => toggleSection(st.id)}
                 >
-                  <span className="service-type-label">{st.label}</span>
-                  <span className="service-type-desc">{st.desc}</span>
+                  <span className="pcw-card-check">{form.serviceTypes.includes(st.id) ? '✓' : ''}</span>
+                  <span className="pcw-card-label">{st.label}</span>
+                  <span className="pcw-card-desc">{st.desc}</span>
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="form-row">
-            <div className="form-group">
-              <label className="form-label">Primary Insured First Name *</label>
-              <input className="form-input" value={form.insuredFirst} onChange={e => setForm(p => ({ ...p, insuredFirst: e.target.value }))} required />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Primary Insured Last Name *</label>
-              <input className="form-input" value={form.insuredLast} onChange={e => setForm(p => ({ ...p, insuredLast: e.target.value }))} required />
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label className="form-label">Business Name *</label>
-            <input className="form-input" value={form.businessName} onChange={e => setForm(p => ({ ...p, businessName: e.target.value }))} required />
-          </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label className="form-label">Email *</label>
-              <input type="email" className="form-input" value={form.email} onChange={e => setForm(p => ({ ...p, email: e.target.value }))} required />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Policy Number</label>
-              <input className="form-input" value={form.policyNumber} onChange={e => setForm(p => ({ ...p, policyNumber: e.target.value }))} />
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label className="form-label">Requested By</label>
-            <input className="form-input" value={form.requestedBy} onChange={e => setForm(p => ({ ...p, requestedBy: e.target.value }))} />
-          </div>
-
-          <div className="wizard-actions">
-            <a href="/service-center" className="sc-btn-ghost">Cancel</a>
-            <button
-              type="button"
-              className="sc-btn-primary"
-              disabled={!canAdvanceToStep2}
-              onClick={() => setStep(2)}
-            >
-              Continue
-            </button>
+          <div className="pcw-actions">
+            <a href="/service-center" className="pcw-btn-ghost">Cancel</a>
+            <button type="button" className="pcw-btn-solid" disabled={!canAdvanceToStep2} onClick={() => setStep(2)}>Continue</button>
           </div>
         </div>
       )}
 
-      {/* Step 2: Change Details */}
+      {/* ═══════════════ STEP 2 ═══════════════ */}
       {step === 2 && (
-        <div className="wizard-step-content">
-          {/* Drivers Section */}
-          {form.serviceTypes.includes('drivers') && (
-            <div className="wizard-section">
-              <h3 className="wizard-section-title">Drivers</h3>
-              {form.drivers.map((driver, idx) => (
-                <div key={driver.id} className="repeatable-row">
-                  <div className="repeatable-row-header">
-                    <span className="repeatable-row-num">Driver {idx + 1}</span>
-                    {form.drivers.length > 1 && (
-                      <button type="button" className="repeatable-remove-btn" onClick={() => removeDriver(driver.id)}>Remove</button>
+        <div className="pcw-step">
+
+          {/* ADD EQUIPMENT */}
+          {form.serviceTypes.includes('addEquipment') && (
+            <div className="pcw-section">
+              <h3 className="pcw-section-title">Add Equipment</h3>
+              {form.addEquipment.map((row, idx) => (
+                <div key={row.id} className="pcw-row">
+                  <div className="pcw-row-head">
+                    <span className="pcw-row-num">Unit {idx + 1}{row.isTrailer ? ' · Trailer' : ''}</span>
+                    {form.addEquipment.length > 1 && (
+                      <button type="button" className="pcw-row-remove" onClick={() => setForm(p => ({ ...p, addEquipment: p.addEquipment.filter(r => r.id !== row.id) }))}>Remove</button>
                     )}
                   </div>
-                  <div className="form-group">
-                    <label className="form-label">Action *</label>
-                    <select className="form-input" value={driver.action} onChange={e => updateDriver(driver.id, 'action', e.target.value)}>
-                      <option value="">Select action...</option>
-                      <option value="add">Add</option>
-                      <option value="update">Update</option>
-                      <option value="delete">Delete</option>
-                    </select>
+                  <div className="pcw-policy-checks">
+                    <span className="pcw-label">Add to: *</span>
+                    {POLICY_OPTIONS.map(p => (
+                      <label key={p} className="pcw-check-label">
+                        <input type="checkbox" checked={row.addTo.includes(p)} onChange={() => togglePolicy(row.id, 'addEquipment', p)} />
+                        {p}
+                      </label>
+                    ))}
                   </div>
-
-                  {driver.action === 'add' && (
-                    <>
-                      <div className="form-row">
-                        <div className="form-group"><label className="form-label">First Name *</label><input className="form-input" value={driver.firstName} onChange={e => updateDriver(driver.id, 'firstName', e.target.value)} /></div>
-                        <div className="form-group"><label className="form-label">Middle Name</label><input className="form-input" value={driver.middleName} onChange={e => updateDriver(driver.id, 'middleName', e.target.value)} /></div>
-                        <div className="form-group"><label className="form-label">Last Name *</label><input className="form-input" value={driver.lastName} onChange={e => updateDriver(driver.id, 'lastName', e.target.value)} /></div>
-                      </div>
-                      <div className="form-row">
-                        <div className="form-group">
-                          <label className="form-label">Gender *</label>
-                          <select className="form-input" value={driver.gender} onChange={e => updateDriver(driver.id, 'gender', e.target.value)}>
-                            <option value="">Select...</option>
-                            <option value="Female">Female</option>
-                            <option value="Male">Male</option>
-                            <option value="Not Specified">Not Specified</option>
-                          </select>
-                        </div>
-                        <div className="form-group"><label className="form-label">Date of Birth *</label><input type="date" className="form-input" max={today} value={driver.dob} onChange={e => updateDriver(driver.id, 'dob', e.target.value)} /></div>
-                      </div>
-                      <div className="form-row">
-                        <div className="form-group"><label className="form-label">DL Number *</label><input className="form-input" value={driver.dlNumber} onChange={e => updateDriver(driver.id, 'dlNumber', e.target.value)} /></div>
-                        <div className="form-group">
-                          <label className="form-label">DL State *</label>
-                          <select className="form-input" value={driver.dlState} onChange={e => updateDriver(driver.id, 'dlState', e.target.value)}>
-                            <option value="">Select...</option>
-                            {US_STATES.map(s => <option key={s} value={s}>{s}</option>)}
-                          </select>
-                        </div>
-                      </div>
-                      <div className="form-row">
-                        <div className="form-group">
-                          <label className="form-label">SR-22 Required *</label>
-                          <select className="form-input" value={driver.sr22Required} onChange={e => updateDriver(driver.id, 'sr22Required', e.target.value)}>
-                            <option value="No">No</option>
-                            <option value="Yes">Yes</option>
-                          </select>
-                        </div>
-                        <div className="form-group"><label className="form-label">Year Licensed</label><input className="form-input" value={driver.yearLicensed} onChange={e => updateDriver(driver.id, 'yearLicensed', e.target.value)} /></div>
-                      </div>
-                    </>
-                  )}
-
-                  {driver.action === 'update' && (
-                    <>
-                      <div className="form-row">
-                        <div className="form-group"><label className="form-label">First Name *</label><input className="form-input" value={driver.firstName} onChange={e => updateDriver(driver.id, 'firstName', e.target.value)} /></div>
-                        <div className="form-group"><label className="form-label">Middle Name</label><input className="form-input" value={driver.middleName} onChange={e => updateDriver(driver.id, 'middleName', e.target.value)} /></div>
-                        <div className="form-group"><label className="form-label">Last Name *</label><input className="form-input" value={driver.lastName} onChange={e => updateDriver(driver.id, 'lastName', e.target.value)} /></div>
-                      </div>
-                      <div className="form-group">
-                        <label className="form-label">Explain the update needed *</label>
-                        <textarea className="form-input form-textarea" value={driver.explanation} onChange={e => updateDriver(driver.id, 'explanation', e.target.value)} />
-                      </div>
-                    </>
-                  )}
-
-                  {driver.action === 'delete' && (
-                    <>
-                      <div className="form-row">
-                        <div className="form-group"><label className="form-label">First Name *</label><input className="form-input" value={driver.firstName} onChange={e => updateDriver(driver.id, 'firstName', e.target.value)} /></div>
-                        <div className="form-group"><label className="form-label">Last Name *</label><input className="form-input" value={driver.lastName} onChange={e => updateDriver(driver.id, 'lastName', e.target.value)} /></div>
-                      </div>
-                      <div className="form-group">
-                        <label className="form-label">Reason for Deletion *</label>
-                        <textarea className="form-input form-textarea" value={driver.reason} onChange={e => updateDriver(driver.id, 'reason', e.target.value)} />
-                      </div>
-                    </>
-                  )}
+                  <div className="pcw-field-grid">
+                    <div className="pcw-field pcw-field-full">
+                      <label className="pcw-label">Complete VIN *</label>
+                      <VinVerifier
+                        value={row.vin}
+                        onChange={(vin) => {
+                          setForm(p => ({ ...p, addEquipment: p.addEquipment.map(r => r.id === row.id ? { ...r, vin } : r) }));
+                        }}
+                        onVerified={(result) => {
+                          setForm(p => ({
+                            ...p,
+                            addEquipment: p.addEquipment.map(r => r.id === row.id ? {
+                              ...r,
+                              vinResult: result,
+                              isTrailer: result?.isTrailer || false,
+                              year: result?.data?.ModelYear || r.year,
+                              make: result?.data?.Make || r.make,
+                              model: result?.data?.Model || r.model,
+                            } : r),
+                          }));
+                        }}
+                        required
+                      />
+                    </div>
+                    <div className="pcw-field">
+                      <label className="pcw-label">Year</label>
+                      <input className="pcw-input" value={row.year} onChange={e => setForm(p => ({ ...p, addEquipment: p.addEquipment.map(r => r.id === row.id ? { ...r, year: e.target.value } : r) }))} />
+                    </div>
+                    <div className="pcw-field">
+                      <label className="pcw-label">Make</label>
+                      <input className="pcw-input" value={row.make} onChange={e => setForm(p => ({ ...p, addEquipment: p.addEquipment.map(r => r.id === row.id ? { ...r, make: e.target.value } : r) }))} />
+                    </div>
+                    <div className="pcw-field">
+                      <label className="pcw-label">Owned By</label>
+                      <input className="pcw-input" value={row.ownedBy} onChange={e => setForm(p => ({ ...p, addEquipment: p.addEquipment.map(r => r.id === row.id ? { ...r, ownedBy: e.target.value } : r) }))} />
+                    </div>
+                    <div className="pcw-field">
+                      <label className="pcw-label">Value</label>
+                      <input className="pcw-input" value={row.value} onChange={e => setForm(p => ({ ...p, addEquipment: p.addEquipment.map(r => r.id === row.id ? { ...r, value: e.target.value } : r) }))} placeholder="$" />
+                    </div>
+                  </div>
                 </div>
               ))}
-              <button type="button" className="add-row-btn" onClick={addDriver}>+ Add another driver</button>
-              <div className="form-group">
-                <label className="form-label">Message to Agent</label>
-                <textarea className="form-input form-textarea" value={form.driverMessage} onChange={e => setForm(p => ({ ...p, driverMessage: e.target.value }))} placeholder="MVRs, licenses, additional notes..." />
+              <button type="button" className="pcw-add-btn" onClick={() => setForm(p => ({ ...p, addEquipment: [...p.addEquipment, makeAddRow()] }))}>+ Add another unit</button>
+
+              {/* Section-level fields */}
+              <div className="pcw-subsection">
+                <p className="pcw-subsection-title">If applicable: Loss Payee and Additional Insured Information</p>
+                <div className="pcw-field">
+                  <label className="pcw-label">Loss Payee Name and Address</label>
+                  <textarea className="pcw-textarea" value={form.lossPayee} onChange={e => setForm(p => ({ ...p, lossPayee: e.target.value }))} rows={3} />
+                </div>
+                <div className="pcw-field">
+                  <label className="pcw-label">Additional Insured Name and Address</label>
+                  <textarea className="pcw-textarea" value={form.additionalInsured} onChange={e => setForm(p => ({ ...p, additionalInsured: e.target.value }))} rows={3} />
+                </div>
+                <div className="pcw-field">
+                  <label className="pcw-label">Contract provided? *</label>
+                  <div className="pcw-radio-group">
+                    <label className="pcw-radio-label"><input type="radio" name="contractProvided" value="Yes" checked={form.contractProvided === 'Yes'} onChange={e => setForm(p => ({ ...p, contractProvided: e.target.value }))} /> Yes</label>
+                    <label className="pcw-radio-label"><input type="radio" name="contractProvided" value="No" checked={form.contractProvided === 'No'} onChange={e => setForm(p => ({ ...p, contractProvided: e.target.value }))} /> No</label>
+                  </div>
+                  {form.contractProvided === 'No' && (
+                    <div className="pcw-warning">If not, coverage might be denied in the event of a claim.</div>
+                  )}
+                </div>
               </div>
             </div>
           )}
 
-          {/* Vehicles & Trailers Section */}
-          {form.serviceTypes.includes('vehicles') && (
-            <div className="wizard-section">
-              <h3 className="wizard-section-title">Vehicles & Trailers</h3>
-
-              {hasVehicleDelete && (
-                <div className="mcs90-memo">
-                  <strong>Required filing for deletions</strong> — Termination Letter, signed by both the Company and the Owner Operator.
-                  Please attach it below. Please note: for many policies the insurance carrier will not allow you to remove liability
-                  and maintain only physical damage or cargo coverage. This is due to the 1980 MCS-90 provision passed by Congress.
-                </div>
-              )}
-
-              {form.vehicles.map((vehicle, idx) => (
-                <div key={vehicle.id} className="repeatable-row">
-                  <div className="repeatable-row-header">
-                    <span className="repeatable-row-num">
-                      Unit {idx + 1}
-                      {vehicle.isTrailer && <span className="trailer-tag"> · Trailer</span>}
-                    </span>
-                    {form.vehicles.length > 1 && (
-                      <button type="button" className="repeatable-remove-btn" onClick={() => removeVehicle(vehicle.id)}>Remove</button>
+          {/* DELETE EQUIPMENT */}
+          {form.serviceTypes.includes('deleteEquipment') && (
+            <div className="pcw-section">
+              <h3 className="pcw-section-title">Delete Equipment</h3>
+              <div className="pcw-notice pcw-notice-warn">
+                <strong>MUST accompany request:</strong> Termination Letter OR Bill of Sale OR Police Report indicating stolen vehicle.<br /><br />
+                <em>*Termination Letter — signed by Company and Owner Operator. For many policies the insurance carrier will not allow for you to remove liability and maintain only physical damage or cargo. This is due to the 1980 MCS-90 provision passed by Congress.</em>
+              </div>
+              {form.deleteEquipment.map((row, idx) => (
+                <div key={row.id} className="pcw-row">
+                  <div className="pcw-row-head">
+                    <span className="pcw-row-num">Unit {idx + 1}{row.isTrailer ? ' · Trailer' : ''}</span>
+                    {form.deleteEquipment.length > 1 && (
+                      <button type="button" className="pcw-row-remove" onClick={() => setForm(p => ({ ...p, deleteEquipment: p.deleteEquipment.filter(r => r.id !== row.id) }))}>Remove</button>
                     )}
                   </div>
-                  <div className="form-group">
-                    <label className="form-label">Action *</label>
-                    <select className="form-input" value={vehicle.action} onChange={e => updateVehicle(vehicle.id, 'action', e.target.value)}>
-                      <option value="">Select action...</option>
-                      <option value="add">Add</option>
-                      <option value="replace">Replace an Existing Unit</option>
-                      <option value="delete">Delete</option>
-                    </select>
+                  <div className="pcw-policy-checks">
+                    <span className="pcw-label">Delete from: *</span>
+                    {POLICY_OPTIONS.map(p => (
+                      <label key={p} className="pcw-check-label">
+                        <input type="checkbox" checked={row.deleteFrom.includes(p)} onChange={() => togglePolicy(row.id, 'deleteEquipment', p)} />
+                        {p}
+                      </label>
+                    ))}
                   </div>
-
-                  {vehicle.action && (
-                    <>
-                      <div className="form-group">
-                        <label className="form-label">VIN *</label>
-                        <VinVerifier
-                          value={vehicle.vin}
-                          onChange={(vin) => updateVehicle(vehicle.id, 'vin', vin)}
-                          onVerified={(result) => {
-                            updateVehicle(vehicle.id, 'vinResult', result);
-                            if (result) {
-                              updateVehicle(vehicle.id, 'isTrailer', result.isTrailer);
-                              if (result.data.ModelYear && !vehicle.year) updateVehicle(vehicle.id, 'year', result.data.ModelYear);
-                              if (result.data.Make && !vehicle.make) updateVehicle(vehicle.id, 'make', result.data.Make);
-                              if (result.data.Model && !vehicle.model) updateVehicle(vehicle.id, 'model', result.data.Model);
-                            }
-                          }}
-                          required
-                        />
-                      </div>
-                      <div className="form-row">
-                        <div className="form-group"><label className="form-label">Year</label><input className="form-input" value={vehicle.year} onChange={e => updateVehicle(vehicle.id, 'year', e.target.value)} /></div>
-                        <div className="form-group"><label className="form-label">Make</label><input className="form-input" value={vehicle.make} onChange={e => updateVehicle(vehicle.id, 'make', e.target.value)} /></div>
-                        <div className="form-group"><label className="form-label">Model</label><input className="form-input" value={vehicle.model} onChange={e => updateVehicle(vehicle.id, 'model', e.target.value)} /></div>
-                      </div>
-
-                      {(vehicle.action === 'add' || vehicle.action === 'replace') && (
-                        <>
-                          <div className="form-group"><label className="form-label">Value</label><input className="form-input" value={vehicle.value} onChange={e => updateVehicle(vehicle.id, 'value', e.target.value)} placeholder="$" /></div>
-                          {!vehicle.isTrailer && (
-                            <div className="form-row">
-                              <div className="form-group">
-                                <label className="form-label">Vehicle Primary Use *</label>
-                                <select className="form-input" value={vehicle.primaryUse} onChange={e => updateVehicle(vehicle.id, 'primaryUse', e.target.value)}>
-                                  <option value="">Select...</option>
-                                  <option value="Local — under 50 mile radius">Local — under 50 mile radius</option>
-                                  <option value="Intermediate — 51–200 mile radius">Intermediate — 51–200 mile radius</option>
-                                  <option value="Long-Haul — over 200 mile radius">Long-Haul — over 200 mile radius</option>
-                                  <option value="Farming">Farming</option>
-                                  <option value="Other Business Use">Other Business Use</option>
-                                </select>
-                              </div>
-                              <div className="form-group"><label className="form-label">Annual Miles *</label><input className="form-input" value={vehicle.annualMiles} onChange={e => updateVehicle(vehicle.id, 'annualMiles', e.target.value)} /></div>
-                            </div>
-                          )}
-                        </>
-                      )}
-
-                      {vehicle.action === 'replace' && (
-                        <div className="form-group">
-                          <label className="form-label">Year, Make, Model, and VIN of the unit being replaced *</label>
-                          <input className="form-input" value={vehicle.replacingUnit} onChange={e => updateVehicle(vehicle.id, 'replacingUnit', e.target.value)} />
-                        </div>
-                      )}
-
-                      {vehicle.action === 'delete' && (
-                        <div className="form-group">
-                          <label className="form-label">Reason for Deletion *</label>
-                          <textarea className="form-input form-textarea" value={vehicle.reason} onChange={e => updateVehicle(vehicle.id, 'reason', e.target.value)} />
-                        </div>
-                      )}
-                    </>
-                  )}
+                  <div className="pcw-field-grid">
+                    <div className="pcw-field pcw-field-full">
+                      <label className="pcw-label">Complete VIN *</label>
+                      <VinVerifier
+                        value={row.vin}
+                        onChange={(vin) => {
+                          setForm(p => ({ ...p, deleteEquipment: p.deleteEquipment.map(r => r.id === row.id ? { ...r, vin } : r) }));
+                        }}
+                        onVerified={(result) => {
+                          setForm(p => ({
+                            ...p,
+                            deleteEquipment: p.deleteEquipment.map(r => r.id === row.id ? {
+                              ...r,
+                              vinResult: result,
+                              isTrailer: result?.isTrailer || false,
+                              year: result?.data?.ModelYear || r.year,
+                              make: result?.data?.Make || r.make,
+                              model: result?.data?.Model || r.model,
+                            } : r),
+                          }));
+                        }}
+                        required
+                      />
+                    </div>
+                    <div className="pcw-field">
+                      <label className="pcw-label">Year</label>
+                      <input className="pcw-input" value={row.year} onChange={e => setForm(p => ({ ...p, deleteEquipment: p.deleteEquipment.map(r => r.id === row.id ? { ...r, year: e.target.value } : r) }))} />
+                    </div>
+                    <div className="pcw-field">
+                      <label className="pcw-label">Make</label>
+                      <input className="pcw-input" value={row.make} onChange={e => setForm(p => ({ ...p, deleteEquipment: p.deleteEquipment.map(r => r.id === row.id ? { ...r, make: e.target.value } : r) }))} />
+                    </div>
+                    <div className="pcw-field pcw-field-full">
+                      <label className="pcw-label">Documentation provided *</label>
+                      <select className="pcw-input" value={row.documentation} onChange={e => setForm(p => ({ ...p, deleteEquipment: p.deleteEquipment.map(r => r.id === row.id ? { ...r, documentation: e.target.value } : r) }))}>
+                        <option value="">Select documentation type...</option>
+                        <option value="Termination Letter">Termination Letter</option>
+                        <option value="Bill of Sale">Bill of Sale</option>
+                        <option value="Police Report (stolen vehicle)">Police Report (stolen vehicle)</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
               ))}
-              <button type="button" className="add-row-btn" onClick={addVehicle}>+ Add another unit</button>
-              <div className="form-group">
-                <label className="form-label">Message to Agent</label>
-                <textarea className="form-input form-textarea" value={form.vehicleMessage} onChange={e => setForm(p => ({ ...p, vehicleMessage: e.target.value }))} placeholder="Termination Letter & Supporting Documents..." />
-              </div>
+              <button type="button" className="pcw-add-btn" onClick={() => setForm(p => ({ ...p, deleteEquipment: [...p.deleteEquipment, makeDeleteRow()] }))}>+ Add another unit</button>
             </div>
           )}
 
-          {/* Addresses Section */}
+          {/* DRIVER CHANGE */}
+          {form.serviceTypes.includes('driverChanges') && (
+            <div className="pcw-section">
+              <h3 className="pcw-section-title">Driver Change</h3>
+              <p className="pcw-hint" style={{ marginBottom: '1rem' }}>If an MVR is needed, it will delay processing of the request.</p>
+              {form.driverChanges.map((row, idx) => (
+                <div key={row.id} className="pcw-row">
+                  <div className="pcw-row-head">
+                    <span className="pcw-row-num">Driver {idx + 1}</span>
+                    {form.driverChanges.length > 1 && (
+                      <button type="button" className="pcw-row-remove" onClick={() => setForm(p => ({ ...p, driverChanges: p.driverChanges.filter(r => r.id !== row.id) }))}>Remove</button>
+                    )}
+                  </div>
+                  <div className="pcw-field-grid">
+                    <div className="pcw-field">
+                      <label className="pcw-label">Action *</label>
+                      <select className="pcw-input" value={row.action} onChange={e => setForm(p => ({ ...p, driverChanges: p.driverChanges.map(r => r.id === row.id ? { ...r, action: e.target.value as any } : r) }))}>
+                        <option value="">Select...</option>
+                        <option value="add">Add</option>
+                        <option value="delete">Delete</option>
+                      </select>
+                    </div>
+                    <div className="pcw-field">
+                      <label className="pcw-label">Request Includes MVR</label>
+                      <select className="pcw-input" value={row.mvrIncluded} onChange={e => setForm(p => ({ ...p, driverChanges: p.driverChanges.map(r => r.id === row.id ? { ...r, mvrIncluded: e.target.value } : r) }))}>
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="pcw-policy-checks">
+                    <span className="pcw-label">Policies: *</span>
+                    {POLICY_OPTIONS.map(p => (
+                      <label key={p} className="pcw-check-label">
+                        <input type="checkbox" checked={row.policies.includes(p)} onChange={() => togglePolicy(row.id, 'driverChanges', p)} />
+                        {p}
+                      </label>
+                    ))}
+                  </div>
+                  <div className="pcw-field-grid">
+                    <div className="pcw-field">
+                      <label className="pcw-label">First Name *</label>
+                      <input className="pcw-input" value={row.firstName} onChange={e => setForm(p => ({ ...p, driverChanges: p.driverChanges.map(r => r.id === row.id ? { ...r, firstName: e.target.value } : r) }))} />
+                    </div>
+                    <div className="pcw-field">
+                      <label className="pcw-label">Last Name *</label>
+                      <input className="pcw-input" value={row.lastName} onChange={e => setForm(p => ({ ...p, driverChanges: p.driverChanges.map(r => r.id === row.id ? { ...r, lastName: e.target.value } : r) }))} />
+                    </div>
+                    <div className="pcw-field">
+                      <label className="pcw-label">Date of Birth</label>
+                      <input type="date" className="pcw-input" max={today} value={row.dob} onChange={e => setForm(p => ({ ...p, driverChanges: p.driverChanges.map(r => r.id === row.id ? { ...r, dob: e.target.value } : r) }))} />
+                    </div>
+                    <div className="pcw-field">
+                      <label className="pcw-label">CDL # *</label>
+                      <input className="pcw-input" value={row.cdl} onChange={e => setForm(p => ({ ...p, driverChanges: p.driverChanges.map(r => r.id === row.id ? { ...r, cdl: e.target.value } : r) }))} />
+                    </div>
+                    <div className="pcw-field">
+                      <label className="pcw-label">State *</label>
+                      <select className="pcw-input" value={row.state} onChange={e => setForm(p => ({ ...p, driverChanges: p.driverChanges.map(r => r.id === row.id ? { ...r, state: e.target.value } : r) }))}>
+                        <option value="">Select...</option>
+                        {US_STATES.map(s => <option key={s} value={s}>{s}</option>)}
+                      </select>
+                    </div>
+                    <div className="pcw-field">
+                      <label className="pcw-label">Years Exp.</label>
+                      <input className="pcw-input" value={row.yearsExp} onChange={e => setForm(p => ({ ...p, driverChanges: p.driverChanges.map(r => r.id === row.id ? { ...r, yearsExp: e.target.value } : r) }))} />
+                    </div>
+                  </div>
+                </div>
+              ))}
+              <button type="button" className="pcw-add-btn" onClick={() => setForm(p => ({ ...p, driverChanges: [...p.driverChanges, makeDriverRow()] }))}>+ Add another driver</button>
+            </div>
+          )}
+
+          {/* ADDRESSES (kept) */}
           {form.serviceTypes.includes('addresses') && (
-            <div className="wizard-section">
-              <h3 className="wizard-section-title">Addresses</h3>
-              <div className="form-group">
-                <label className="form-checkbox-label">
-                  <input type="checkbox" checked={form.changeMailingAddress} onChange={e => setForm(p => ({ ...p, changeMailingAddress: e.target.checked }))} />
-                  Change Mailing Address
-                </label>
-              </div>
+            <div className="pcw-section">
+              <h3 className="pcw-section-title">Addresses</h3>
+              <label className="pcw-check-label"><input type="checkbox" checked={form.changeMailingAddress} onChange={e => setForm(p => ({ ...p, changeMailingAddress: e.target.checked }))} /> Change Mailing Address</label>
               {form.changeMailingAddress && (
-                <div className="address-block">
-                  <div className="form-group"><label className="form-label">Street</label><input className="form-input" value={form.mailingStreet} onChange={e => setForm(p => ({ ...p, mailingStreet: e.target.value }))} /></div>
-                  <div className="form-row">
-                    <div className="form-group"><label className="form-label">City</label><input className="form-input" value={form.mailingCity} onChange={e => setForm(p => ({ ...p, mailingCity: e.target.value }))} /></div>
-                    <div className="form-group"><label className="form-label">State/Province</label><input className="form-input" value={form.mailingState} onChange={e => setForm(p => ({ ...p, mailingState: e.target.value }))} /></div>
-                    <div className="form-group"><label className="form-label">ZIP/Postal</label><input className="form-input" value={form.mailingZip} onChange={e => setForm(p => ({ ...p, mailingZip: e.target.value }))} /></div>
-                  </div>
+                <div className="pcw-address-block">
+                  <div className="pcw-field pcw-field-full"><label className="pcw-label">Street</label><input className="pcw-input" value={form.mailingStreet} onChange={e => setForm(p => ({ ...p, mailingStreet: e.target.value }))} /></div>
+                  <div className="pcw-field"><label className="pcw-label">City</label><input className="pcw-input" value={form.mailingCity} onChange={e => setForm(p => ({ ...p, mailingCity: e.target.value }))} /></div>
+                  <div className="pcw-field"><label className="pcw-label">State</label><select className="pcw-input" value={form.mailingState} onChange={e => setForm(p => ({ ...p, mailingState: e.target.value }))}><option value="">Select...</option>{US_STATES.map(s => <option key={s} value={s}>{s}</option>)}</select></div>
+                  <div className="pcw-field"><label className="pcw-label">ZIP</label><input className="pcw-input" value={form.mailingZip} onChange={e => setForm(p => ({ ...p, mailingZip: e.target.value }))} /></div>
                 </div>
               )}
-
-              <div className="form-group">
-                <label className="form-checkbox-label">
-                  <input type="checkbox" checked={form.changePhysicalAddress} onChange={e => setForm(p => ({ ...p, changePhysicalAddress: e.target.checked }))} />
-                  Change Physical Address
-                </label>
-              </div>
+              <label className="pcw-check-label"><input type="checkbox" checked={form.changePhysicalAddress} onChange={e => setForm(p => ({ ...p, changePhysicalAddress: e.target.checked }))} /> Change Physical Address</label>
               {form.changePhysicalAddress && (
-                <div className="address-block">
-                  <div className="form-group"><label className="form-label">Street</label><input className="form-input" value={form.physicalStreet} onChange={e => setForm(p => ({ ...p, physicalStreet: e.target.value }))} /></div>
-                  <div className="form-row">
-                    <div className="form-group"><label className="form-label">City</label><input className="form-input" value={form.physicalCity} onChange={e => setForm(p => ({ ...p, physicalCity: e.target.value }))} /></div>
-                    <div className="form-group">
-                      <label className="form-label">State</label>
-                      <select className="form-input" value={form.physicalState} onChange={e => setForm(p => ({ ...p, physicalState: e.target.value }))}>
-                        <option value="">Select...</option>
-                        {US_STATES.map(s => <option key={s} value={s}>{s}</option>)}
-                      </select>
-                    </div>
-                    <div className="form-group"><label className="form-label">ZIP</label><input className="form-input" value={form.physicalZip} onChange={e => setForm(p => ({ ...p, physicalZip: e.target.value }))} /></div>
-                  </div>
+                <div className="pcw-address-block">
+                  <div className="pcw-field pcw-field-full"><label className="pcw-label">Street</label><input className="pcw-input" value={form.physicalStreet} onChange={e => setForm(p => ({ ...p, physicalStreet: e.target.value }))} /></div>
+                  <div className="pcw-field"><label className="pcw-label">City</label><input className="pcw-input" value={form.physicalCity} onChange={e => setForm(p => ({ ...p, physicalCity: e.target.value }))} /></div>
+                  <div className="pcw-field"><label className="pcw-label">State</label><select className="pcw-input" value={form.physicalState} onChange={e => setForm(p => ({ ...p, physicalState: e.target.value }))}><option value="">Select...</option>{US_STATES.map(s => <option key={s} value={s}>{s}</option>)}</select></div>
+                  <div className="pcw-field"><label className="pcw-label">ZIP</label><input className="pcw-input" value={form.physicalZip} onChange={e => setForm(p => ({ ...p, physicalZip: e.target.value }))} /></div>
                 </div>
               )}
-
-              <div className="form-group">
-                <label className="form-checkbox-label">
-                  <input type="checkbox" checked={form.changeGaragingAddress} onChange={e => setForm(p => ({ ...p, changeGaragingAddress: e.target.checked }))} />
-                  Change Garaging Address
-                </label>
-              </div>
+              <label className="pcw-check-label"><input type="checkbox" checked={form.changeGaragingAddress} onChange={e => setForm(p => ({ ...p, changeGaragingAddress: e.target.checked }))} /> Change Garaging Address</label>
               {form.changeGaragingAddress && (
-                <div className="address-block">
-                  <div className="form-group"><label className="form-label">Street</label><input className="form-input" value={form.garagingStreet} onChange={e => setForm(p => ({ ...p, garagingStreet: e.target.value }))} /></div>
-                  <div className="form-row">
-                    <div className="form-group"><label className="form-label">City</label><input className="form-input" value={form.garagingCity} onChange={e => setForm(p => ({ ...p, garagingCity: e.target.value }))} /></div>
-                    <div className="form-group">
-                      <label className="form-label">State</label>
-                      <select className="form-input" value={form.garagingState} onChange={e => setForm(p => ({ ...p, garagingState: e.target.value }))}>
-                        <option value="">Select...</option>
-                        {US_STATES.map(s => <option key={s} value={s}>{s}</option>)}
-                      </select>
-                    </div>
-                    <div className="form-group"><label className="form-label">ZIP</label><input className="form-input" value={form.garagingZip} onChange={e => setForm(p => ({ ...p, garagingZip: e.target.value }))} /></div>
-                  </div>
+                <div className="pcw-address-block">
+                  <div className="pcw-field pcw-field-full"><label className="pcw-label">Street</label><input className="pcw-input" value={form.garagingStreet} onChange={e => setForm(p => ({ ...p, garagingStreet: e.target.value }))} /></div>
+                  <div className="pcw-field"><label className="pcw-label">City</label><input className="pcw-input" value={form.garagingCity} onChange={e => setForm(p => ({ ...p, garagingCity: e.target.value }))} /></div>
+                  <div className="pcw-field"><label className="pcw-label">State</label><select className="pcw-input" value={form.garagingState} onChange={e => setForm(p => ({ ...p, garagingState: e.target.value }))}><option value="">Select...</option>{US_STATES.map(s => <option key={s} value={s}>{s}</option>)}</select></div>
+                  <div className="pcw-field"><label className="pcw-label">ZIP</label><input className="pcw-input" value={form.garagingZip} onChange={e => setForm(p => ({ ...p, garagingZip: e.target.value }))} /></div>
                 </div>
               )}
             </div>
           )}
 
-          {/* Lien Holders Section */}
+          {/* LIEN HOLDERS (kept) */}
           {form.serviceTypes.includes('lienholders') && (
-            <div className="wizard-section">
-              <h3 className="wizard-section-title">Lien Holders</h3>
-              <div className="form-group">
-                <label className="form-checkbox-label">
-                  <input type="checkbox" checked={form.lienBusiness} onChange={e => setForm(p => ({ ...p, lienBusiness: e.target.checked }))} />
-                  Add to Business / Property
-                </label>
-              </div>
+            <div className="pcw-section">
+              <h3 className="pcw-section-title">Lien Holders</h3>
+              <label className="pcw-check-label"><input type="checkbox" checked={form.lienBusiness} onChange={e => setForm(p => ({ ...p, lienBusiness: e.target.checked }))} /> Add to Business / Property</label>
               {form.lienBusiness && (
-                <div className="address-block">
-                  <div className="form-group"><label className="form-label">Lien Holder Name *</label><input className="form-input" value={form.lienHolderName} onChange={e => setForm(p => ({ ...p, lienHolderName: e.target.value }))} /></div>
-                  <div className="form-group"><label className="form-label">Name Line 2</label><input className="form-input" value={form.lienNameLine2} onChange={e => setForm(p => ({ ...p, lienNameLine2: e.target.value }))} /></div>
-                  <div className="form-row">
-                    <div className="form-group"><label className="form-label">Address 1</label><input className="form-input" value={form.lienAddress1} onChange={e => setForm(p => ({ ...p, lienAddress1: e.target.value }))} /></div>
-                    <div className="form-group"><label className="form-label">Address 2</label><input className="form-input" value={form.lienAddress2} onChange={e => setForm(p => ({ ...p, lienAddress2: e.target.value }))} /></div>
-                  </div>
-                  <div className="form-row">
-                    <div className="form-group"><label className="form-label">City</label><input className="form-input" value={form.lienCity} onChange={e => setForm(p => ({ ...p, lienCity: e.target.value }))} /></div>
-                    <div className="form-group"><label className="form-label">State</label><input className="form-input" value={form.lienState} onChange={e => setForm(p => ({ ...p, lienState: e.target.value }))} /></div>
-                    <div className="form-group"><label className="form-label">ZIP</label><input className="form-input" value={form.lienZip} onChange={e => setForm(p => ({ ...p, lienZip: e.target.value }))} /></div>
-                  </div>
-                  <div className="form-row">
-                    <div className="form-group"><label className="form-label">Loan Number *</label><input className="form-input" value={form.lienLoanNumber} onChange={e => setForm(p => ({ ...p, lienLoanNumber: e.target.value }))} /></div>
-                    <div className="form-group">
-                      <label className="form-label">Lender Position</label>
-                      <select className="form-input" value={form.lienPosition} onChange={e => setForm(p => ({ ...p, lienPosition: e.target.value }))}>
-                        <option value="First Mortgagee">First Mortgagee</option>
-                        <option value="Second Mortgagee">Second Mortgagee</option>
-                      </select>
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label">Bill To *</label>
-                      <select className="form-input" value={form.lienBillTo} onChange={e => setForm(p => ({ ...p, lienBillTo: e.target.value }))}>
-                        <option value="Mortgagee">Mortgagee</option>
-                        <option value="Insured">Insured</option>
-                      </select>
-                    </div>
-                  </div>
+                <div className="pcw-address-block">
+                  <div className="pcw-field pcw-field-full"><label className="pcw-label">Lien Holder Name *</label><input className="pcw-input" value={form.lienHolderName} onChange={e => setForm(p => ({ ...p, lienHolderName: e.target.value }))} /></div>
+                  <div className="pcw-field pcw-field-full"><label className="pcw-label">Name Line 2</label><input className="pcw-input" value={form.lienNameLine2} onChange={e => setForm(p => ({ ...p, lienNameLine2: e.target.value }))} /></div>
+                  <div className="pcw-field"><label className="pcw-label">Address 1</label><input className="pcw-input" value={form.lienAddress1} onChange={e => setForm(p => ({ ...p, lienAddress1: e.target.value }))} /></div>
+                  <div className="pcw-field"><label className="pcw-label">Address 2</label><input className="pcw-input" value={form.lienAddress2} onChange={e => setForm(p => ({ ...p, lienAddress2: e.target.value }))} /></div>
+                  <div className="pcw-field"><label className="pcw-label">City</label><input className="pcw-input" value={form.lienCity} onChange={e => setForm(p => ({ ...p, lienCity: e.target.value }))} /></div>
+                  <div className="pcw-field"><label className="pcw-label">State</label><input className="pcw-input" value={form.lienState} onChange={e => setForm(p => ({ ...p, lienState: e.target.value }))} /></div>
+                  <div className="pcw-field"><label className="pcw-label">ZIP</label><input className="pcw-input" value={form.lienZip} onChange={e => setForm(p => ({ ...p, lienZip: e.target.value }))} /></div>
+                  <div className="pcw-field"><label className="pcw-label">Loan Number *</label><input className="pcw-input" value={form.lienLoanNumber} onChange={e => setForm(p => ({ ...p, lienLoanNumber: e.target.value }))} /></div>
+                  <div className="pcw-field"><label className="pcw-label">Position</label><select className="pcw-input" value={form.lienPosition} onChange={e => setForm(p => ({ ...p, lienPosition: e.target.value }))}><option value="First Mortgagee">First Mortgagee</option><option value="Second Mortgagee">Second Mortgagee</option></select></div>
+                  <div className="pcw-field"><label className="pcw-label">Bill To</label><select className="pcw-input" value={form.lienBillTo} onChange={e => setForm(p => ({ ...p, lienBillTo: e.target.value }))}><option value="Mortgagee">Mortgagee</option><option value="Insured">Insured</option></select></div>
                 </div>
               )}
-
-              <div className="form-group">
-                <label className="form-checkbox-label">
-                  <input type="checkbox" checked={form.lienVehicle} onChange={e => setForm(p => ({ ...p, lienVehicle: e.target.checked }))} />
-                  Add to Vehicle
-                </label>
-              </div>
+              <label className="pcw-check-label"><input type="checkbox" checked={form.lienVehicle} onChange={e => setForm(p => ({ ...p, lienVehicle: e.target.checked }))} /> Add to Vehicle</label>
               {form.lienVehicle && (
-                <div className="address-block">
-                  <div className="form-group"><label className="form-label">Vehicle to add lien holder to *</label><input className="form-input" value={form.vehicleLienVehicle} onChange={e => setForm(p => ({ ...p, vehicleLienVehicle: e.target.value }))} /></div>
-                  <div className="form-group"><label className="form-label">Lien Holder Name *</label><input className="form-input" value={form.vehicleLienName} onChange={e => setForm(p => ({ ...p, vehicleLienName: e.target.value }))} /></div>
-                  <div className="form-group"><label className="form-label">Loan Number</label><input className="form-input" value={form.vehicleLienLoanNumber} onChange={e => setForm(p => ({ ...p, vehicleLienLoanNumber: e.target.value }))} /></div>
+                <div className="pcw-address-block">
+                  <div className="pcw-field pcw-field-full"><label className="pcw-label">Vehicle *</label><input className="pcw-input" value={form.vehicleLienVehicle} onChange={e => setForm(p => ({ ...p, vehicleLienVehicle: e.target.value }))} /></div>
+                  <div className="pcw-field"><label className="pcw-label">Lien Holder Name *</label><input className="pcw-input" value={form.vehicleLienName} onChange={e => setForm(p => ({ ...p, vehicleLienName: e.target.value }))} /></div>
+                  <div className="pcw-field"><label className="pcw-label">Loan Number</label><input className="pcw-input" value={form.vehicleLienLoanNumber} onChange={e => setForm(p => ({ ...p, vehicleLienLoanNumber: e.target.value }))} /></div>
                 </div>
               )}
             </div>
           )}
 
-          {/* Certificate of Insurance Section */}
+          {/* CERTIFICATE (kept) */}
           {form.serviceTypes.includes('certificate') && (
-            <div className="wizard-section">
-              <h3 className="wizard-section-title">Certificate of Insurance</h3>
-              <div className="form-row">
-                <div className="form-group"><label className="form-label">Email to send COI *</label><input type="email" className="form-input" value={form.coiEmail} onChange={e => setForm(p => ({ ...p, coiEmail: e.target.value }))} /></div>
-                <div className="form-group"><label className="form-label">Certificate Holder's Name *</label><input className="form-input" value={form.coiHolderName} onChange={e => setForm(p => ({ ...p, coiHolderName: e.target.value }))} /></div>
+            <div className="pcw-section">
+              <h3 className="pcw-section-title">Certificate of Insurance</h3>
+              <div className="pcw-field-grid">
+                <div className="pcw-field"><label className="pcw-label">Email to send COI *</label><input type="email" className="pcw-input" value={form.coiEmail} onChange={e => setForm(p => ({ ...p, coiEmail: e.target.value }))} /></div>
+                <div className="pcw-field"><label className="pcw-label">Certificate Holder Name *</label><input className="pcw-input" value={form.coiHolderName} onChange={e => setForm(p => ({ ...p, coiHolderName: e.target.value }))} /></div>
+                <div className="pcw-field"><label className="pcw-label">Address 1</label><input className="pcw-input" value={form.coiAddress1} onChange={e => setForm(p => ({ ...p, coiAddress1: e.target.value }))} /></div>
+                <div className="pcw-field"><label className="pcw-label">Address 2</label><input className="pcw-input" value={form.coiAddress2} onChange={e => setForm(p => ({ ...p, coiAddress2: e.target.value }))} /></div>
+                <div className="pcw-field"><label className="pcw-label">City</label><input className="pcw-input" value={form.coiCity} onChange={e => setForm(p => ({ ...p, coiCity: e.target.value }))} /></div>
+                <div className="pcw-field"><label className="pcw-label">State</label><select className="pcw-input" value={form.coiState} onChange={e => setForm(p => ({ ...p, coiState: e.target.value }))}><option value="">Select...</option>{US_STATES.map(s => <option key={s} value={s}>{s}</option>)}</select></div>
+                <div className="pcw-field"><label className="pcw-label">ZIP</label><input className="pcw-input" value={form.coiZip} onChange={e => setForm(p => ({ ...p, coiZip: e.target.value }))} /></div>
               </div>
-              <div className="form-row">
-                <div className="form-group"><label className="form-label">Address 1</label><input className="form-input" value={form.coiAddress1} onChange={e => setForm(p => ({ ...p, coiAddress1: e.target.value }))} /></div>
-                <div className="form-group"><label className="form-label">Address 2</label><input className="form-input" value={form.coiAddress2} onChange={e => setForm(p => ({ ...p, coiAddress2: e.target.value }))} /></div>
-              </div>
-              <div className="form-row">
-                <div className="form-group"><label className="form-label">City</label><input className="form-input" value={form.coiCity} onChange={e => setForm(p => ({ ...p, coiCity: e.target.value }))} /></div>
-                <div className="form-group"><label className="form-label">State</label><input className="form-input" value={form.coiState} onChange={e => setForm(p => ({ ...p, coiState: e.target.value }))} /></div>
-                <div className="form-group"><label className="form-label">ZIP</label><input className="form-input" value={form.coiZip} onChange={e => setForm(p => ({ ...p, coiZip: e.target.value }))} /></div>
-              </div>
-              <div className="form-group"><label className="form-label">Certificate Request Details</label><textarea className="form-input form-textarea" value={form.coiDetails} onChange={e => setForm(p => ({ ...p, coiDetails: e.target.value }))} /></div>
-              <div className="form-group">
-                <label className="form-checkbox-label"><input type="checkbox" checked={form.coiIncludeVehicleSchedule} onChange={e => setForm(p => ({ ...p, coiIncludeVehicleSchedule: e.target.checked }))} /> Include Vehicle Schedule</label>
-              </div>
-              <div className="form-group">
-                <label className="form-checkbox-label"><input type="checkbox" checked={form.coiIncludeDriverSchedule} onChange={e => setForm(p => ({ ...p, coiIncludeDriverSchedule: e.target.checked }))} /> Include Driver Schedule</label>
-              </div>
-              <div className="form-group">
-                <label className="form-checkbox-label"><input type="checkbox" checked={form.coiAdditionalInsured} onChange={e => setForm(p => ({ ...p, coiAdditionalInsured: e.target.checked }))} /> Make Certificate Holder an Additional Insured</label>
+              <div className="pcw-field pcw-field-full"><label className="pcw-label">Request Details</label><textarea className="pcw-textarea" value={form.coiDetails} onChange={e => setForm(p => ({ ...p, coiDetails: e.target.value }))} rows={3} /></div>
+              <div className="pcw-checks-group">
+                <label className="pcw-check-label"><input type="checkbox" checked={form.coiIncludeVehicleSchedule} onChange={e => setForm(p => ({ ...p, coiIncludeVehicleSchedule: e.target.checked }))} /> Include Vehicle Schedule</label>
+                <label className="pcw-check-label"><input type="checkbox" checked={form.coiIncludeDriverSchedule} onChange={e => setForm(p => ({ ...p, coiIncludeDriverSchedule: e.target.checked }))} /> Include Driver Schedule</label>
+                <label className="pcw-check-label"><input type="checkbox" checked={form.coiAdditionalInsured} onChange={e => setForm(p => ({ ...p, coiAdditionalInsured: e.target.checked }))} /> Make Certificate Holder an Additional Insured</label>
               </div>
             </div>
           )}
 
-          {/* Coverage Change / General Request */}
-          {(form.serviceTypes.includes('coverage') || form.serviceTypes.includes('general')) && (
-            <div className="wizard-section">
-              <h3 className="wizard-section-title">Coverage Change / General Request</h3>
-              <div className="form-group">
-                <label className="form-label">Request Details *</label>
-                <textarea className="form-input form-textarea" rows={5} value={form.coverageDetails} onChange={e => setForm(p => ({ ...p, coverageDetails: e.target.value }))} />
+          {/* COVERAGE / GENERAL (kept) */}
+          {form.serviceTypes.includes('coverage') && (
+            <div className="pcw-section">
+              <h3 className="pcw-section-title">Coverage Change / General Request</h3>
+              <div className="pcw-field pcw-field-full">
+                <label className="pcw-label">Request Details *</label>
+                <textarea className="pcw-textarea" rows={5} value={form.coverageDetails} onChange={e => setForm(p => ({ ...p, coverageDetails: e.target.value }))} />
               </div>
             </div>
           )}
 
-          {!allVinsVerified && form.serviceTypes.includes('vehicles') && (
-            <div className="vin-warning-banner">
+          {/* VIN warning */}
+          {!allVinsVerified && (
+            <div className="pcw-notice pcw-notice-warn">
               Verification required — click Verify VIN on each unit before continuing.
             </div>
           )}
 
-          <div className="wizard-actions">
-            <button type="button" className="sc-btn-ghost" onClick={() => setStep(1)}>Back</button>
-            <button type="button" className="sc-btn-primary" disabled={!canAdvanceToStep3} onClick={() => setStep(3)}>
-              Continue to Review
-            </button>
+          <div className="pcw-actions">
+            <button type="button" className="pcw-btn-ghost" onClick={() => setStep(1)}>Back</button>
+            <button type="button" className="pcw-btn-solid" disabled={!canAdvanceToStep3} onClick={() => setStep(3)}>Continue to Review</button>
           </div>
         </div>
       )}
 
-      {/* Step 3: Review & Submit */}
+      {/* ═══════════════ STEP 3 ═══════════════ */}
       {step === 3 && (
-        <div className="wizard-step-content">
-          <h3 className="wizard-section-title">Request Summary</h3>
+        <div className="pcw-step">
+          <h3 className="pcw-section-title">Request Summary</h3>
 
-          <div className="review-summary">
-            <div className="review-section">
+          <div className="pcw-review">
+            <div className="pcw-review-block">
               <h4>Request Information</h4>
-              <div className="review-field"><span>Date:</span> {form.changeDate}</div>
-              <div className="review-field"><span>Services:</span> {form.serviceTypes.map(t => SERVICE_TYPES.find(s => s.id === t)?.label).join(', ')}</div>
-              <div className="review-field"><span>Insured:</span> {form.insuredFirst} {form.insuredLast}</div>
-              <div className="review-field"><span>Business:</span> {form.businessName}</div>
-              <div className="review-field"><span>Email:</span> {form.email}</div>
-              {form.policyNumber && <div className="review-field"><span>Policy #:</span> {form.policyNumber}</div>}
+              <div className="pcw-review-row"><span>Company:</span> {form.businessName}</div>
+              <div className="pcw-review-row"><span>Effective Date:</span> {form.changeDate}</div>
+              <div className="pcw-review-row"><span>Insured:</span> {form.insuredFirst} {form.insuredLast}</div>
+              <div className="pcw-review-row"><span>Email:</span> {form.insuredEmail}</div>
+              {form.phone && <div className="pcw-review-row"><span>Phone:</span> {form.phone}</div>}
+              {form.policyNumber && <div className="pcw-review-row"><span>Policy #:</span> {form.policyNumber}</div>}
+              <div className="pcw-review-row"><span>Sections:</span> {form.serviceTypes.map(t => SECTION_TYPES.find(s => s.id === t)?.label).join(', ')}</div>
             </div>
 
-            {form.serviceTypes.includes('drivers') && form.drivers.some(d => d.action) && (
-              <div className="review-section">
-                <h4>Drivers</h4>
-                {form.drivers.filter(d => d.action).map((d, i) => (
-                  <div key={d.id} className="review-field">
-                    <span>Driver {i + 1}:</span> {d.action.toUpperCase()} — {d.firstName} {d.lastName}
+            {form.serviceTypes.includes('addEquipment') && form.addEquipment.some(r => r.vin || r.addTo.length > 0) && (
+              <div className="pcw-review-block">
+                <h4>Add Equipment</h4>
+                {form.addEquipment.filter(r => r.vin || r.addTo.length > 0).map((r, i) => (
+                  <div key={r.id} className="pcw-review-row">
+                    <span>Unit {i + 1}:</span> Add to: {r.addTo.join(', ')} · VIN: {r.vin} ({r.year} {r.make}{r.model ? ` ${r.model}` : ''}) · Value: {r.value || '—'}
+                  </div>
+                ))}
+                {form.lossPayee && <div className="pcw-review-row"><span>Loss Payee:</span> {form.lossPayee}</div>}
+                {form.additionalInsured && <div className="pcw-review-row"><span>Additional Insured:</span> {form.additionalInsured}</div>}
+                {form.contractProvided && <div className="pcw-review-row"><span>Contract Provided:</span> {form.contractProvided}</div>}
+              </div>
+            )}
+
+            {form.serviceTypes.includes('deleteEquipment') && form.deleteEquipment.some(r => r.vin || r.deleteFrom.length > 0) && (
+              <div className="pcw-review-block">
+                <h4>Delete Equipment</h4>
+                {form.deleteEquipment.filter(r => r.vin || r.deleteFrom.length > 0).map((r, i) => (
+                  <div key={r.id} className="pcw-review-row">
+                    <span>Unit {i + 1}:</span> Delete from: {r.deleteFrom.join(', ')} · VIN: {r.vin} ({r.year} {r.make}) · Doc: {r.documentation || '—'}
                   </div>
                 ))}
               </div>
             )}
 
-            {form.serviceTypes.includes('vehicles') && form.vehicles.some(v => v.action) && (
-              <div className="review-section">
-                <h4>Vehicles & Trailers</h4>
-                {form.vehicles.filter(v => v.action).map((v, i) => (
-                  <div key={v.id} className="review-field">
-                    <span>Unit {i + 1}:</span> {v.action.toUpperCase()} — VIN: {v.vin} ({v.year} {v.make} {v.model})
-                    {v.isTrailer && ' · Trailer'}
+            {form.serviceTypes.includes('driverChanges') && form.driverChanges.some(r => r.action) && (
+              <div className="pcw-review-block">
+                <h4>Driver Changes</h4>
+                {form.driverChanges.filter(r => r.action).map((r, i) => (
+                  <div key={r.id} className="pcw-review-row">
+                    <span>Driver {i + 1}:</span> {r.action.toUpperCase()} — {r.firstName} {r.lastName} · Policies: {r.policies.join(', ')} · CDL: {r.cdl} ({r.state})
                   </div>
                 ))}
+              </div>
+            )}
+
+            {form.serviceTypes.includes('addresses') && (
+              <div className="pcw-review-block">
+                <h4>Addresses</h4>
+                {form.changeMailingAddress && <div className="pcw-review-row"><span>Mailing:</span> {form.mailingStreet}, {form.mailingCity}, {form.mailingState} {form.mailingZip}</div>}
+                {form.changePhysicalAddress && <div className="pcw-review-row"><span>Physical:</span> {form.physicalStreet}, {form.physicalCity}, {form.physicalState} {form.physicalZip}</div>}
+                {form.changeGaragingAddress && <div className="pcw-review-row"><span>Garaging:</span> {form.garagingStreet}, {form.garagingCity}, {form.garagingState} {form.garagingZip}</div>}
+              </div>
+            )}
+
+            {form.serviceTypes.includes('lienholders') && (
+              <div className="pcw-review-block">
+                <h4>Lien Holders</h4>
+                {form.lienBusiness && <div className="pcw-review-row"><span>Business:</span> {form.lienHolderName} — Loan #{form.lienLoanNumber}</div>}
+                {form.lienVehicle && <div className="pcw-review-row"><span>Vehicle:</span> {form.vehicleLienVehicle} — {form.vehicleLienName}</div>}
+              </div>
+            )}
+
+            {form.serviceTypes.includes('certificate') && (
+              <div className="pcw-review-block">
+                <h4>Certificate of Insurance</h4>
+                <div className="pcw-review-row"><span>Holder:</span> {form.coiHolderName}</div>
+                <div className="pcw-review-row"><span>Email:</span> {form.coiEmail}</div>
+              </div>
+            )}
+
+            {form.serviceTypes.includes('coverage') && (
+              <div className="pcw-review-block">
+                <h4>Coverage Change / General Request</h4>
+                <div className="pcw-review-row">{form.coverageDetails}</div>
               </div>
             )}
           </div>
 
-          <div className="sc-disclaimer-box">
+          {/* Warning + Disclaimer */}
+          <div className="pcw-notice pcw-notice-warn" style={{ marginTop: '1.5rem' }}>
+            <strong>Completing this form does not indicate the change request was processed.</strong> Incomplete forms or failure to provide necessary documentation will delay changes being processed.
+          </div>
+          <div className="pcw-disclaimer">
             Any change requested through this form is only a request for service and does not alter your policy
             until formal confirmation and endorsement is received from the carrier. Coverage cannot be bound by
             email, voicemail, or fax.
           </div>
 
-          <div className="form-group" style={{ marginTop: '1.5rem' }}>
-            <label className="form-checkbox-label">
+          {/* Agreement + Signature */}
+          <div className="pcw-field" style={{ marginTop: '1.5rem' }}>
+            <label className="pcw-check-label">
               <input type="checkbox" checked={form.agreeDisclaimer} onChange={e => setForm(p => ({ ...p, agreeDisclaimer: e.target.checked }))} />
               I have read and agree to the above disclaimer *
             </label>
           </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label className="form-label">Signature *</label>
-              <input className="form-input" value={form.signature} onChange={e => setForm(p => ({ ...p, signature: e.target.value }))} placeholder="Type your full name" />
-              <span className="form-hint">Typing your name acts as your electronic signature</span>
+          <div className="pcw-field-grid" style={{ marginTop: '1rem' }}>
+            <div className="pcw-field">
+              <label className="pcw-label">Signature *</label>
+              <input className="pcw-input" value={form.signature} onChange={e => setForm(p => ({ ...p, signature: e.target.value }))} placeholder="Type your full name" />
+              <span className="pcw-hint">Typing your name acts as your electronic signature</span>
             </div>
-            <div className="form-group">
-              <label className="form-label">Date *</label>
-              <input type="date" className="form-input" value={form.signatureDate} min={today} onChange={e => setForm(p => ({ ...p, signatureDate: e.target.value }))} />
+            <div className="pcw-field">
+              <label className="pcw-label">Date *</label>
+              <input type="date" className="pcw-input" value={form.signatureDate} min={today} onChange={e => setForm(p => ({ ...p, signatureDate: e.target.value }))} />
             </div>
           </div>
 
-          <div className="wizard-actions">
-            <button type="button" className="sc-btn-ghost" onClick={() => setStep(2)}>Back</button>
+          <div className="pcw-actions">
+            <button type="button" className="pcw-btn-ghost" onClick={() => setStep(2)}>Back</button>
             <button
               type="button"
-              className="sc-btn-primary"
+              className="pcw-btn-solid"
               disabled={!form.agreeDisclaimer || !form.signature || submitting}
               onClick={handleSubmit}
             >

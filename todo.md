@@ -97,3 +97,20 @@
 - [x] Email notification + JotForm push on intake submissions
 - [x] Dashboard quick-link card "Intake" for staff/admin
 - [ ] Staff dashboard "My Intake Entries" stat (deferred)
+
+## Policy Change Form Rebuild (per real Change Request Form spec) — DONE
+- [x] Fix rendering: 3-step wizard bar, checkbox CARDS, field grid, section cards, serif headings
+- [x] Step 1: Company Name, Effective Date (min today), Insured First/Last, Email, Phone, Policy Number, Requested By
+- [x] Step 1: Section picker as checkbox cards (Add Equipment, Delete Equipment, Driver Change, Addresses, Lien Holders, COI, Coverage Change)
+- [x] Step 2 — Add Equipment: repeatable rows with policy checkboxes (Liability/Cargo/PD), Year/Make/VIN (verified), OwnedBy, Value
+- [x] Step 2 — Add Equipment section-level: Loss Payee, Additional Insured, Contract Provided radio, file upload
+- [x] Step 2 — Delete Equipment: repeatable rows with policy checkboxes, Year/Make/VIN, Documentation dropdown
+- [x] Step 2 — Delete Equipment: warning notice, required file upload (Termination Letter/Bill of Sale/Police Report)
+- [x] Step 2 — Driver Change: repeatable rows with Action (Add/Delete), policy checkboxes, MVR radio, Name/DOB/CDL/State/YearsExp
+- [x] Step 2 — Driver Change: file upload for MVRs/CDLs
+- [x] Step 3: Grouped summary with numbered rows and per-row policy selections
+- [x] Step 3: Bold warning statement + standard disclaimer, I Agree checkbox, Signature, Date, Submit
+- [x] Validation: unverified VIN blocks Continue, Delete Equipment without file blocks submit, no backdating
+- [x] JotForm serialization: addEquipment/deleteEquipment/driverChanges arrays with exact field names
+- [x] Agent Intake panel still works on this form
+- [x] Fix AgentIntakeBar React hooks ordering (conditional return before useQuery)

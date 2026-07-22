@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useAuth } from '@/_core/hooks/useAuth';
 import { trpc } from '@/lib/trpc';
 
@@ -14,19 +14,24 @@ export default function AgentIntakeBar({ onCustomerSelect, selectedCustomer }: A
 
   // Only show for staff/admin
   const isStaff = user && (user as any).role && ['staff', 'admin'].includes((user as any).role);
-  if (!isStaff) return null;
 
+  // ALL hooks must be called unconditionally (before any early return)
   const { data: customers = [] } = trpc.portal.listUsers.useQuery(undefined, {
+    enabled: !!isStaff, // only fetch if staff
     select: (data: any[]) => data.filter((u: any) => u.role === 'customer' && u.accountStatus === 'approved'),
   });
 
-  const filtered = search
-    ? (customers as any[]).filter((c: any) =>
-        c.name?.toLowerCase().includes(search.toLowerCase()) ||
-        c.email?.toLowerCase().includes(search.toLowerCase()) ||
-        c.title?.toLowerCase().includes(search.toLowerCase())
-      )
-    : (customers as any[]);
+  const filtered = useMemo(() => {
+    if (!search) return customers as any[];
+    return (customers as any[]).filter((c: any) =>
+      c.name?.toLowerCase().includes(search.toLowerCase()) ||
+      c.email?.toLowerCase().includes(search.toLowerCase()) ||
+      c.title?.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [customers, search]);
+
+  // Now safe to return early
+  if (!isStaff) return null;
 
   return (
     <div className="agent-intake-bar">
