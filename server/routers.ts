@@ -170,24 +170,18 @@ export const appRouter = router({
         return await getQuoteById(input);
       }),
     
-    getAll: protectedProcedure
-      .query(async ({ ctx }) => {
-        if (ctx.user?.role !== 'admin') {
-          throw new Error('Unauthorized');
-        }
+    getAll: staffProcedure
+      .query(async () => {
         return await getAllQuotes();
       }),
     
-    updateStatus: protectedProcedure
+    updateStatus: staffProcedure
       .input(z.object({
         id: z.number(),
         status: z.enum(['pending', 'under_review', 'approved', 'issued', 'rejected']),
         notes: z.string().optional(),
       }))
-      .mutation(async ({ input, ctx }) => {
-        if (ctx.user?.role !== 'admin') {
-          throw new Error('Unauthorized');
-        }
+      .mutation(async ({ input }) => {
         return await updateQuoteStatus(input.id, input.status, input.notes);
       }),
   }),
@@ -381,6 +375,42 @@ export const appRouter = router({
           customerEmail: input.customerEmail || null,
           fields: flatFields,
         }).catch(() => {});
+
+        // Push to JotForm (fire-and-forget) for contact/fast_quote/full_quote
+        const fieldMap = Object.fromEntries(flatFields.map(f => [f.label, f.value]));
+        if (input.type === 'contact') {
+          submitContactToJotform({
+            name: fieldMap['Name'] || '',
+            email: fieldMap['Email'] || '',
+            phone: fieldMap['Phone'] || '',
+            message: fieldMap['Message'] || '',
+          }).catch(err => console.error('[JotForm] Contact intake push failed:', err));
+        } else if (input.type === 'fast_quote') {
+          const nameParts = (fieldMap['Name'] || '').split(' ');
+          submitFastQuoteToJotform({
+            firstName: nameParts[0] || '',
+            lastName: nameParts.slice(1).join(' ') || '',
+            email: fieldMap['Email'] || '',
+            phone: fieldMap['Phone'] || '',
+            companyName: fieldMap['Name'] || '',
+            dotNumber: fieldMap['USDOT Number'] || '',
+            notes: `Coverage: ${fieldMap['Coverage Needed'] || ''} | Trucks: ${fieldMap['Number of Trucks'] || ''}`,
+          }).catch(err => console.error('[JotForm] Fast quote intake push failed:', err));
+        } else if (input.type === 'full_quote') {
+          const contactParts = (fieldMap['Contact Name'] || '').split(' ');
+          submitFullQuoteToJotform({
+            firstName: contactParts[0] || '',
+            lastName: contactParts.slice(1).join(' ') || '',
+            companyName: fieldMap['Business Name'] || '',
+            email: fieldMap['Email'] || '',
+            phone: fieldMap['Phone'] || '',
+            dotMcNumber: fieldMap['USDOT Number'] || '',
+            primaryState: '',
+            effectiveDate: fieldMap['Desired Effective Date'] || '',
+            equipmentDetails: fieldMap['Vehicles'] || '',
+            driverDetails: fieldMap['Drivers'] || '',
+          }).catch(err => console.error('[JotForm] Full quote intake push failed:', err));
+        }
 
         return { id: result.insertId, ref };
       }),

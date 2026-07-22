@@ -30,7 +30,7 @@ const peopleNav: NavItem[] = [
 ];
 
 const opsNav: NavItem[] = [
-  { label: "Intake Forms", path: "/portal/forms", icon: <FormsIcon /> },
+  { label: "Intake", path: "/portal/intake", icon: <FormsIcon /> },
   { label: "Standards", path: "/portal/standards", icon: <StandardsIcon /> },
   { label: "Payment Options", path: "/portal/payments", icon: <PaymentsIcon /> },
 ];
@@ -91,6 +91,7 @@ function getPageTitle(path: string): string {
   if (path.startsWith("/portal/workflows")) return "Workflows";
   if (path.startsWith("/portal/training")) return "Onboarding & Training";
   if (path.startsWith("/portal/team")) return "Team Directory";
+  if (path.startsWith("/portal/intake")) return "Intake";
   if (path.startsWith("/portal/forms")) return "Intake Forms";
   if (path.startsWith("/portal/standards")) return "Standards";
   if (path.startsWith("/portal/payments")) return "Payment Options";

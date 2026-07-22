@@ -68,10 +68,32 @@
 ## Phase 9: Integrations & Polish
 - [ ] Cloudflare Turnstile on all public/customer forms
 - [ ] Self-host Lora + Poppins fonts (woff2)
-- [ ] FMCSA USDOT lookup (QCMobile API) for Fast/Full Quote
+- [x] FMCSA USDOT lookup (QCMobile API) for Intake Fast/Full Quote
+- [ ] Wire FMCSA lookup into customer-facing Quote pages (future)
 - [ ] JotForm inbound webhook (/api/jotform/webhook) to upsert submissions
 - [ ] Approval email via Resend when admin approves a user
 - [ ] Dark mode tokens match spec exactly
 - [ ] All tests passing
 - [x] Remove black logo from expanded sidebar, use Profile-02.jpg as collapsed icon
 - [x] Link portal login page to the client center (Service Center) page
+
+## BUG 1: truxins1@gmail.com sees Admin portal instead of Service Center
+- [x] Fix auto-role logic: exact domain match @truxins.com only (not substring)
+- [x] Remove owner-is-admin fallback on login
+- [x] Fix DB: set truxins1@gmail.com to role=customer, accountStatus=approved
+- [x] Existing DB row role wins on subsequent logins (no re-derive)
+- [x] Client RBAC: customer on /portal → redirect to /service-center
+- [x] Server RBAC: all hub procedures use staffProcedure/adminProcedure (not protectedProcedure)
+- [x] Regression tests: gmail→pending, @truxins.com→staff, truxins1@gmail.com→customer, milen→admin
+- [x] Fix login loop for new @truxins.com users (psr@truxins.com stuck on signin screen)
+
+## BUG 2: Intake forms missing from Agency Hub
+- [x] Build /portal/intake page (staff+admin only)
+- [x] 4 service-form cards linking to Service Center forms with Agent Intake bar
+- [x] 3 quick intake tabs: Contact, Fast Quote, Full Quote
+- [x] Customer selector ("Submitting on behalf of") with prefill
+- [x] USDOT lookup (FMCSA QCMobile or SAFER fallback)
+- [x] Intake submissions stored in DB with ref, type, agent attribution
+- [x] Email notification + JotForm push on intake submissions
+- [x] Dashboard quick-link card "Intake" for staff/admin
+- [ ] Staff dashboard "My Intake Entries" stat (deferred)

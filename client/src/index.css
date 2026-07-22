@@ -2878,3 +2878,301 @@
   color: var(--taupe);
   text-align: center;
 }
+
+
+/* ─── Hub Intake Page ──────────────────────────────────────────────────────── */
+.intake-service-cards {
+  margin-top: 2rem;
+}
+.intake-section-title {
+  font-family: 'Lora', serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--head);
+  margin-bottom: 0.25rem;
+}
+.intake-section-desc {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.8125rem;
+  color: var(--taupe);
+  margin-bottom: 1rem;
+}
+.intake-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.75rem;
+}
+.intake-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--hair);
+  background: var(--paper);
+  text-decoration: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+.intake-card:hover {
+  border-color: var(--tick);
+  background: var(--sand);
+}
+.intake-card-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+.intake-card-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ink);
+  flex: 1;
+}
+.intake-card-arrow {
+  font-size: 1rem;
+  color: var(--taupe);
+}
+
+.hub-divider {
+  border: none;
+  border-top: 1px solid var(--hair);
+  margin: 2rem 0;
+}
+
+.intake-quick-forms {
+  margin-top: 1rem;
+}
+
+.intake-customer-selector {
+  margin-bottom: 1.5rem;
+}
+.intake-label {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.375rem;
+}
+.intake-select {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid var(--hair);
+  border-radius: 0;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.875rem;
+  color: var(--ink);
+  background: var(--paper);
+  appearance: auto;
+}
+.intake-select:focus {
+  outline: 2px solid var(--tick);
+  outline-offset: -1px;
+}
+
+.intake-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--hair);
+  margin-bottom: 1.5rem;
+}
+.intake-tab {
+  padding: 0.75rem 1.5rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--muted);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.intake-tab:hover {
+  color: var(--ink);
+}
+.intake-tab.active {
+  color: var(--ink);
+  border-bottom-color: var(--tick);
+}
+
+.intake-form {
+  max-width: 640px;
+}
+.intake-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 1.5rem;
+}
+@media (max-width: 600px) {
+  .intake-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.intake-field {
+  margin-bottom: 1.25rem;
+}
+.intake-input {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid var(--hair);
+  border-radius: 0;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.875rem;
+  color: var(--ink);
+  background: var(--paper);
+}
+.intake-input:focus {
+  outline: 2px solid var(--tick);
+  outline-offset: -1px;
+}
+.intake-textarea {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid var(--hair);
+  border-radius: 0;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.875rem;
+  color: var(--ink);
+  background: var(--paper);
+  resize: vertical;
+}
+.intake-textarea:focus {
+  outline: 2px solid var(--tick);
+  outline-offset: -1px;
+}
+
+.intake-dot-row {
+  display: flex;
+  gap: 0.5rem;
+}
+.intake-dot-row .intake-input {
+  flex: 1;
+}
+.intake-dot-btn {
+  padding: 0.625rem 1rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--paper);
+  background: var(--ink);
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.intake-dot-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.intake-dot-result {
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--sand);
+  border: 1px solid var(--hair);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.8125rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.intake-dot-status {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 0.125rem 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.intake-dot-status.active {
+  background: #e6f4ea;
+  color: #1e7e34;
+}
+.intake-dot-status.inactive {
+  background: #fde8e8;
+  color: var(--warn);
+}
+
+.intake-submit {
+  padding: 0.75rem 2rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--paper);
+  background: var(--ink);
+  border: none;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: opacity 0.15s;
+}
+.intake-submit:hover:not(:disabled) {
+  opacity: 0.85;
+}
+.intake-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.intake-success {
+  padding: 1rem 1.25rem;
+  background: #e6f4ea;
+  border: 1px solid #b7e1c8;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.875rem;
+  color: #1e7e34;
+  margin-bottom: 1.5rem;
+}
+
+/* Dark mode overrides */
+.hub-dark .intake-card {
+  background: #1e1e1e;
+  border-color: #333;
+}
+.hub-dark .intake-card:hover {
+  background: #2a2a2a;
+  border-color: var(--tick);
+}
+.hub-dark .intake-card-label {
+  color: #e8e6e3;
+}
+.hub-dark .intake-input,
+.hub-dark .intake-textarea,
+.hub-dark .intake-select {
+  background: #1e1e1e;
+  border-color: #333;
+  color: #e8e6e3;
+}
+.hub-dark .intake-input:focus,
+.hub-dark .intake-textarea:focus,
+.hub-dark .intake-select:focus {
+  outline-color: var(--tick);
+}
+.hub-dark .intake-dot-result {
+  background: #2a2a2a;
+  border-color: #333;
+}
+.hub-dark .intake-dot-status.active {
+  background: #1e3a2a;
+  color: #6fcf97;
+}
+.hub-dark .intake-dot-status.inactive {
+  background: #3a1e1e;
+  color: #f87171;
+}
+.hub-dark .intake-success {
+  background: #1e3a2a;
+  border-color: #2d5a3e;
+  color: #6fcf97;
+}
+.hub-dark .intake-tab {
+  color: #999;
+}
+.hub-dark .intake-tab:hover {
+  color: #e8e6e3;
+}
+.hub-dark .intake-tab.active {
+  color: #e8e6e3;
+}
+.hub-dark .intake-section-title {
+  color: #e8e6e3;
+}

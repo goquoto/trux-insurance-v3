@@ -33,6 +33,7 @@ export async function upsertUser(user: InsertUser): Promise<void> {
     const values: InsertUser = {
       openId: user.openId,
     };
+    // updateSet only contains fields safe to overwrite on subsequent logins
     const updateSet: Record<string, unknown> = {};
 
     const textFields = ["name", "email", "loginMethod"] as const;
@@ -52,22 +53,42 @@ export async function upsertUser(user: InsertUser): Promise<void> {
       values.lastSignedIn = user.lastSignedIn;
       updateSet.lastSignedIn = user.lastSignedIn;
     }
+
+    // --- Role assignment: ONLY on INSERT (new user creation) ---
+    // Determine the email domain with an EXACT suffix match
+    const emailLower = (user.email || '').toLowerCase();
+    const isTruxinsDomain = emailLower.endsWith('@truxins.com');
+    const isOwner = user.openId === ENV.ownerOpenId;
+
+    // For INSERT (new user): assign role based on email domain
+    // Admin is ONLY granted to the exact email milen@truxins.com or via explicit admin role-change
+    const isAdminEmail = emailLower === 'milen@truxins.com';
+
     if (user.role !== undefined) {
+      // Explicit role passed (e.g., from admin role-change) — apply to both insert and update
       values.role = user.role;
       updateSet.role = user.role;
-    } else if (user.openId === ENV.ownerOpenId) {
-      values.role = 'admin';
-      updateSet.role = 'admin';
+    } else {
+      // Auto-role only for INSERT values (new users)
+      if (isAdminEmail) {
+        values.role = 'admin';
+      } else if (isTruxinsDomain) {
+        values.role = 'staff';
+      } else {
+        values.role = 'user'; // pending approval
+      }
+      // DO NOT put role in updateSet — existing DB row's role wins on subsequent logins
     }
 
-    // Owner is always approved; @truxins.com team members are auto-approved; others start as pending
-    if (user.openId === ENV.ownerOpenId) {
+    // --- Account status: ONLY on INSERT (new user creation) ---
+    if (isAdminEmail || isTruxinsDomain) {
+      // @truxins.com accounts are auto-approved on creation
       (values as any).accountStatus = 'approved';
-      updateSet.accountStatus = 'approved';
-    } else if (user.email?.endsWith('@truxins.com')) {
-      // Team members with @truxins.com emails are auto-approved
-      (values as any).accountStatus = 'approved';
-      updateSet.accountStatus = 'approved';
+      // DO NOT override status on update — admin may have changed it
+    } else {
+      // Non-truxins accounts start as pending
+      (values as any).accountStatus = 'pending';
+      // DO NOT override status on update — admin may have approved them
     }
 
     if (!values.lastSignedIn) {

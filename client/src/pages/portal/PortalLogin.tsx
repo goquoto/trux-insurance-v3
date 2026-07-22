@@ -33,11 +33,12 @@ export default function PortalLogin() {
       window.location.href = '/service-center';
       return null;
     }
-    // role === 'user' — show pending-like screen asking them to wait for role assignment
+    // role === 'user' with approved status — show role-pending screen
+    // (This shouldn't normally happen, but handles edge case)
   }
 
-  // If user is logged in but pending approval
-  if (user && (user as any).accountStatus === "pending") {
+  // If user is logged in but pending approval OR has role='user' (awaiting role assignment)
+  if (user && ((user as any).accountStatus === "pending" || (user as any).role === 'user')) {
     return (
       <div className={`portal-login-page ${darkMode ? 'portal-dark' : ''}`}>
         <div className="portal-login-dark-toggle">

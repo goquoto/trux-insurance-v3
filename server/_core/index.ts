@@ -11,6 +11,7 @@ import { serveStatic, setupVite } from "./vite";
 import { registerSitemapRoute } from "../sitemap";
 import { injectSEO } from "../seo-prerender";
 import { registerJotformWebhook } from "../jotform-webhook";
+import { registerFmcsaRoute } from "../fmcsa-lookup";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -41,6 +42,7 @@ async function startServer() {
   registerOAuthRoutes(app);
   registerSitemapRoute(app);
   registerJotformWebhook(app);
+  registerFmcsaRoute(app);
   // tRPC API
   app.use(
     "/api/trpc",
