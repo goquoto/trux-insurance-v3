@@ -49,7 +49,8 @@ export default function Footer() {
               <li><a href="https://support.truxins.com" target="_blank" rel="noopener noreferrer" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Policy Service</a></li>
               <li><a href="https://identity.nowcerts.com/Account/Login?ReturnUrl=%2FAccount%2FLoginRedirectUrl" target="_blank" rel="noopener noreferrer" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Request a Certificate</a></li>
               <li><Link href="/service" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Report a Claim</Link></li>
-              <li><a href="https://truxins.epaypolicy.com" target="_blank" rel="noopener noreferrer" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Make a Payment</a></li>
+             <li><a href="https://truxins.epaypolicy.com" target="_blank" rel="noopener noreferrer" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Make a Payment</a></li>
+              <li><Link href="/portal" className="font-sans text-[14px] text-muted-custom hover:text-purple no-underline">Agency Portal</Link></li>
             </ul>
           </div>
 
